@@ -1,0 +1,79 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-a211a26b98d19e40affb.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "NeobankClientWidgets",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "NeobankClientWidgets::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-NeobankClientWidgets-Debug-f8fc8b88ff49db7bb607.json",
+					"name" : "NeobankClientWidgets",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "NeobankClientWidgets_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-NeobankClientWidgets_autogen-Debug-812360a836b6d4ba1d5b.json",
+					"name" : "NeobankClientWidgets_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "NeobankClientWidgets_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-NeobankClientWidgets_autogen_timestamp_deps-Debug-5af60ce56e41e3c8c0be.json",
+					"name" : "NeobankClientWidgets_autogen_timestamp_deps",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/rakigor788/Projects/Course/NeobankClientWidgets/build/Desktop_Qt_6_10_0-Debug",
+		"source" : "/home/rakigor788/Projects/Course/NeobankClientWidgets"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}
