@@ -13,44 +13,34 @@ void AuthService::handleMessage(const QByteArray &msg)
         return;
 
     QJsonObject obj = doc.object();
-    if (!obj.contains("type") || !(obj["type"].toString() == "auth"))
-        return;
+    const QString type = obj.value("type").toString();
+    const bool result = obj.value("result").toBool();
+    const QString reason = obj.value("reason").toString();
 
-    if (obj.contains("subtype") && obj["subtype"].toString() == "login")
+    if (type == "login")
     {
-        if (obj.contains("result") && obj["result"].toBool())
-        {
+        if (result)
             emit loginSuccess();
-        }
-        else if (obj.contains("result") && !obj["result"].toBool())
-        {
-            emit loginFailed(obj.contains("reason") ? obj["reason"].toString() : "");
-        }
+        else
+            emit loginFailed(reason);
     }
-    else if (obj.contains("subtype") && obj["subtype"].toString() == "register")
+    else if (type == "register")
     {
-        if (obj.contains("result") && obj["result"].toBool())
-        {
+        if (result)
             emit registerSuccess();
-        }
-        else if (obj.contains("result") && !obj["result"].toBool())
-        {
-            emit registerFailed(obj.contains("reason") ? obj["reason"].toString() : "");
-        }
+        else
+            emit registerFailed(reason);
     }
 }
 
+
 QByteArray AuthService::createLoginRequest(const QString &username, const QString &password)
 {
-    QJsonObject payload;
-    payload["username"] = username;
-    payload["password"] = password;
-
     QJsonObject request;
-    request["type"] = "auth";
-    request["subtype"] = "login";
+    request["type"] = "login";
     // request["id"] = QString::number(QDateTime::currentMSecsSinceEpoch());
-    request["payload"] = payload;
+    request["username"] = username;
+    request["password"] = password;
     QJsonDocument doc(request);
     QByteArray data = doc.toJson(QJsonDocument::Compact);
     return data;
@@ -65,8 +55,7 @@ QByteArray AuthService::createRegistrationRequest(const RegData &regData)
     payload["phone"] = regData.phone;
 
     QJsonObject request;
-    request["type"] = "auth";
-    request["subtype"] = "register";
+    request["type"] = "register";
     // request["id"] = QString::number(QDateTime::currentMSecsSinceEpoch());
     request["payload"] = payload;
     QJsonDocument doc(request);
