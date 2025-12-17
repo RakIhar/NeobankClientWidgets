@@ -13,36 +13,60 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Network)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Network)
 
 set(PROJECT_SOURCES
-        main.cpp
-        mainwindow.cpp
-        mainwindow.h
-        mainwindow.ui
-        network/socketwrapper.h
-        network/socketwrapper.cpp
-        protocols/protocolvalidator.h
-        protocols/protocolvalidator.cpp
-        pages/connectpage.h
-        pages/connectpage.cpp
-        pages/loginpage.h
-        pages/loginpage.cpp
-        pages/dashboardpage.h
-        pages/dashboardpage.cpp
-        pages/accountspage.h
-        pages/accountspage.cpp
-        pages/transactionspage.h
-        pages/transactionspage.cpp
+  main.cpp
+  mainwindow.cpp
+  mainwindow.h
+  mainwindow.ui
+  readme.md
+
+  network/socketwrapper.h
+  network/socketwrapper.cpp
+
+  services/accountsservice.h
+  services/accountsservice.cpp
+  services/authservice.h
+  services/authservice.cpp
+  services/transactionsservice.h
+  services/transactionsservice.cpp
+
+  pages/accountspage.ui
+  pages/accountspage.h
+  pages/accountspage.cpp
+
+  pages/connectpage.ui
+  pages/connectpage.h
+  pages/connectpage.cpp
+
+  pages/dashboardpage.ui
+  pages/dashboardpage.h
+  pages/dashboardpage.cpp
+
+  pages/loginpage.ui
+  pages/loginpage.h
+  pages/loginpage.cpp
+
+  pages/registrationpage.ui
+  pages/registrationpage.h
+  pages/registrationpage.cpp
+
+  pages/transactionspage.ui
+  pages/transactionspage.h
+  pages/transactionspage.cpp
+
+  #нет ui
+  pages/transferdialog.h
+  pages/transferdialog.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    find_package(Qt6 REQUIRED COMPONENTS Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Widgets)
 find_package(Qt6 REQUIRED COMPONENTS Core)
 
-    qt_add_executable(NeobankClientWidgets
-        MANUAL_FINALIZATION
-        ${PROJECT_SOURCES}
-        pages/registrationpage.h pages/registrationpage.cpp
-        services/authservice.h services/authservice.cpp
-    )
+qt_add_executable(NeobankClientWidgets
+    MANUAL_FINALIZATION
+    ${PROJECT_SOURCES}
+    constants.h
+)
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET NeobankClientWidgets APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
 #                 ${CMAKE_CURRENT_SOURCE_DIR}/android)

@@ -1,41 +1,29 @@
 #ifndef LOGINPAGE_H
 #define LOGINPAGE_H
 
-#include <QWidget>
-
-QT_BEGIN_NAMESPACE
-class QLineEdit;
-class QPushButton;
-class QLabel;
-QT_END_NAMESPACE
-
-class SocketHandler;
+#include "ui_loginpage.h"
 
 class LoginPage : public QWidget
 {
     Q_OBJECT
-
 public:
     explicit LoginPage(QWidget *parent = nullptr);
-
+    void reset();
 signals:
-    void loginRequested(const QString &username, const QString &password);
-    void registrationPageRequested();
+    void r_login(const QString &username, const QString &password);
+    void pr_registration();
+
+public slots:
+    void onLoginError(const QString &reason);
+
+//===============================================================//
 
 private slots:
     void onLoginClicked();
-    void onRegisterClicked();
-
-public slots:
-    // void onLoginSuccess();
-    void onLoginError(const QString &reason); //обновить интерфейс
 
 private:
-    QLineEdit *m_usernameEdit;
-    QLineEdit *m_passwordEdit;
-    QPushButton *m_loginButton;
-    QPushButton *m_registerButton;
-    QLabel *m_statusLabel;
+    void setupConnections();
+    Ui::LoginPage *ui;
 };
 
 #endif // LOGINPAGE_H

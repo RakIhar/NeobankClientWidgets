@@ -1,17 +1,7 @@
 #include "registrationpage.h"
 
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QFormLayout>
-#include <QLineEdit>
-#include <QPushButton>
-#include <QLabel>
 #include <QMessageBox>
-#include <QGroupBox>
-#include <QJsonDocument>
-#include <QJsonObject>
-#include <QDateTime>
-#include <QTimer>
+
 
 /*
                                                                    Table "public.users"
@@ -41,92 +31,61 @@
  updated_at | timestamp with time zone |           |          | now()                            | plain    |             |              |
 */
 
+
 RegistrationPage::RegistrationPage(QWidget *parent)
     : QWidget(parent)
+    , ui(new Ui::RegistrationPage)
 {
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
-    mainLayout->setSpacing(20);
+    ui->setupUi(this);
+    // Apply validators
+    ui->emailEdit->setValidator(new QRegularExpressionValidator(m_emailRegex, this));
+    ui->phoneEdit->setValidator(new QRegularExpressionValidator(m_phoneRegex, this));
+    ui->phoneEdit->setText("+375");
+    setupConnections();
+}
 
-    QLabel *titleLabel = new QLabel(tr("Регистрация"), this);
-    titleLabel->setStyleSheet("font-size: 18px; font-weight: bold;");
-    mainLayout->addWidget(titleLabel);
-
-    //registerData
-    QGroupBox *registerGroup = new QGroupBox(tr("Данные для регистрации"), this);
-    QFormLayout *formLayout = new QFormLayout(registerGroup);
-
-    m_usernameEdit = new QLineEdit(this);
-    m_usernameEdit->setPlaceholderText(tr("Имя пользователя"));
-    formLayout->addRow(tr("Логин:"), m_usernameEdit);
-
-    m_emailEdit = new QLineEdit(this);
-    m_emailEdit->setPlaceholderText(tr("Электронная почта"));
-    m_emailEdit->setValidator(new QRegularExpressionValidator(m_emailRegex, this));
-    formLayout->addRow(tr("E-mail:"), m_emailEdit);
-
-    m_phoneEdit = new QLineEdit(this);
-    m_phoneEdit->setPlaceholderText(tr("+375 XX XXX-XX-XX"));
-    // m_phoneEdit->setInputMask("+375000000000;_");
-    m_phoneEdit->setValidator(new QRegularExpressionValidator(m_phoneRegex, this));
-    m_phoneEdit->setText("+375");
-    formLayout->addRow(tr("Номер телефона:"), m_phoneEdit);
-
-    m_passwordEdit = new QLineEdit(this);
-    m_passwordEdit->setEchoMode(QLineEdit::EchoMode::Password);
-    m_passwordEdit->setPlaceholderText(tr("Пароль"));
-    formLayout->addRow(tr("Пароль:"), m_passwordEdit);
-
-    m_passwordConfirmEdit = new QLineEdit(this);
-    m_passwordConfirmEdit->setEchoMode(QLineEdit::EchoMode::Password);
-    m_passwordConfirmEdit->setPlaceholderText(tr("Подтверждение пароля"));
-    formLayout->addRow(tr("Подтверждение пароля:"), m_passwordConfirmEdit);
-
-    mainLayout->addWidget(registerGroup);
-
-    //buttons
-    QHBoxLayout *buttonsLayout = new QHBoxLayout;
-    m_backToLogin = new QPushButton(tr("Вернуться ко входу"), this);
-    m_backToLogin->setStyleSheet("padding: 10px; font-size: 14px;");
-    m_registerButton = new QPushButton(tr("Регистрация"), this);
-    m_registerButton->setStyleSheet("padding: 10px; font-size: 14px;");
-    buttonsLayout->addWidget(m_backToLogin);
-    buttonsLayout->addWidget(m_registerButton);
-    mainLayout->addLayout(buttonsLayout);
-
-    m_statusLabel = new QLabel("", this);
-    m_statusLabel->setStyleSheet("color: gray; padding: 10px;");
-    mainLayout->addWidget(m_statusLabel);
-
-    mainLayout->addStretch();
-
-    connect(m_backToLogin, &QPushButton::clicked, this, [this]() {
-        emit loginPageRequested();
+void RegistrationPage::setupConnections()
+{
+    connect(ui->backToLogin, &QPushButton::clicked, this,
+    [this]{
+        emit pr_login();
     });
-    connect(m_registerButton, &QPushButton::clicked,
+
+    connect(ui->registerButton, &QPushButton::clicked,
             this, &RegistrationPage::onRegisterClicked);
 }
 
 void RegistrationPage::onRegistrationError(const QString &error)
 {
-    m_statusLabel->setText(error);
-    m_statusLabel->setStyleSheet("color: red; padding: 10px;");
-    m_registerButton->setEnabled(true);
+    ui->statusLabel->setText(tr("❌ %1").arg(error));
+    ui->statusLabel->setStyleSheet(
+        "font-size: 14px; "
+        "color: #ff6b6b; "
+        "padding: 16px; "
+        "background: transparent;"
+    );
+    ui->registerButton->setEnabled(true);
 }
 
 void RegistrationPage::onRegistrationSuccess()
 {
-    m_statusLabel->setText(tr("Success"));
-    m_statusLabel->setStyleSheet("color: green; padding: 10px;");
-    m_registerButton->setEnabled(false);
+    ui->statusLabel->setText(tr("> Регистрация прошла успешно <"));
+    ui->statusLabel->setStyleSheet(
+        "font-size: 14px; "
+        "color: #51cf66; "
+        "padding: 16px; "
+        "background: transparent;"
+    );
+    ui->registerButton->setEnabled(false);
 }
 
 void RegistrationPage::onRegisterClicked()
 {
-    const QString username = m_usernameEdit->text().trimmed();
-    const QString email = m_emailEdit->text().trimmed();
-    const QString phone = m_phoneEdit->text().trimmed();
-    const QString password = m_passwordEdit->text();
-    const QString password2 = m_passwordConfirmEdit->text();
+    const QString username = ui->usernameEdit->text().trimmed();
+    const QString email = ui->emailEdit->text().trimmed();
+    const QString phone = ui->phoneEdit->text().trimmed();
+    const QString password = ui->passwordEdit->text();
+    const QString password2 = ui->passwordConfirmEdit->text();
 
     if (username.isEmpty() || password.isEmpty() || password2.isEmpty()) {
         QMessageBox::warning(this, tr("Ошибка"), tr("Заполните все поля"));
@@ -136,11 +95,11 @@ void RegistrationPage::onRegisterClicked()
         QMessageBox::warning(this, tr("Ошибка"), tr("Пароли не совпадают"));
         return;
     }
-    if (!m_emailEdit->hasAcceptableInput()) {
+    if (!ui->emailEdit->hasAcceptableInput()) {
         QMessageBox::warning(this, tr("Ошибка"), tr("Некорректный email"));
         return;
     }
-    if (!m_phoneEdit->hasAcceptableInput()) {
+    if (!ui->phoneEdit->hasAcceptableInput()) {
         QMessageBox::warning(this, tr("Ошибка"), tr("Некорректный номер телефона"));
         return;
     }
@@ -149,10 +108,15 @@ void RegistrationPage::onRegisterClicked()
     regData.email = email;
     regData.phone = phone;
     regData.password = password;
-    emit registrationRequested(regData);
+    emit r_registration(regData);
 
-    m_statusLabel->setText(tr("Отправка запроса..."));
-    m_statusLabel->setStyleSheet("color: blue; padding: 10px;");
-    m_registerButton->setEnabled(false);
+    ui->statusLabel->setText(tr("> Отправка запроса... <"));
+    ui->statusLabel->setStyleSheet(
+        "font-size: 14px; "
+        "color: #4facfe; "
+        "padding: 16px; "
+        "background: transparent;"
+    );
+    ui->registerButton->setEnabled(false);
 }
 

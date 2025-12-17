@@ -7,6 +7,7 @@
 *****************************************************************************/
 
 #include "../../../../pages/dashboardpage.h"
+#include <QtGui/qtextcursor.h>
 #include <QtCore/qmetatype.h>
 
 #include <QtCore/qtmochelpers.h>
@@ -39,28 +40,19 @@ template <> constexpr inline auto DashboardPage::qt_create_metaobjectdata<qt_met
     namespace QMC = QtMocConstants;
     QtMocHelpers::StringRefStorage qt_stringData {
         "DashboardPage",
-        "showAccounts",
+        "pr_accounts",
         "",
-        "showTransactions",
-        "logout",
-        "onAccountsClicked",
-        "onTransactionsClicked",
-        "onLogoutClicked"
+        "pr_transactions",
+        "r_logout"
     };
 
     QtMocHelpers::UintData qt_methods {
-        // Signal 'showAccounts'
+        // Signal 'pr_accounts'
         QtMocHelpers::SignalData<void()>(1, 2, QMC::AccessPublic, QMetaType::Void),
-        // Signal 'showTransactions'
+        // Signal 'pr_transactions'
         QtMocHelpers::SignalData<void()>(3, 2, QMC::AccessPublic, QMetaType::Void),
-        // Signal 'logout'
+        // Signal 'r_logout'
         QtMocHelpers::SignalData<void()>(4, 2, QMC::AccessPublic, QMetaType::Void),
-        // Slot 'onAccountsClicked'
-        QtMocHelpers::SlotData<void()>(5, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'onTransactionsClicked'
-        QtMocHelpers::SlotData<void()>(6, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'onLogoutClicked'
-        QtMocHelpers::SlotData<void()>(7, 2, QMC::AccessPrivate, QMetaType::Void),
     };
     QtMocHelpers::UintData qt_properties {
     };
@@ -84,21 +76,18 @@ void DashboardPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
     auto *_t = static_cast<DashboardPage *>(_o);
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: _t->showAccounts(); break;
-        case 1: _t->showTransactions(); break;
-        case 2: _t->logout(); break;
-        case 3: _t->onAccountsClicked(); break;
-        case 4: _t->onTransactionsClicked(); break;
-        case 5: _t->onLogoutClicked(); break;
+        case 0: _t->pr_accounts(); break;
+        case 1: _t->pr_transactions(); break;
+        case 2: _t->r_logout(); break;
         default: ;
         }
     }
     if (_c == QMetaObject::IndexOfMethod) {
-        if (QtMocHelpers::indexOfMethod<void (DashboardPage::*)()>(_a, &DashboardPage::showAccounts, 0))
+        if (QtMocHelpers::indexOfMethod<void (DashboardPage::*)()>(_a, &DashboardPage::pr_accounts, 0))
             return;
-        if (QtMocHelpers::indexOfMethod<void (DashboardPage::*)()>(_a, &DashboardPage::showTransactions, 1))
+        if (QtMocHelpers::indexOfMethod<void (DashboardPage::*)()>(_a, &DashboardPage::pr_transactions, 1))
             return;
-        if (QtMocHelpers::indexOfMethod<void (DashboardPage::*)()>(_a, &DashboardPage::logout, 2))
+        if (QtMocHelpers::indexOfMethod<void (DashboardPage::*)()>(_a, &DashboardPage::r_logout, 2))
             return;
     }
 }
@@ -122,32 +111,32 @@ int DashboardPage::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 6)
+        if (_id < 3)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 6;
+        _id -= 3;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 6)
+        if (_id < 3)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 6;
+        _id -= 3;
     }
     return _id;
 }
 
 // SIGNAL 0
-void DashboardPage::showAccounts()
+void DashboardPage::pr_accounts()
 {
     QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
 }
 
 // SIGNAL 1
-void DashboardPage::showTransactions()
+void DashboardPage::pr_transactions()
 {
     QMetaObject::activate(this, &staticMetaObject, 1, nullptr);
 }
 
 // SIGNAL 2
-void DashboardPage::logout()
+void DashboardPage::r_logout()
 {
     QMetaObject::activate(this, &staticMetaObject, 2, nullptr);
 }

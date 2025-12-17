@@ -1,37 +1,43 @@
 #ifndef ACCOUNTSPAGE_H
 #define ACCOUNTSPAGE_H
 
-#include <QWidget>
-
-QT_BEGIN_NAMESPACE
-class QListWidget;
-class QPushButton;
-class QLabel;
-QT_END_NAMESPACE
-
-class SocketHandler;
+#include "ui_accountspage.h"
+#include <QListWidget>
+#include <QPushButton>
+#include <QLabel>
+#include "../services/accountsservice.h"
+// #include "transferdialog.h"
 
 class AccountsPage : public QWidget
 {
     Q_OBJECT
-
 public:
-    explicit AccountsPage(SocketHandler *client, QWidget *parent = nullptr);
+    explicit AccountsPage(QWidget *parent = nullptr);
     void refreshAccounts();
+    void showLoading(const QString &message = QString());
 
 signals:
-    void backToDashboard();
+    void pr_dashboard();
+    void r_accounts();
+    ///CHECK
+    void r_transferRequested(const QString &fromAccountId,
+                             const QString &to,
+                             const QString &amount,
+                             const Enums::Currency &currency,
+                             const QString &description);
+    void r_createAccount(Enums::Currency curr);
+    void r_testCreditRequested(const QString &accountId, const QString &amount);
+    ///
+public slots:
+    void onAccountsUpdated(const QList<AccountInfo> &accounts);
+    void onAccountsFailed(const QString &reason);
 
-private slots:
-    void onBackClicked();
-    void onRefreshClicked();
+//===========================================================//
 
 private:
-    SocketHandler *m_client;
-    QListWidget *m_accountsList;
-    QPushButton *m_backButton;
-    QPushButton *m_refreshButton;
-    QLabel *m_statusLabel;
+    void setupConnections();
+    Ui::AccountsPage *ui;
+    QList<AccountInfo> m_accounts; //CHECK
 };
 
 #endif // ACCOUNTSPAGE_H

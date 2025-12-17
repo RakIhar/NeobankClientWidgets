@@ -1,37 +1,34 @@
 #ifndef TRANSACTIONSPAGE_H
 #define TRANSACTIONSPAGE_H
 
-#include <QWidget>
-
-QT_BEGIN_NAMESPACE
-class QListWidget;
-class QPushButton;
-class QLabel;
-QT_END_NAMESPACE
-
-class SocketHandler;
+#include "ui_transactionspage.h"
+#include <QListWidget>
+#include <QPushButton>
+#include <QLabel>
+#include "../services/transactionsservice.h"
 
 class TransactionsPage : public QWidget
 {
     Q_OBJECT
-
 public:
-    explicit TransactionsPage(SocketHandler *client, QWidget *parent = nullptr);
+    explicit TransactionsPage(QWidget *parent = nullptr);
     void refreshTransactions();
+    void showLoading(const QString &message = QString());
 
 signals:
-    void backToDashboard();
+    void pr_dashboard();
+    void r_transactions();
 
-private slots:
-    void onBackClicked();
-    void onRefreshClicked();
+public slots:
+    void onTransactionsUpdated(const QList<TransactionInfo> &transactions);
+    void onTransactionsFailed(const QString &reason);
+    void onTransactionCreated(const TransactionInfo &transaction);//CHECK
+
+//=======================================================================//
 
 private:
-    SocketHandler *m_client;
-    QListWidget *m_transactionsList;
-    QPushButton *m_backButton;
-    QPushButton *m_refreshButton;
-    QLabel *m_statusLabel;
+    void setupConnections();
+    Ui::TransactionsPage *ui;
 };
 
 #endif // TRANSACTIONSPAGE_H

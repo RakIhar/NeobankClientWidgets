@@ -1,6 +1,8 @@
 #include "authservice.h"
-#include "../protocols/protocolvalidator.h"
 #include "../pages/registrationpage.h"
+#include <QJsonObject>
+#include <QJsonDocument>
+#include "../constants.h"
 
 AuthService::AuthService(QObject *parent)
     : QObject{parent}
@@ -8,23 +10,23 @@ AuthService::AuthService(QObject *parent)
 
 void AuthService::handleMessage(const QByteArray &msg)
 {
-    QJsonDocument doc;
-    if (!ProtocolValidator::validateMessage(msg, doc))
-        return;
+    QJsonObject obj      = QJsonDocument::fromJson(msg).object();
+    const QString type   = obj.value(toStr(JsonField::Type)).toString();
+    const bool result    = obj.value(toStr(JsonField::Result)).toBool();
+    const QString reason = obj.value(toStr(JsonField::Reason)).toString();
 
-    QJsonObject obj = doc.object();
-    const QString type = obj.value("type").toString();
-    const bool result = obj.value("result").toBool();
-    const QString reason = obj.value("reason").toString();
-
-    if (type == "login")
+    if (type == toStr(ProtocolType::Login))
     {
         if (result)
+        {
+            this->session_id = obj.value(toStr(JsonField::SessionId)).toString();
+            this->token      = obj.value(toStr(JsonField::Token)).toString();
             emit loginSuccess();
+        }
         else
             emit loginFailed(reason);
     }
-    else if (type == "register")
+    else if (type == toStr(ProtocolType::Register))
     {
         if (result)
             emit registerSuccess();
@@ -33,14 +35,12 @@ void AuthService::handleMessage(const QByteArray &msg)
     }
 }
 
-
 QByteArray AuthService::createLoginRequest(const QString &username, const QString &password)
 {
     QJsonObject request;
-    request["type"] = "login";
-    // request["id"] = QString::number(QDateTime::currentMSecsSinceEpoch());
-    request["username"] = username;
-    request["password"] = password;
+    request[toStr(JsonField::Type)]     = toStr(ProtocolType::Login);
+    request[toStr(JsonField::Username)] = username;
+    request[toStr(JsonField::Password)] = password;
     QJsonDocument doc(request);
     QByteArray data = doc.toJson(QJsonDocument::Compact);
     return data;
@@ -48,16 +48,12 @@ QByteArray AuthService::createLoginRequest(const QString &username, const QStrin
 
 QByteArray AuthService::createRegistrationRequest(const RegData &regData)
 {
-    QJsonObject payload;
-    payload["username"] = regData.username;
-    payload["password"] = regData.password;
-    payload["email"] = regData.email;
-    payload["phone"] = regData.phone;
-
     QJsonObject request;
-    request["type"] = "register";
-    // request["id"] = QString::number(QDateTime::currentMSecsSinceEpoch());
-    request["payload"] = payload;
+    request[toStr(JsonField::Type)]     = toStr(ProtocolType::Register);
+    request[toStr(JsonField::Username)] = regData.username;
+    request[toStr(JsonField::Password)] = regData.password;
+    request[toStr(JsonField::Email)]    = regData.email;
+    request[toStr(JsonField::Phone)]    = regData.phone;
     QJsonDocument doc(request);
     QByteArray data = doc.toJson(QJsonDocument::Compact);
     return data;

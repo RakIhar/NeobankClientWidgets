@@ -642,6 +642,12 @@
 	"HEADERS" : 
 	[
 		[
+			"/home/rakigor788/Projects/Course/NeobankClientWidgets/constants.h",
+			"MU",
+			"EWIEGA46WW/moc_constants.cpp",
+			null
+		],
+		[
 			"/home/rakigor788/Projects/Course/NeobankClientWidgets/mainwindow.h",
 			"MU",
 			"EWIEGA46WW/moc_mainwindow.cpp",
@@ -690,15 +696,27 @@
 			null
 		],
 		[
-			"/home/rakigor788/Projects/Course/NeobankClientWidgets/protocols/protocolvalidator.h",
+			"/home/rakigor788/Projects/Course/NeobankClientWidgets/pages/transferdialog.h",
 			"MU",
-			"QEXRLBDUJQ/moc_protocolvalidator.cpp",
+			"P2WXERC3RM/moc_transferdialog.cpp",
+			null
+		],
+		[
+			"/home/rakigor788/Projects/Course/NeobankClientWidgets/services/accountsservice.h",
+			"MU",
+			"3BYFHCGL5U/moc_accountsservice.cpp",
 			null
 		],
 		[
 			"/home/rakigor788/Projects/Course/NeobankClientWidgets/services/authservice.h",
 			"MU",
 			"3BYFHCGL5U/moc_authservice.cpp",
+			null
+		],
+		[
+			"/home/rakigor788/Projects/Course/NeobankClientWidgets/services/transactionsservice.h",
+			"MU",
+			"3BYFHCGL5U/moc_transactionsservice.cpp",
 			null
 		]
 	],
@@ -808,12 +826,22 @@
 			null
 		],
 		[
-			"/home/rakigor788/Projects/Course/NeobankClientWidgets/protocols/protocolvalidator.cpp",
+			"/home/rakigor788/Projects/Course/NeobankClientWidgets/pages/transferdialog.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/rakigor788/Projects/Course/NeobankClientWidgets/services/accountsservice.cpp",
 			"MU",
 			null
 		],
 		[
 			"/home/rakigor788/Projects/Course/NeobankClientWidgets/services/authservice.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/rakigor788/Projects/Course/NeobankClientWidgets/services/transactionsservice.cpp",
 			"MU",
 			null
 		]

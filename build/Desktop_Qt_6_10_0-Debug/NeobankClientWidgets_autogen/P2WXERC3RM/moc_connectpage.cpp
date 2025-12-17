@@ -7,6 +7,7 @@
 *****************************************************************************/
 
 #include "../../../../pages/connectpage.h"
+#include <QtGui/qtextcursor.h>
 #include <QtCore/qmetatype.h>
 
 #include <QtCore/qtmochelpers.h>
@@ -39,26 +40,26 @@ template <> constexpr inline auto ConnectPage::qt_create_metaobjectdata<qt_meta_
     namespace QMC = QtMocConstants;
     QtMocHelpers::StringRefStorage qt_stringData {
         "ConnectPage",
-        "connectRequested",
+        "r_connect",
         "",
         "host",
         "port",
-        "onConnectClicked",
         "onSocketError",
-        "msg"
+        "msg",
+        "onConnectClicked"
     };
 
     QtMocHelpers::UintData qt_methods {
-        // Signal 'connectRequested'
+        // Signal 'r_connect'
         QtMocHelpers::SignalData<void(QString, quint16)>(1, 2, QMC::AccessPublic, QMetaType::Void, {{
             { QMetaType::QString, 3 }, { QMetaType::UShort, 4 },
         }}),
-        // Slot 'onConnectClicked'
-        QtMocHelpers::SlotData<void()>(5, 2, QMC::AccessPrivate, QMetaType::Void),
         // Slot 'onSocketError'
-        QtMocHelpers::SlotData<void(const QString &)>(6, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { QMetaType::QString, 7 },
+        QtMocHelpers::SlotData<void(const QString &)>(5, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::QString, 6 },
         }}),
+        // Slot 'onConnectClicked'
+        QtMocHelpers::SlotData<void()>(7, 2, QMC::AccessPrivate, QMetaType::Void),
     };
     QtMocHelpers::UintData qt_properties {
     };
@@ -82,14 +83,14 @@ void ConnectPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
     auto *_t = static_cast<ConnectPage *>(_o);
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: _t->connectRequested((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<quint16>>(_a[2]))); break;
-        case 1: _t->onConnectClicked(); break;
-        case 2: _t->onSocketError((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1]))); break;
+        case 0: _t->r_connect((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<quint16>>(_a[2]))); break;
+        case 1: _t->onSocketError((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1]))); break;
+        case 2: _t->onConnectClicked(); break;
         default: ;
         }
     }
     if (_c == QMetaObject::IndexOfMethod) {
-        if (QtMocHelpers::indexOfMethod<void (ConnectPage::*)(QString , quint16 )>(_a, &ConnectPage::connectRequested, 0))
+        if (QtMocHelpers::indexOfMethod<void (ConnectPage::*)(QString , quint16 )>(_a, &ConnectPage::r_connect, 0))
             return;
     }
 }
@@ -126,7 +127,7 @@ int ConnectPage::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void ConnectPage::connectRequested(QString _t1, quint16 _t2)
+void ConnectPage::r_connect(QString _t1, quint16 _t2)
 {
     QMetaObject::activate<void>(this, &staticMetaObject, 0, nullptr, _t1, _t2);
 }

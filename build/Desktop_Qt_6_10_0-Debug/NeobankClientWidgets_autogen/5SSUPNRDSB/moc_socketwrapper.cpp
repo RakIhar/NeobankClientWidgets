@@ -8,7 +8,6 @@
 
 #include "../../../../network/socketwrapper.h"
 #include <QtCore/qmetatype.h>
-#include <QtCore/QList>
 
 #include <QtCore/qtmochelpers.h>
 
@@ -32,32 +31,22 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 QT_WARNING_DISABLE_GCC("-Wuseless-cast")
 namespace {
-struct qt_meta_tag_ZN13SocketHandlerE_t {};
+struct qt_meta_tag_ZN13SocketWrapperE_t {};
 } // unnamed namespace
 
-template <> constexpr inline auto SocketHandler::qt_create_metaobjectdata<qt_meta_tag_ZN13SocketHandlerE_t>()
+template <> constexpr inline auto SocketWrapper::qt_create_metaobjectdata<qt_meta_tag_ZN13SocketWrapperE_t>()
 {
     namespace QMC = QtMocConstants;
     QtMocHelpers::StringRefStorage qt_stringData {
-        "SocketHandler",
+        "SocketWrapper",
         "connected",
         "",
         "disconnected",
-        "receivedMessagesChanged",
-        "sentMessagesChanged",
+        "sent",
         "errorOccurred",
         "msg",
-        "messageReceived",
-        "onEncrypted",
-        "onSslErrors",
-        "QList<QSslError>",
-        "errors",
-        "onErrorOccurred",
-        "QAbstractSocket::SocketError",
-        "error",
-        "onReadyRead",
-        "processIncomingMessage",
-        "data"
+        "received",
+        "onReadyRead"
     };
 
     QtMocHelpers::UintData qt_methods {
@@ -65,170 +54,122 @@ template <> constexpr inline auto SocketHandler::qt_create_metaobjectdata<qt_met
         QtMocHelpers::SignalData<void()>(1, 2, QMC::AccessPublic, QMetaType::Void),
         // Signal 'disconnected'
         QtMocHelpers::SignalData<void()>(3, 2, QMC::AccessPublic, QMetaType::Void),
-        // Signal 'receivedMessagesChanged'
+        // Signal 'sent'
         QtMocHelpers::SignalData<void()>(4, 2, QMC::AccessPublic, QMetaType::Void),
-        // Signal 'sentMessagesChanged'
-        QtMocHelpers::SignalData<void()>(5, 2, QMC::AccessPublic, QMetaType::Void),
         // Signal 'errorOccurred'
-        QtMocHelpers::SignalData<void(const QString &)>(6, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { QMetaType::QString, 7 },
+        QtMocHelpers::SignalData<void(const QString &)>(5, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::QString, 6 },
         }}),
-        // Signal 'messageReceived'
-        QtMocHelpers::SignalData<void(const QByteArray &)>(8, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { QMetaType::QByteArray, 7 },
-        }}),
-        // Slot 'onEncrypted'
-        QtMocHelpers::SlotData<void()>(9, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'onSslErrors'
-        QtMocHelpers::SlotData<void(const QList<QSslError> &)>(10, 2, QMC::AccessPrivate, QMetaType::Void, {{
-            { 0x80000000 | 11, 12 },
-        }}),
-        // Slot 'onErrorOccurred'
-        QtMocHelpers::SlotData<void(QAbstractSocket::SocketError)>(13, 2, QMC::AccessPrivate, QMetaType::Void, {{
-            { 0x80000000 | 14, 15 },
+        // Signal 'received'
+        QtMocHelpers::SignalData<void(const QByteArray &)>(7, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::QByteArray, 6 },
         }}),
         // Slot 'onReadyRead'
-        QtMocHelpers::SlotData<void()>(16, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'processIncomingMessage'
-        QtMocHelpers::SlotData<void(const QByteArray &)>(17, 2, QMC::AccessPrivate, QMetaType::Void, {{
-            { QMetaType::QByteArray, 18 },
-        }}),
+        QtMocHelpers::SlotData<void()>(8, 2, QMC::AccessPrivate, QMetaType::Void),
     };
     QtMocHelpers::UintData qt_properties {
     };
     QtMocHelpers::UintData qt_enums {
     };
-    return QtMocHelpers::metaObjectData<SocketHandler, qt_meta_tag_ZN13SocketHandlerE_t>(QMC::MetaObjectFlag{}, qt_stringData,
+    return QtMocHelpers::metaObjectData<SocketWrapper, qt_meta_tag_ZN13SocketWrapperE_t>(QMC::MetaObjectFlag{}, qt_stringData,
             qt_methods, qt_properties, qt_enums);
 }
-Q_CONSTINIT const QMetaObject SocketHandler::staticMetaObject = { {
+Q_CONSTINIT const QMetaObject SocketWrapper::staticMetaObject = { {
     QMetaObject::SuperData::link<QObject::staticMetaObject>(),
-    qt_staticMetaObjectStaticContent<qt_meta_tag_ZN13SocketHandlerE_t>.stringdata,
-    qt_staticMetaObjectStaticContent<qt_meta_tag_ZN13SocketHandlerE_t>.data,
+    qt_staticMetaObjectStaticContent<qt_meta_tag_ZN13SocketWrapperE_t>.stringdata,
+    qt_staticMetaObjectStaticContent<qt_meta_tag_ZN13SocketWrapperE_t>.data,
     qt_static_metacall,
     nullptr,
-    qt_staticMetaObjectRelocatingContent<qt_meta_tag_ZN13SocketHandlerE_t>.metaTypes,
+    qt_staticMetaObjectRelocatingContent<qt_meta_tag_ZN13SocketWrapperE_t>.metaTypes,
     nullptr
 } };
 
-void SocketHandler::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void SocketWrapper::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
-    auto *_t = static_cast<SocketHandler *>(_o);
+    auto *_t = static_cast<SocketWrapper *>(_o);
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
         case 0: _t->connected(); break;
         case 1: _t->disconnected(); break;
-        case 2: _t->receivedMessagesChanged(); break;
-        case 3: _t->sentMessagesChanged(); break;
-        case 4: _t->errorOccurred((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1]))); break;
-        case 5: _t->messageReceived((*reinterpret_cast<std::add_pointer_t<QByteArray>>(_a[1]))); break;
-        case 6: _t->onEncrypted(); break;
-        case 7: _t->onSslErrors((*reinterpret_cast<std::add_pointer_t<QList<QSslError>>>(_a[1]))); break;
-        case 8: _t->onErrorOccurred((*reinterpret_cast<std::add_pointer_t<QAbstractSocket::SocketError>>(_a[1]))); break;
-        case 9: _t->onReadyRead(); break;
-        case 10: _t->processIncomingMessage((*reinterpret_cast<std::add_pointer_t<QByteArray>>(_a[1]))); break;
+        case 2: _t->sent(); break;
+        case 3: _t->errorOccurred((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1]))); break;
+        case 4: _t->received((*reinterpret_cast<std::add_pointer_t<QByteArray>>(_a[1]))); break;
+        case 5: _t->onReadyRead(); break;
         default: ;
         }
     }
-    if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        switch (_id) {
-        default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
-        case 7:
-            switch (*reinterpret_cast<int*>(_a[1])) {
-            default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
-            case 0:
-                *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< QList<QSslError> >(); break;
-            }
-            break;
-        case 8:
-            switch (*reinterpret_cast<int*>(_a[1])) {
-            default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
-            case 0:
-                *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< QAbstractSocket::SocketError >(); break;
-            }
-            break;
-        }
-    }
     if (_c == QMetaObject::IndexOfMethod) {
-        if (QtMocHelpers::indexOfMethod<void (SocketHandler::*)()>(_a, &SocketHandler::connected, 0))
+        if (QtMocHelpers::indexOfMethod<void (SocketWrapper::*)()>(_a, &SocketWrapper::connected, 0))
             return;
-        if (QtMocHelpers::indexOfMethod<void (SocketHandler::*)()>(_a, &SocketHandler::disconnected, 1))
+        if (QtMocHelpers::indexOfMethod<void (SocketWrapper::*)()>(_a, &SocketWrapper::disconnected, 1))
             return;
-        if (QtMocHelpers::indexOfMethod<void (SocketHandler::*)()>(_a, &SocketHandler::receivedMessagesChanged, 2))
+        if (QtMocHelpers::indexOfMethod<void (SocketWrapper::*)()>(_a, &SocketWrapper::sent, 2))
             return;
-        if (QtMocHelpers::indexOfMethod<void (SocketHandler::*)()>(_a, &SocketHandler::sentMessagesChanged, 3))
+        if (QtMocHelpers::indexOfMethod<void (SocketWrapper::*)(const QString & )>(_a, &SocketWrapper::errorOccurred, 3))
             return;
-        if (QtMocHelpers::indexOfMethod<void (SocketHandler::*)(const QString & )>(_a, &SocketHandler::errorOccurred, 4))
-            return;
-        if (QtMocHelpers::indexOfMethod<void (SocketHandler::*)(const QByteArray & )>(_a, &SocketHandler::messageReceived, 5))
+        if (QtMocHelpers::indexOfMethod<void (SocketWrapper::*)(const QByteArray & )>(_a, &SocketWrapper::received, 4))
             return;
     }
 }
 
-const QMetaObject *SocketHandler::metaObject() const
+const QMetaObject *SocketWrapper::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
-void *SocketHandler::qt_metacast(const char *_clname)
+void *SocketWrapper::qt_metacast(const char *_clname)
 {
     if (!_clname) return nullptr;
-    if (!strcmp(_clname, qt_staticMetaObjectStaticContent<qt_meta_tag_ZN13SocketHandlerE_t>.strings))
+    if (!strcmp(_clname, qt_staticMetaObjectStaticContent<qt_meta_tag_ZN13SocketWrapperE_t>.strings))
         return static_cast<void*>(this);
     return QObject::qt_metacast(_clname);
 }
 
-int SocketHandler::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int SocketWrapper::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QObject::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 11)
+        if (_id < 6)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 11;
+        _id -= 6;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 11)
-            qt_static_metacall(this, _c, _id, _a);
-        _id -= 11;
+        if (_id < 6)
+            *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
+        _id -= 6;
     }
     return _id;
 }
 
 // SIGNAL 0
-void SocketHandler::connected()
+void SocketWrapper::connected()
 {
     QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
 }
 
 // SIGNAL 1
-void SocketHandler::disconnected()
+void SocketWrapper::disconnected()
 {
     QMetaObject::activate(this, &staticMetaObject, 1, nullptr);
 }
 
 // SIGNAL 2
-void SocketHandler::receivedMessagesChanged()
+void SocketWrapper::sent()
 {
     QMetaObject::activate(this, &staticMetaObject, 2, nullptr);
 }
 
 // SIGNAL 3
-void SocketHandler::sentMessagesChanged()
+void SocketWrapper::errorOccurred(const QString & _t1)
 {
-    QMetaObject::activate(this, &staticMetaObject, 3, nullptr);
+    QMetaObject::activate<void>(this, &staticMetaObject, 3, nullptr, _t1);
 }
 
 // SIGNAL 4
-void SocketHandler::errorOccurred(const QString & _t1)
+void SocketWrapper::received(const QByteArray & _t1)
 {
     QMetaObject::activate<void>(this, &staticMetaObject, 4, nullptr, _t1);
-}
-
-// SIGNAL 5
-void SocketHandler::messageReceived(const QByteArray & _t1)
-{
-    QMetaObject::activate<void>(this, &staticMetaObject, 5, nullptr, _t1);
 }
 QT_WARNING_POP

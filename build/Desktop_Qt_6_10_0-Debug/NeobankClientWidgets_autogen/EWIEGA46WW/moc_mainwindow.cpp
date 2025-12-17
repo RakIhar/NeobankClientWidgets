@@ -7,6 +7,7 @@
 *****************************************************************************/
 
 #include "../../../../mainwindow.h"
+#include <QtGui/qtextcursor.h>
 #include <QtCore/qmetatype.h>
 
 #include <QtCore/qtmochelpers.h>
@@ -39,49 +40,64 @@ template <> constexpr inline auto MainWindow::qt_create_metaobjectdata<qt_meta_t
     namespace QMC = QtMocConstants;
     QtMocHelpers::StringRefStorage qt_stringData {
         "MainWindow",
-        "onConnectRequested",
+        "onRequestConnect",
         "",
         "host",
         "port",
-        "onLoginRequested",
+        "onRequestLogin",
         "username",
         "password",
-        "onRegistrationRequested",
+        "onRequestRegistration",
         "RegData",
         "regData",
-        "onLoginSuccess",
-        "onDashboardShowAccounts",
-        "onDashboardShowTransactions",
-        "onDashboardLogout",
-        "onAccountsBack",
-        "onTransactionsBack"
+        "onRequestLogout",
+        "onRequestAccountsList",
+        "onRequestTransactionsList",
+        "onRequestCreateTransaction",
+        "fromAccountId",
+        "to",
+        "amount",
+        "Enums::Currency",
+        "currency",
+        "description",
+        "onRequestCreateAccount",
+        "curr",
+        "onRequestTestCredit",
+        "accountId"
     };
 
     QtMocHelpers::UintData qt_methods {
-        // Slot 'onConnectRequested'
+        // Slot 'onRequestConnect'
         QtMocHelpers::SlotData<void(QString, quint16)>(1, 2, QMC::AccessPrivate, QMetaType::Void, {{
             { QMetaType::QString, 3 }, { QMetaType::UShort, 4 },
         }}),
-        // Slot 'onLoginRequested'
+        // Slot 'onRequestLogin'
         QtMocHelpers::SlotData<void(const QString &, const QString &)>(5, 2, QMC::AccessPrivate, QMetaType::Void, {{
             { QMetaType::QString, 6 }, { QMetaType::QString, 7 },
         }}),
-        // Slot 'onRegistrationRequested'
+        // Slot 'onRequestRegistration'
         QtMocHelpers::SlotData<void(const RegData &)>(8, 2, QMC::AccessPrivate, QMetaType::Void, {{
             { 0x80000000 | 9, 10 },
         }}),
-        // Slot 'onLoginSuccess'
+        // Slot 'onRequestLogout'
         QtMocHelpers::SlotData<void()>(11, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'onDashboardShowAccounts'
+        // Slot 'onRequestAccountsList'
         QtMocHelpers::SlotData<void()>(12, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'onDashboardShowTransactions'
+        // Slot 'onRequestTransactionsList'
         QtMocHelpers::SlotData<void()>(13, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'onDashboardLogout'
-        QtMocHelpers::SlotData<void()>(14, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'onAccountsBack'
-        QtMocHelpers::SlotData<void()>(15, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'onTransactionsBack'
-        QtMocHelpers::SlotData<void()>(16, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'onRequestCreateTransaction'
+        QtMocHelpers::SlotData<void(const QString &, const QString &, const QString &, const Enums::Currency &, const QString &)>(14, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::QString, 15 }, { QMetaType::QString, 16 }, { QMetaType::QString, 17 }, { 0x80000000 | 18, 19 },
+            { QMetaType::QString, 20 },
+        }}),
+        // Slot 'onRequestCreateAccount'
+        QtMocHelpers::SlotData<void(const Enums::Currency)>(21, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { 0x80000000 | 18, 22 },
+        }}),
+        // Slot 'onRequestTestCredit'
+        QtMocHelpers::SlotData<void(const QString &, const QString &)>(23, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::QString, 24 }, { QMetaType::QString, 17 },
+        }}),
     };
     QtMocHelpers::UintData qt_properties {
     };
@@ -105,15 +121,15 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
     auto *_t = static_cast<MainWindow *>(_o);
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: _t->onConnectRequested((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<quint16>>(_a[2]))); break;
-        case 1: _t->onLoginRequested((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2]))); break;
-        case 2: _t->onRegistrationRequested((*reinterpret_cast<std::add_pointer_t<RegData>>(_a[1]))); break;
-        case 3: _t->onLoginSuccess(); break;
-        case 4: _t->onDashboardShowAccounts(); break;
-        case 5: _t->onDashboardShowTransactions(); break;
-        case 6: _t->onDashboardLogout(); break;
-        case 7: _t->onAccountsBack(); break;
-        case 8: _t->onTransactionsBack(); break;
+        case 0: _t->onRequestConnect((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<quint16>>(_a[2]))); break;
+        case 1: _t->onRequestLogin((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2]))); break;
+        case 2: _t->onRequestRegistration((*reinterpret_cast<std::add_pointer_t<RegData>>(_a[1]))); break;
+        case 3: _t->onRequestLogout(); break;
+        case 4: _t->onRequestAccountsList(); break;
+        case 5: _t->onRequestTransactionsList(); break;
+        case 6: _t->onRequestCreateTransaction((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[3])),(*reinterpret_cast<std::add_pointer_t<Enums::Currency>>(_a[4])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[5]))); break;
+        case 7: _t->onRequestCreateAccount((*reinterpret_cast<std::add_pointer_t<Enums::Currency>>(_a[1]))); break;
+        case 8: _t->onRequestTestCredit((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2]))); break;
         default: ;
         }
     }

@@ -1,37 +1,26 @@
 #ifndef DASHBOARDPAGE_H
 #define DASHBOARDPAGE_H
 
-#include <QWidget>
-
-QT_BEGIN_NAMESPACE
-class QLabel;
-class QPushButton;
-class QVBoxLayout;
-QT_END_NAMESPACE
+#include "ui_dashboardpage.h"
+#include <QLabel>
+#include <QPushButton>
 
 class DashboardPage : public QWidget
 {
     Q_OBJECT
-
 public:
     explicit DashboardPage(QWidget *parent = nullptr);
 
 signals:
-    void showAccounts();
-    void showTransactions();
-    void logout();
+    void pr_accounts();
+    void pr_transactions();
+    void r_logout();
 
-private slots:
-    void onAccountsClicked();
-    void onTransactionsClicked();
-    void onLogoutClicked();
+//==================================================//
 
 private:
-    QLabel *m_welcomeLabel;
-    QLabel *m_balanceLabel;
-    QPushButton *m_accountsButton;
-    QPushButton *m_transactionsButton;
-    QPushButton *m_logoutButton;
+    void setupConnections();
+    Ui::DashboardPage *ui;
 };
 
 #endif // DASHBOARDPAGE_H

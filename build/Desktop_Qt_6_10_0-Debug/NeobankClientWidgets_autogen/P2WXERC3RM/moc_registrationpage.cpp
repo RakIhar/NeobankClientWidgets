@@ -7,6 +7,7 @@
 *****************************************************************************/
 
 #include "../../../../pages/registrationpage.h"
+#include <QtGui/qtextcursor.h>
 #include <QtCore/qmetatype.h>
 
 #include <QtCore/qtmochelpers.h>
@@ -39,9 +40,9 @@ template <> constexpr inline auto RegistrationPage::qt_create_metaobjectdata<qt_
     namespace QMC = QtMocConstants;
     QtMocHelpers::StringRefStorage qt_stringData {
         "RegistrationPage",
-        "loginPageRequested",
+        "pr_login",
         "",
-        "registrationRequested",
+        "r_registration",
         "RegData",
         "regData",
         "onRegistrationError",
@@ -51,9 +52,9 @@ template <> constexpr inline auto RegistrationPage::qt_create_metaobjectdata<qt_
     };
 
     QtMocHelpers::UintData qt_methods {
-        // Signal 'loginPageRequested'
+        // Signal 'pr_login'
         QtMocHelpers::SignalData<void()>(1, 2, QMC::AccessPublic, QMetaType::Void),
-        // Signal 'registrationRequested'
+        // Signal 'r_registration'
         QtMocHelpers::SignalData<void(const RegData &)>(3, 2, QMC::AccessPublic, QMetaType::Void, {{
             { 0x80000000 | 4, 5 },
         }}),
@@ -88,8 +89,8 @@ void RegistrationPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int
     auto *_t = static_cast<RegistrationPage *>(_o);
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: _t->loginPageRequested(); break;
-        case 1: _t->registrationRequested((*reinterpret_cast<std::add_pointer_t<RegData>>(_a[1]))); break;
+        case 0: _t->pr_login(); break;
+        case 1: _t->r_registration((*reinterpret_cast<std::add_pointer_t<RegData>>(_a[1]))); break;
         case 2: _t->onRegistrationError((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1]))); break;
         case 3: _t->onRegistrationSuccess(); break;
         case 4: _t->onRegisterClicked(); break;
@@ -97,9 +98,9 @@ void RegistrationPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int
         }
     }
     if (_c == QMetaObject::IndexOfMethod) {
-        if (QtMocHelpers::indexOfMethod<void (RegistrationPage::*)()>(_a, &RegistrationPage::loginPageRequested, 0))
+        if (QtMocHelpers::indexOfMethod<void (RegistrationPage::*)()>(_a, &RegistrationPage::pr_login, 0))
             return;
-        if (QtMocHelpers::indexOfMethod<void (RegistrationPage::*)(const RegData & )>(_a, &RegistrationPage::registrationRequested, 1))
+        if (QtMocHelpers::indexOfMethod<void (RegistrationPage::*)(const RegData & )>(_a, &RegistrationPage::r_registration, 1))
             return;
     }
 }
@@ -136,13 +137,13 @@ int RegistrationPage::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void RegistrationPage::loginPageRequested()
+void RegistrationPage::pr_login()
 {
     QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
 }
 
 // SIGNAL 1
-void RegistrationPage::registrationRequested(const RegData & _t1)
+void RegistrationPage::r_registration(const RegData & _t1)
 {
     QMetaObject::activate<void>(this, &staticMetaObject, 1, nullptr, _t1);
 }

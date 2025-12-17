@@ -81,25 +81,41 @@ build CMakeFiles/NeobankClientWidgets.dir/network/socketwrapper.cpp.o: CXX_COMPI
   OBJECT_DIR = CMakeFiles/NeobankClientWidgets.dir
   OBJECT_FILE_DIR = CMakeFiles/NeobankClientWidgets.dir/network
 
-build CMakeFiles/NeobankClientWidgets.dir/protocols/protocolvalidator.cpp.o: CXX_COMPILER__NeobankClientWidgets_unscanned_Debug /home/rakigor788/Projects/Course/NeobankClientWidgets/protocols/protocolvalidator.cpp || cmake_object_order_depends_target_NeobankClientWidgets
+build CMakeFiles/NeobankClientWidgets.dir/services/accountsservice.cpp.o: CXX_COMPILER__NeobankClientWidgets_unscanned_Debug /home/rakigor788/Projects/Course/NeobankClientWidgets/services/accountsservice.cpp || cmake_object_order_depends_target_NeobankClientWidgets
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_WIDGETS_LIB
-  DEP_FILE = CMakeFiles/NeobankClientWidgets.dir/protocols/protocolvalidator.cpp.o.d
+  DEP_FILE = CMakeFiles/NeobankClientWidgets.dir/services/accountsservice.cpp.o.d
   FLAGS = -DQT_QML_DEBUG -g -std=gnu++17 -fdiagnostics-color=always -fPIC
   INCLUDES = -I/home/rakigor788/Projects/Course/NeobankClientWidgets/build/Desktop_Qt_6_10_0-Debug/NeobankClientWidgets_autogen/include -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include -isystem /home/rakigor788/Qt/6.10.0/gcc_64/mkspecs/linux-g++ -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include/QtNetwork
   OBJECT_DIR = CMakeFiles/NeobankClientWidgets.dir
-  OBJECT_FILE_DIR = CMakeFiles/NeobankClientWidgets.dir/protocols
+  OBJECT_FILE_DIR = CMakeFiles/NeobankClientWidgets.dir/services
 
-build CMakeFiles/NeobankClientWidgets.dir/pages/connectpage.cpp.o: CXX_COMPILER__NeobankClientWidgets_unscanned_Debug /home/rakigor788/Projects/Course/NeobankClientWidgets/pages/connectpage.cpp || cmake_object_order_depends_target_NeobankClientWidgets
+build CMakeFiles/NeobankClientWidgets.dir/services/authservice.cpp.o: CXX_COMPILER__NeobankClientWidgets_unscanned_Debug /home/rakigor788/Projects/Course/NeobankClientWidgets/services/authservice.cpp || cmake_object_order_depends_target_NeobankClientWidgets
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_WIDGETS_LIB
-  DEP_FILE = CMakeFiles/NeobankClientWidgets.dir/pages/connectpage.cpp.o.d
+  DEP_FILE = CMakeFiles/NeobankClientWidgets.dir/services/authservice.cpp.o.d
+  FLAGS = -DQT_QML_DEBUG -g -std=gnu++17 -fdiagnostics-color=always -fPIC
+  INCLUDES = -I/home/rakigor788/Projects/Course/NeobankClientWidgets/build/Desktop_Qt_6_10_0-Debug/NeobankClientWidgets_autogen/include -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include -isystem /home/rakigor788/Qt/6.10.0/gcc_64/mkspecs/linux-g++ -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include/QtNetwork
+  OBJECT_DIR = CMakeFiles/NeobankClientWidgets.dir
+  OBJECT_FILE_DIR = CMakeFiles/NeobankClientWidgets.dir/services
+
+build CMakeFiles/NeobankClientWidgets.dir/services/transactionsservice.cpp.o: CXX_COMPILER__NeobankClientWidgets_unscanned_Debug /home/rakigor788/Projects/Course/NeobankClientWidgets/services/transactionsservice.cpp || cmake_object_order_depends_target_NeobankClientWidgets
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_WIDGETS_LIB
+  DEP_FILE = CMakeFiles/NeobankClientWidgets.dir/services/transactionsservice.cpp.o.d
+  FLAGS = -DQT_QML_DEBUG -g -std=gnu++17 -fdiagnostics-color=always -fPIC
+  INCLUDES = -I/home/rakigor788/Projects/Course/NeobankClientWidgets/build/Desktop_Qt_6_10_0-Debug/NeobankClientWidgets_autogen/include -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include -isystem /home/rakigor788/Qt/6.10.0/gcc_64/mkspecs/linux-g++ -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include/QtNetwork
+  OBJECT_DIR = CMakeFiles/NeobankClientWidgets.dir
+  OBJECT_FILE_DIR = CMakeFiles/NeobankClientWidgets.dir/services
+
+build CMakeFiles/NeobankClientWidgets.dir/pages/accountspage.cpp.o: CXX_COMPILER__NeobankClientWidgets_unscanned_Debug /home/rakigor788/Projects/Course/NeobankClientWidgets/pages/accountspage.cpp || cmake_object_order_depends_target_NeobankClientWidgets
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_WIDGETS_LIB
+  DEP_FILE = CMakeFiles/NeobankClientWidgets.dir/pages/accountspage.cpp.o.d
   FLAGS = -DQT_QML_DEBUG -g -std=gnu++17 -fdiagnostics-color=always -fPIC
   INCLUDES = -I/home/rakigor788/Projects/Course/NeobankClientWidgets/build/Desktop_Qt_6_10_0-Debug/NeobankClientWidgets_autogen/include -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include -isystem /home/rakigor788/Qt/6.10.0/gcc_64/mkspecs/linux-g++ -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include/QtNetwork
   OBJECT_DIR = CMakeFiles/NeobankClientWidgets.dir
   OBJECT_FILE_DIR = CMakeFiles/NeobankClientWidgets.dir/pages
 
-build CMakeFiles/NeobankClientWidgets.dir/pages/loginpage.cpp.o: CXX_COMPILER__NeobankClientWidgets_unscanned_Debug /home/rakigor788/Projects/Course/NeobankClientWidgets/pages/loginpage.cpp || cmake_object_order_depends_target_NeobankClientWidgets
+build CMakeFiles/NeobankClientWidgets.dir/pages/connectpage.cpp.o: CXX_COMPILER__NeobankClientWidgets_unscanned_Debug /home/rakigor788/Projects/Course/NeobankClientWidgets/pages/connectpage.cpp || cmake_object_order_depends_target_NeobankClientWidgets
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_WIDGETS_LIB
-  DEP_FILE = CMakeFiles/NeobankClientWidgets.dir/pages/loginpage.cpp.o.d
+  DEP_FILE = CMakeFiles/NeobankClientWidgets.dir/pages/connectpage.cpp.o.d
   FLAGS = -DQT_QML_DEBUG -g -std=gnu++17 -fdiagnostics-color=always -fPIC
   INCLUDES = -I/home/rakigor788/Projects/Course/NeobankClientWidgets/build/Desktop_Qt_6_10_0-Debug/NeobankClientWidgets_autogen/include -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include -isystem /home/rakigor788/Qt/6.10.0/gcc_64/mkspecs/linux-g++ -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include/QtNetwork
   OBJECT_DIR = CMakeFiles/NeobankClientWidgets.dir
@@ -113,17 +129,9 @@ build CMakeFiles/NeobankClientWidgets.dir/pages/dashboardpage.cpp.o: CXX_COMPILE
   OBJECT_DIR = CMakeFiles/NeobankClientWidgets.dir
   OBJECT_FILE_DIR = CMakeFiles/NeobankClientWidgets.dir/pages
 
-build CMakeFiles/NeobankClientWidgets.dir/pages/accountspage.cpp.o: CXX_COMPILER__NeobankClientWidgets_unscanned_Debug /home/rakigor788/Projects/Course/NeobankClientWidgets/pages/accountspage.cpp || cmake_object_order_depends_target_NeobankClientWidgets
+build CMakeFiles/NeobankClientWidgets.dir/pages/loginpage.cpp.o: CXX_COMPILER__NeobankClientWidgets_unscanned_Debug /home/rakigor788/Projects/Course/NeobankClientWidgets/pages/loginpage.cpp || cmake_object_order_depends_target_NeobankClientWidgets
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_WIDGETS_LIB
-  DEP_FILE = CMakeFiles/NeobankClientWidgets.dir/pages/accountspage.cpp.o.d
-  FLAGS = -DQT_QML_DEBUG -g -std=gnu++17 -fdiagnostics-color=always -fPIC
-  INCLUDES = -I/home/rakigor788/Projects/Course/NeobankClientWidgets/build/Desktop_Qt_6_10_0-Debug/NeobankClientWidgets_autogen/include -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include -isystem /home/rakigor788/Qt/6.10.0/gcc_64/mkspecs/linux-g++ -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include/QtNetwork
-  OBJECT_DIR = CMakeFiles/NeobankClientWidgets.dir
-  OBJECT_FILE_DIR = CMakeFiles/NeobankClientWidgets.dir/pages
-
-build CMakeFiles/NeobankClientWidgets.dir/pages/transactionspage.cpp.o: CXX_COMPILER__NeobankClientWidgets_unscanned_Debug /home/rakigor788/Projects/Course/NeobankClientWidgets/pages/transactionspage.cpp || cmake_object_order_depends_target_NeobankClientWidgets
-  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_WIDGETS_LIB
-  DEP_FILE = CMakeFiles/NeobankClientWidgets.dir/pages/transactionspage.cpp.o.d
+  DEP_FILE = CMakeFiles/NeobankClientWidgets.dir/pages/loginpage.cpp.o.d
   FLAGS = -DQT_QML_DEBUG -g -std=gnu++17 -fdiagnostics-color=always -fPIC
   INCLUDES = -I/home/rakigor788/Projects/Course/NeobankClientWidgets/build/Desktop_Qt_6_10_0-Debug/NeobankClientWidgets_autogen/include -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include -isystem /home/rakigor788/Qt/6.10.0/gcc_64/mkspecs/linux-g++ -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include/QtNetwork
   OBJECT_DIR = CMakeFiles/NeobankClientWidgets.dir
@@ -137,13 +145,21 @@ build CMakeFiles/NeobankClientWidgets.dir/pages/registrationpage.cpp.o: CXX_COMP
   OBJECT_DIR = CMakeFiles/NeobankClientWidgets.dir
   OBJECT_FILE_DIR = CMakeFiles/NeobankClientWidgets.dir/pages
 
-build CMakeFiles/NeobankClientWidgets.dir/services/authservice.cpp.o: CXX_COMPILER__NeobankClientWidgets_unscanned_Debug /home/rakigor788/Projects/Course/NeobankClientWidgets/services/authservice.cpp || cmake_object_order_depends_target_NeobankClientWidgets
+build CMakeFiles/NeobankClientWidgets.dir/pages/transactionspage.cpp.o: CXX_COMPILER__NeobankClientWidgets_unscanned_Debug /home/rakigor788/Projects/Course/NeobankClientWidgets/pages/transactionspage.cpp || cmake_object_order_depends_target_NeobankClientWidgets
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_WIDGETS_LIB
-  DEP_FILE = CMakeFiles/NeobankClientWidgets.dir/services/authservice.cpp.o.d
+  DEP_FILE = CMakeFiles/NeobankClientWidgets.dir/pages/transactionspage.cpp.o.d
   FLAGS = -DQT_QML_DEBUG -g -std=gnu++17 -fdiagnostics-color=always -fPIC
   INCLUDES = -I/home/rakigor788/Projects/Course/NeobankClientWidgets/build/Desktop_Qt_6_10_0-Debug/NeobankClientWidgets_autogen/include -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include -isystem /home/rakigor788/Qt/6.10.0/gcc_64/mkspecs/linux-g++ -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include/QtNetwork
   OBJECT_DIR = CMakeFiles/NeobankClientWidgets.dir
-  OBJECT_FILE_DIR = CMakeFiles/NeobankClientWidgets.dir/services
+  OBJECT_FILE_DIR = CMakeFiles/NeobankClientWidgets.dir/pages
+
+build CMakeFiles/NeobankClientWidgets.dir/pages/transferdialog.cpp.o: CXX_COMPILER__NeobankClientWidgets_unscanned_Debug /home/rakigor788/Projects/Course/NeobankClientWidgets/pages/transferdialog.cpp || cmake_object_order_depends_target_NeobankClientWidgets
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_WIDGETS_LIB
+  DEP_FILE = CMakeFiles/NeobankClientWidgets.dir/pages/transferdialog.cpp.o.d
+  FLAGS = -DQT_QML_DEBUG -g -std=gnu++17 -fdiagnostics-color=always -fPIC
+  INCLUDES = -I/home/rakigor788/Projects/Course/NeobankClientWidgets/build/Desktop_Qt_6_10_0-Debug/NeobankClientWidgets_autogen/include -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include -isystem /home/rakigor788/Qt/6.10.0/gcc_64/mkspecs/linux-g++ -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui -isystem /home/rakigor788/Qt/6.10.0/gcc_64/include/QtNetwork
+  OBJECT_DIR = CMakeFiles/NeobankClientWidgets.dir
+  OBJECT_FILE_DIR = CMakeFiles/NeobankClientWidgets.dir/pages
 
 
 # =============================================================================
@@ -153,7 +169,7 @@ build CMakeFiles/NeobankClientWidgets.dir/services/authservice.cpp.o: CXX_COMPIL
 #############################################
 # Link the executable NeobankClientWidgets
 
-build NeobankClientWidgets: CXX_EXECUTABLE_LINKER__NeobankClientWidgets_Debug CMakeFiles/NeobankClientWidgets.dir/NeobankClientWidgets_autogen/mocs_compilation.cpp.o CMakeFiles/NeobankClientWidgets.dir/main.cpp.o CMakeFiles/NeobankClientWidgets.dir/mainwindow.cpp.o CMakeFiles/NeobankClientWidgets.dir/network/socketwrapper.cpp.o CMakeFiles/NeobankClientWidgets.dir/protocols/protocolvalidator.cpp.o CMakeFiles/NeobankClientWidgets.dir/pages/connectpage.cpp.o CMakeFiles/NeobankClientWidgets.dir/pages/loginpage.cpp.o CMakeFiles/NeobankClientWidgets.dir/pages/dashboardpage.cpp.o CMakeFiles/NeobankClientWidgets.dir/pages/accountspage.cpp.o CMakeFiles/NeobankClientWidgets.dir/pages/transactionspage.cpp.o CMakeFiles/NeobankClientWidgets.dir/pages/registrationpage.cpp.o CMakeFiles/NeobankClientWidgets.dir/services/authservice.cpp.o | /home/rakigor788/Qt/6.10.0/gcc_64/lib/libQt6Network.so.6.10.0 /home/rakigor788/Qt/6.10.0/gcc_64/lib/libQt6Widgets.so.6.10.0 /home/rakigor788/Qt/6.10.0/gcc_64/lib/libQt6Gui.so.6.10.0 /usr/lib/x86_64-linux-gnu/libGLX.so /usr/lib/x86_64-linux-gnu/libOpenGL.so /home/rakigor788/Qt/6.10.0/gcc_64/lib/libQt6Core.so.6.10.0 || NeobankClientWidgets_autogen NeobankClientWidgets_autogen_timestamp_deps
+build NeobankClientWidgets: CXX_EXECUTABLE_LINKER__NeobankClientWidgets_Debug CMakeFiles/NeobankClientWidgets.dir/NeobankClientWidgets_autogen/mocs_compilation.cpp.o CMakeFiles/NeobankClientWidgets.dir/main.cpp.o CMakeFiles/NeobankClientWidgets.dir/mainwindow.cpp.o CMakeFiles/NeobankClientWidgets.dir/network/socketwrapper.cpp.o CMakeFiles/NeobankClientWidgets.dir/services/accountsservice.cpp.o CMakeFiles/NeobankClientWidgets.dir/services/authservice.cpp.o CMakeFiles/NeobankClientWidgets.dir/services/transactionsservice.cpp.o CMakeFiles/NeobankClientWidgets.dir/pages/accountspage.cpp.o CMakeFiles/NeobankClientWidgets.dir/pages/connectpage.cpp.o CMakeFiles/NeobankClientWidgets.dir/pages/dashboardpage.cpp.o CMakeFiles/NeobankClientWidgets.dir/pages/loginpage.cpp.o CMakeFiles/NeobankClientWidgets.dir/pages/registrationpage.cpp.o CMakeFiles/NeobankClientWidgets.dir/pages/transactionspage.cpp.o CMakeFiles/NeobankClientWidgets.dir/pages/transferdialog.cpp.o | /home/rakigor788/Qt/6.10.0/gcc_64/lib/libQt6Network.so.6.10.0 /home/rakigor788/Qt/6.10.0/gcc_64/lib/libQt6Widgets.so.6.10.0 /home/rakigor788/Qt/6.10.0/gcc_64/lib/libQt6Gui.so.6.10.0 /usr/lib/x86_64-linux-gnu/libGLX.so /usr/lib/x86_64-linux-gnu/libOpenGL.so /home/rakigor788/Qt/6.10.0/gcc_64/lib/libQt6Core.so.6.10.0 || NeobankClientWidgets_autogen NeobankClientWidgets_autogen_timestamp_deps
   FLAGS = -DQT_QML_DEBUG -g
   LINK_LIBRARIES = -Wl,-rpath,/home/rakigor788/Qt/6.10.0/gcc_64/lib:  /home/rakigor788/Qt/6.10.0/gcc_64/lib/libQt6Network.so.6.10.0  /home/rakigor788/Qt/6.10.0/gcc_64/lib/libQt6Widgets.so.6.10.0  /home/rakigor788/Qt/6.10.0/gcc_64/lib/libQt6Gui.so.6.10.0  /usr/lib/x86_64-linux-gnu/libGLX.so  /usr/lib/x86_64-linux-gnu/libOpenGL.so  /home/rakigor788/Qt/6.10.0/gcc_64/lib/libQt6Core.so.6.10.0  -Wl,-rpath-link,/home/rakigor788/Qt/6.10.0/gcc_64/lib
   OBJECT_DIR = CMakeFiles/NeobankClientWidgets.dir
@@ -238,7 +254,7 @@ build NeobankClientWidgets_autogen_timestamp_deps: phony
 #############################################
 # Utility command for NeobankClientWidgets_autogen
 
-build NeobankClientWidgets_autogen: phony CMakeFiles/NeobankClientWidgets_autogen NeobankClientWidgets_autogen/include/ui_mainwindow.h NeobankClientWidgets_autogen/timestamp NeobankClientWidgets_autogen/mocs_compilation.cpp NeobankClientWidgets_autogen_timestamp_deps
+build NeobankClientWidgets_autogen: phony CMakeFiles/NeobankClientWidgets_autogen NeobankClientWidgets_autogen/include/ui_mainwindow.h NeobankClientWidgets_autogen/include/pages/ui_accountspage.h NeobankClientWidgets_autogen/include/pages/ui_connectpage.h NeobankClientWidgets_autogen/include/pages/ui_dashboardpage.h NeobankClientWidgets_autogen/include/pages/ui_loginpage.h NeobankClientWidgets_autogen/include/pages/ui_registrationpage.h NeobankClientWidgets_autogen/include/pages/ui_transactionspage.h NeobankClientWidgets_autogen/timestamp NeobankClientWidgets_autogen/mocs_compilation.cpp NeobankClientWidgets_autogen_timestamp_deps
 
 
 #############################################
@@ -255,7 +271,7 @@ build NeobankClientWidgets_autogen/timestamp NeobankClientWidgets_autogen/mocs_c
 #############################################
 # Phony custom command for CMakeFiles/NeobankClientWidgets_autogen
 
-build CMakeFiles/NeobankClientWidgets_autogen NeobankClientWidgets_autogen/include/ui_mainwindow.h | ${cmake_ninja_workdir}CMakeFiles/NeobankClientWidgets_autogen ${cmake_ninja_workdir}NeobankClientWidgets_autogen/include/ui_mainwindow.h: phony NeobankClientWidgets_autogen/timestamp || NeobankClientWidgets_autogen_timestamp_deps
+build CMakeFiles/NeobankClientWidgets_autogen NeobankClientWidgets_autogen/include/ui_mainwindow.h NeobankClientWidgets_autogen/include/pages/ui_accountspage.h NeobankClientWidgets_autogen/include/pages/ui_connectpage.h NeobankClientWidgets_autogen/include/pages/ui_dashboardpage.h NeobankClientWidgets_autogen/include/pages/ui_loginpage.h NeobankClientWidgets_autogen/include/pages/ui_registrationpage.h NeobankClientWidgets_autogen/include/pages/ui_transactionspage.h | ${cmake_ninja_workdir}CMakeFiles/NeobankClientWidgets_autogen ${cmake_ninja_workdir}NeobankClientWidgets_autogen/include/ui_mainwindow.h ${cmake_ninja_workdir}NeobankClientWidgets_autogen/include/pages/ui_accountspage.h ${cmake_ninja_workdir}NeobankClientWidgets_autogen/include/pages/ui_connectpage.h ${cmake_ninja_workdir}NeobankClientWidgets_autogen/include/pages/ui_dashboardpage.h ${cmake_ninja_workdir}NeobankClientWidgets_autogen/include/pages/ui_loginpage.h ${cmake_ninja_workdir}NeobankClientWidgets_autogen/include/pages/ui_registrationpage.h ${cmake_ninja_workdir}NeobankClientWidgets_autogen/include/pages/ui_transactionspage.h: phony NeobankClientWidgets_autogen/timestamp || NeobankClientWidgets_autogen_timestamp_deps
 
 # =============================================================================
 # Target aliases.

@@ -39,32 +39,29 @@ template <> constexpr inline auto LoginPage::qt_create_metaobjectdata<qt_meta_ta
     namespace QMC = QtMocConstants;
     QtMocHelpers::StringRefStorage qt_stringData {
         "LoginPage",
-        "loginRequested",
+        "r_login",
         "",
         "username",
         "password",
-        "registrationPageRequested",
-        "onLoginClicked",
-        "onRegisterClicked",
+        "pr_registration",
         "onLoginError",
-        "reason"
+        "reason",
+        "onLoginClicked"
     };
 
     QtMocHelpers::UintData qt_methods {
-        // Signal 'loginRequested'
+        // Signal 'r_login'
         QtMocHelpers::SignalData<void(const QString &, const QString &)>(1, 2, QMC::AccessPublic, QMetaType::Void, {{
             { QMetaType::QString, 3 }, { QMetaType::QString, 4 },
         }}),
-        // Signal 'registrationPageRequested'
+        // Signal 'pr_registration'
         QtMocHelpers::SignalData<void()>(5, 2, QMC::AccessPublic, QMetaType::Void),
-        // Slot 'onLoginClicked'
-        QtMocHelpers::SlotData<void()>(6, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'onRegisterClicked'
-        QtMocHelpers::SlotData<void()>(7, 2, QMC::AccessPrivate, QMetaType::Void),
         // Slot 'onLoginError'
-        QtMocHelpers::SlotData<void(const QString &)>(8, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { QMetaType::QString, 9 },
+        QtMocHelpers::SlotData<void(const QString &)>(6, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::QString, 7 },
         }}),
+        // Slot 'onLoginClicked'
+        QtMocHelpers::SlotData<void()>(8, 2, QMC::AccessPrivate, QMetaType::Void),
     };
     QtMocHelpers::UintData qt_properties {
     };
@@ -88,18 +85,17 @@ void LoginPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
     auto *_t = static_cast<LoginPage *>(_o);
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: _t->loginRequested((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2]))); break;
-        case 1: _t->registrationPageRequested(); break;
-        case 2: _t->onLoginClicked(); break;
-        case 3: _t->onRegisterClicked(); break;
-        case 4: _t->onLoginError((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1]))); break;
+        case 0: _t->r_login((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QString>>(_a[2]))); break;
+        case 1: _t->pr_registration(); break;
+        case 2: _t->onLoginError((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1]))); break;
+        case 3: _t->onLoginClicked(); break;
         default: ;
         }
     }
     if (_c == QMetaObject::IndexOfMethod) {
-        if (QtMocHelpers::indexOfMethod<void (LoginPage::*)(const QString & , const QString & )>(_a, &LoginPage::loginRequested, 0))
+        if (QtMocHelpers::indexOfMethod<void (LoginPage::*)(const QString & , const QString & )>(_a, &LoginPage::r_login, 0))
             return;
-        if (QtMocHelpers::indexOfMethod<void (LoginPage::*)()>(_a, &LoginPage::registrationPageRequested, 1))
+        if (QtMocHelpers::indexOfMethod<void (LoginPage::*)()>(_a, &LoginPage::pr_registration, 1))
             return;
     }
 }
@@ -123,26 +119,26 @@ int LoginPage::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 5)
+        if (_id < 4)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 5;
+        _id -= 4;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 5)
+        if (_id < 4)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 5;
+        _id -= 4;
     }
     return _id;
 }
 
 // SIGNAL 0
-void LoginPage::loginRequested(const QString & _t1, const QString & _t2)
+void LoginPage::r_login(const QString & _t1, const QString & _t2)
 {
     QMetaObject::activate<void>(this, &staticMetaObject, 0, nullptr, _t1, _t2);
 }
 
 // SIGNAL 1
-void LoginPage::registrationPageRequested()
+void LoginPage::pr_registration()
 {
     QMetaObject::activate(this, &staticMetaObject, 1, nullptr);
 }

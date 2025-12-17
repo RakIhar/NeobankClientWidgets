@@ -2,47 +2,39 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <memory>
+#include <QStackedWidget>
+#include "network/socketwrapper.h"
+#include "pages/accountspage.h"
+#include "pages/connectpage.h"
+#include "pages/dashboardpage.h"
+#include "pages/loginpage.h"
+#include "pages/registrationpage.h"
+#include "pages/transactionspage.h"
+#include "services/authservice.h"
+#include "services/transactionsservice.h"
+#include "constants.h"
 
-class SocketHandler;
-class QStackedWidget;
-
-QT_BEGIN_NAMESPACE
-namespace Ui {
-class MainWindow;
-}
-QT_END_NAMESPACE
-
-class ConnectPage;
-class LoginPage;
-class DashboardPage;
-class AccountsPage;
-class TransactionsPage;
-class RegistrationPage;
-class AuthService;
-class RegData;
+namespace Ui { class MainWindow; }
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 private:
     Ui::MainWindow *ui;
-    std::unique_ptr<SocketHandler> m_client;
+    std::unique_ptr<SocketWrapper> m_client;
     QStackedWidget *m_stackedWidget;
 
+    //=====PAGES=====//
     ConnectPage *m_connectPage;
     LoginPage *m_loginPage;
     RegistrationPage *m_registrationPage;
     DashboardPage *m_dashboardPage;
     AccountsPage *m_accountsPage;
     TransactionsPage *m_transactionsPage;
-
-    AuthService *m_authService;
 
     enum PageIndex {
         PageConnect = 0,
@@ -53,33 +45,40 @@ private:
         PageRegistration = 5
     };
 
-    void setupPages();
-    void setupPageConnections();
+    //====SERVICES====//
+    AuthService *m_authService;
+    AccountsService *m_accountsService;
+    TransactionsService *m_transactionsService;
+
+
+    //======CTR======//
+    void setupPagesServices();
+    void setupPageSwapConnections();
+    void setupRequestConnections();
+    void setupConnectionsFromServicesToPages();
+
+    //=====OTHER=====//
     void showPage(PageIndex index);
-
-    void setupLoginRegistration();
-    void setupConnection();
-
+    void routeMessage(const QByteArray &msg);
 
 private slots:
-    void onConnectRequested(QString host, quint16 port);
+    //===REQUESTS===//
+    void onRequestConnect(QString host, quint16 port);
+    void onRequestLogin(const QString &username, const QString &password);
+    void onRequestRegistration(const RegData &regData);
+    void onRequestLogout();
+    void onRequestAccountsList();
+    void onRequestTransactionsList();
+    ///CHECK
+    void onRequestCreateTransaction(const QString &fromAccountId,
+                                    const QString &to,
+                                    const QString &amount,
+                                    const Enums::Currency &currency,
+                                    const QString &description);
+    void onRequestCreateAccount(const Enums::Currency curr);
+    void onRequestTestCredit(const QString &accountId, const QString &amount);
+    ///
+private:
 
-    void onLoginRequested(const QString &username, const QString &password); //LoginPage
-    void onRegistrationRequested(const RegData &regData); //PageLogin, ConnectPage
-    // void onRegistrationRequested(...); //RegistrationPage, недописано
-    void onLoginSuccess(); //AuthService
-    // void onLoginPageRequested(); //RegistrationPage, излишне, можно лямбду
-    //onLoginError обрабатывает LoginPage
-    //onRegistrationSuccess, onRegistrationError обрабатывает RegistrationPage
-
-    // void onConnectPageConnected();
-    // void onLoginPageSuccess();
-    // void onRegistration();
-    // void onRegistrationBack();
-    void onDashboardShowAccounts();
-    void onDashboardShowTransactions();
-    void onDashboardLogout();
-    void onAccountsBack();
-    void onTransactionsBack();
 };
 #endif // MAINWINDOW_H

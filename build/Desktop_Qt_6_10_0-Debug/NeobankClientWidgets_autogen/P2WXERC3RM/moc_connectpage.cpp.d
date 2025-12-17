@@ -49,6 +49,7 @@
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qglobalstatic.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qhash.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qhashfunctions.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qiodevice.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qiodevicebase.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qiterable.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qiterator.h \
@@ -121,6 +122,7 @@
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qtversionchecks.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qtypeinfo.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qtypes.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qurl.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qutf8stringview.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qvariant.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qvarlengtharray.h \
@@ -141,18 +143,31 @@
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qkeysequence.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qpaintdevice.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qpalette.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qpen.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qpicture.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qpixelformat.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qpixmap.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qpolygon.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qregion.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qrgb.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qrgba64.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qtextcursor.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qtextdocument.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qtextformat.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qtextoption.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qtgui-config.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qtguiexports.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qtguiglobal.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qtransform.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qwindowdefs.h \
-  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/QWidget \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/QLabel \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/QLineEdit \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/QPushButton \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/qabstractbutton.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/qframe.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/qlabel.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/qlineedit.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/qpushbutton.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/qsizepolicy.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/qtwidgets-config.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/qtwidgetsexports.h \

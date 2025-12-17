@@ -1,92 +1,104 @@
 #include "transactionspage.h"
-#include "../network/socketwrapper.h"
+#include "../services/transactionsservice.h"
 
-#include <QVBoxLayout>
-#include <QHBoxLayout>
 #include <QListWidget>
 #include <QPushButton>
 #include <QLabel>
-#include <QGroupBox>
-#include <QJsonDocument>
-#include <QJsonObject>
-#include <QDateTime>
 
-TransactionsPage::TransactionsPage(SocketHandler *client, QWidget *parent)
+TransactionsPage::TransactionsPage(QWidget *parent)
     : QWidget(parent)
-    , m_client(client)
+    , ui(new Ui::TransactionsPage)
 {
-    auto *mainLayout = new QVBoxLayout(this);
-    mainLayout->setSpacing(20);
+    ui->setupUi(this);
+    setupConnections();
+}
 
-    // Заголовок
-    auto *titleLabel = new QLabel(tr("История транзакций"), this);
-    titleLabel->setStyleSheet("font-size: 18px; font-weight: bold;");
-    mainLayout->addWidget(titleLabel);
+void TransactionsPage::setupConnections()
+{
+    connect(ui->backButton, &QPushButton::clicked, this,
+    [this]{
+        emit pr_dashboard();
+    });
 
-    // Список транзакций
-    auto *transactionsGroup = new QGroupBox(tr("Транзакции"), this);
-    auto *transactionsLayout = new QVBoxLayout(transactionsGroup);
-    m_transactionsList = new QListWidget(this);
-    transactionsLayout->addWidget(m_transactionsList);
-    mainLayout->addWidget(transactionsGroup);
-
-    // Кнопки
-    auto *buttonsLayout = new QHBoxLayout;
-    m_backButton = new QPushButton(tr("Назад"), this);
-    m_backButton->setStyleSheet("padding: 10px; font-size: 14px;");
-    m_refreshButton = new QPushButton(tr("Обновить"), this);
-    m_refreshButton->setStyleSheet("padding: 10px; font-size: 14px;");
-    buttonsLayout->addWidget(m_backButton);
-    buttonsLayout->addStretch();
-    buttonsLayout->addWidget(m_refreshButton);
-    mainLayout->addLayout(buttonsLayout);
-
-    // Статус
-    m_statusLabel = new QLabel("", this);
-    m_statusLabel->setStyleSheet("color: gray; padding: 10px;");
-    mainLayout->addWidget(m_statusLabel);
-
-    // Подключения
-    connect(m_backButton, &QPushButton::clicked, this, &TransactionsPage::onBackClicked);
-    connect(m_refreshButton, &QPushButton::clicked, this, &TransactionsPage::onRefreshClicked);
-
-    refreshTransactions();
+    connect(ui->refreshButton, &QPushButton::clicked, this,
+    [this]{
+        refreshTransactions();
+    });
 }
 
 void TransactionsPage::refreshTransactions()
 {
-    if (!m_client) {
-        m_statusLabel->setText(tr("Клиент не инициализирован"));
-        return;
+    showLoading(tr("Загрузка транзакций..."));
+    emit r_transactions();
+}
+
+void TransactionsPage::onTransactionsUpdated(const QList<TransactionInfo> &transactions)
+{
+    ui->transactionsList->clear();
+    for (const auto &tx : transactions)
+    {
+        const QString line = tr("%1 • %2 %3 • %4")
+                                 .arg(tx.createdAt.isEmpty() ? tr("Дата неизвестна") : tx.createdAt)
+                                 .arg(tx.amount)
+                                 .arg(tx.currency.isEmpty() ? QStringLiteral("₽") : tx.currency)
+                                 .arg(tx.description.isEmpty() ? tx.type : tx.description);
+        ui->transactionsList->addItem(line);
     }
 
-    // Формируем запрос на получение транзакций
-    QJsonObject request;
-    request["type"] = "transaction.list";
-    request["id"] = QString::number(QDateTime::currentMSecsSinceEpoch());
-    request["payload"] = QJsonObject();
-
-    QJsonDocument doc(request);
-    m_client->sendData(doc.toJson(QJsonDocument::Compact));
-
-    m_statusLabel->setText(tr("Загрузка транзакций..."));
-    m_statusLabel->setStyleSheet("color: blue; padding: 10px;");
-
-    // TODO: обработать ответ от сервера
-    // Пока показываем заглушку
-    m_transactionsList->clear();
-    m_transactionsList->addItem(tr("01.01.2024 - Пополнение: +1000.00 ₽"));
-    m_transactionsList->addItem(tr("02.01.2024 - Перевод: -500.00 ₽"));
-    m_transactionsList->addItem(tr("03.01.2024 - Покупка: -250.50 ₽"));
+    if (transactions.isEmpty())
+    {
+        ui->statusLabel->setText(tr("> Нет транзакций <"));
+        ui->statusLabel->setStyleSheet(
+            "font-size: 12px; "
+            "color: #ff6b6b; "
+            "padding: 20px; "
+            "background: transparent;"
+            "letter-spacing: 2px;"
+        );
+    }
+    else
+    {
+        ui->statusLabel->clear();
+    }
+    ui->refreshButton->setEnabled(true);
 }
 
-void TransactionsPage::onBackClicked()
+void TransactionsPage::onTransactionsFailed(const QString &reason)
 {
-    emit backToDashboard();
+    ui->statusLabel->setText(tr("❌ %1").arg(reason));
+    ui->statusLabel->setStyleSheet(
+        "font-size: 14px; "
+        "color: #ff6b6b; "
+        "padding: 16px; "
+        "background: transparent;"
+    );
+    ui->refreshButton->setEnabled(true);
 }
-
-void TransactionsPage::onRefreshClicked()
+//CHECK
+void TransactionsPage::onTransactionCreated(const TransactionInfo &transaction)
 {
+    Q_UNUSED(transaction);
+    ui->statusLabel->setText(tr("✅ Транзакция успешно создана"));
+    ui->statusLabel->setStyleSheet(
+        "font-size: 14px; "
+        "color: #3ac569; "
+        "padding: 16px; "
+        "background: transparent;"
+    );
+    ui->refreshButton->setEnabled(true);
+    // Автообновим список транзакций
     refreshTransactions();
+}
+
+void TransactionsPage::showLoading(const QString &message)
+{
+    ui->statusLabel->setText(message.isEmpty() ? tr("> Загрузка... <") : message);
+    ui->statusLabel->setStyleSheet(
+        "font-size: 14px; "
+        "color: #4facfe; "
+        "padding: 16px; "
+        "background: transparent;"
+    );
+    ui->refreshButton->setEnabled(false);
 }
 

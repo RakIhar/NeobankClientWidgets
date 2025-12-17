@@ -1,91 +1,137 @@
 #include "accountspage.h"
-#include "../network/socketwrapper.h"
+#include "../services/accountsservice.h"
+#include "transferdialog.h"
+#include <QInputDialog>
+#include <QListWidgetItem>
 
-#include <QVBoxLayout>
-#include <QHBoxLayout>
 #include <QListWidget>
 #include <QPushButton>
 #include <QLabel>
-#include <QGroupBox>
-#include <QJsonDocument>
-#include <QJsonObject>
-#include <QDateTime>
+#include "../constants.h"
 
-AccountsPage::AccountsPage(SocketHandler *client, QWidget *parent)
+AccountsPage::AccountsPage(QWidget *parent)
     : QWidget(parent)
-    , m_client(client)
+    , ui(new Ui::AccountsPage)
 {
-    auto *mainLayout = new QVBoxLayout(this);
-    mainLayout->setSpacing(20);
+    ui->setupUi(this);
+    setupConnections();
+}
 
-    // Заголовок
-    auto *titleLabel = new QLabel(tr("Мои счета"), this);
-    titleLabel->setStyleSheet("font-size: 18px; font-weight: bold;");
-    mainLayout->addWidget(titleLabel);
+void AccountsPage::setupConnections()
+{
+    connect(ui->backButton, &QPushButton::clicked, this,
+    [this]{
+        emit pr_dashboard();
+    });
 
-    // Список счетов
-    auto *accountsGroup = new QGroupBox(tr("Счета"), this);
-    auto *accountsLayout = new QVBoxLayout(accountsGroup);
-    m_accountsList = new QListWidget(this);
-    accountsLayout->addWidget(m_accountsList);
-    mainLayout->addWidget(accountsGroup);
+    connect(ui->refreshButton, &QPushButton::clicked, this,
+    [this]{
+        refreshAccounts();
+    });
+    ///CHECK
+    connect(ui->accountsList, &QListWidget::itemDoubleClicked, this,
+    [this](QListWidgetItem *item){
+        const int row = ui->accountsList->row(item);
+        if (row < 0 || row >= m_accounts.size())
+            return;
+        const AccountInfo acc = m_accounts.at(row);
+        TransferDialog dlg(this);
+        dlg.setFromAccount(acc.id.isEmpty() ? acc.iban : acc.id);
+        if (dlg.exec() == QDialog::Accepted) {
+            const auto data = dlg.resultData();
+            emit r_transferRequested(acc.id.isEmpty() ? acc.iban : acc.id,
+                                     data.toAccount,
+                                     data.amount,
+                                     Enums::fromStr(data.currency, Enums::Currency::BYN),
+                                     data.description);
+        }
+    });
 
-    // Кнопки
-    auto *buttonsLayout = new QHBoxLayout;
-    m_backButton = new QPushButton(tr("Назад"), this);
-    m_backButton->setStyleSheet("padding: 10px; font-size: 14px;");
-    m_refreshButton = new QPushButton(tr("Обновить"), this);
-    m_refreshButton->setStyleSheet("padding: 10px; font-size: 14px;");
-    buttonsLayout->addWidget(m_backButton);
-    buttonsLayout->addStretch();
-    buttonsLayout->addWidget(m_refreshButton);
-    mainLayout->addLayout(buttonsLayout);
+    connect(ui->createButton, &QPushButton::clicked, this, [this]{
+        emit r_createAccount(Enums::Currency::BYN); //TODO CHECK добавить новые валюты
+    });
 
-    // Статус
-    m_statusLabel = new QLabel("", this);
-    m_statusLabel->setStyleSheet("color: gray; padding: 10px;");
-    mainLayout->addWidget(m_statusLabel);
-
-    // Подключения
-    connect(m_backButton, &QPushButton::clicked, this, &AccountsPage::onBackClicked);
-    connect(m_refreshButton, &QPushButton::clicked, this, &AccountsPage::onRefreshClicked);
-
-    refreshAccounts();
+    connect(ui->testCreditButton, &QPushButton::clicked, this, [this]{
+        const auto current = ui->accountsList->currentItem();
+        if (!current) {
+            onAccountsFailed(tr("Выберите счёт перед тестовым начислением"));
+            return;
+        }
+        const int row = ui->accountsList->row(current);
+        if (row < 0 || row >= m_accounts.size()) {
+            onAccountsFailed(tr("Неверный счёт"));
+            return;
+        }
+        bool ok = false;
+        const QString amount = QInputDialog::getText(this, tr("Тестовое начисление"), tr("Сумма:"), QLineEdit::Normal, "100", &ok);
+        if (!ok || amount.isEmpty()) return;
+        const AccountInfo acc = m_accounts.at(row);
+        emit r_testCreditRequested(acc.id.isEmpty() ? acc.iban : acc.id, amount);
+    });
+    ///
 }
 
 void AccountsPage::refreshAccounts()
 {
-    if (!m_client) {
-        m_statusLabel->setText(tr("Клиент не инициализирован"));
-        return;
+    showLoading(tr("Загрузка счетов..."));
+    emit r_accounts();
+}
+
+void AccountsPage::onAccountsUpdated(const QList<AccountInfo> &accounts)
+{
+    ui->accountsList->clear();
+    m_accounts = accounts; //CHECK
+    for (const auto &acc : accounts)
+    {
+        const QString text = tr("Счет %1 • %2 %3 (%4)")
+                                 .arg(acc.iban.isEmpty() ? acc.id : acc.iban,
+                                      acc.balance,
+                                      acc.currency.isEmpty() ? QStringLiteral("₽") : acc.currency,
+                                      acc.status);
+        ui->accountsList->addItem(text);
     }
 
-    // Формируем запрос на получение счетов
-    QJsonObject request;
-    request["type"] = "account.list";
-    request["id"] = QString::number(QDateTime::currentMSecsSinceEpoch());
-    request["payload"] = QJsonObject();
-
-    QJsonDocument doc(request);
-    m_client->sendData(doc.toJson(QJsonDocument::Compact));
-
-    m_statusLabel->setText(tr("Загрузка счетов..."));
-    m_statusLabel->setStyleSheet("color: blue; padding: 10px;");
-
-    // TODO: обработать ответ от сервера
-    // Пока показываем заглушку
-    m_accountsList->clear();
-    m_accountsList->addItem(tr("Счет 1: 1000.00 ₽"));
-    m_accountsList->addItem(tr("Счет 2: 2500.50 ₽"));
+    if (accounts.isEmpty())
+    {
+        ui->statusLabel->setText(tr("> Аккаунты не найдены <"));
+        ui->statusLabel->setStyleSheet(
+            "font-size: 12px; "
+            "color: #ff6b6b; "
+            "padding: 20px; "
+            "background: transparent;"
+            "letter-spacing: 2px;"
+        );
+    }
+    else
+    {
+        ui->statusLabel->clear();
+    }
+    ui->refreshButton->setEnabled(true);
 }
 
-void AccountsPage::onBackClicked()
+void AccountsPage::onAccountsFailed(const QString &reason)
 {
-    emit backToDashboard();
+    ui->statusLabel->setText(tr("> Ошибка: %1 <").arg(reason.toUpper()));
+    ui->statusLabel->setStyleSheet(
+        "font-size: 12px; "
+        "color: #ff6b6b; "
+        "padding: 20px; "
+        "background: transparent;"
+        "letter-spacing: 2px;"
+    );
+    ui->refreshButton->setEnabled(true);
 }
 
-void AccountsPage::onRefreshClicked()
+void AccountsPage::showLoading(const QString &message)
 {
-    refreshAccounts();
+    ui->statusLabel->setText(message.isEmpty() ? tr("> Загрузка... <") : message.toUpper());
+    ui->statusLabel->setStyleSheet(
+        "font-size: 12px; "
+        "color: #4facfe; "
+        "padding: 20px; "
+        "background: transparent;"
+        "letter-spacing: 2px;"
+    );
+    ui->refreshButton->setEnabled(false);
 }
 

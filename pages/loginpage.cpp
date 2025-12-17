@@ -1,65 +1,46 @@
 #include "loginpage.h"
 
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QFormLayout>
-#include <QLineEdit>
-#include <QPushButton>
-#include <QLabel>
 #include <QMessageBox>
-#include <QGroupBox>
-#include <QJsonDocument>
-#include <QJsonObject>
-#include <QDateTime>
-#include <QTimer>
 
 LoginPage::LoginPage(QWidget *parent)
     : QWidget(parent)
+    , ui(new Ui::LoginPage)
 {
-    auto *mainLayout = new QVBoxLayout(this);
-    mainLayout->setSpacing(20);
+    ui->setupUi(this);
+    setupConnections();
+}
 
-    auto *titleLabel = new QLabel(tr("Вход в систему"), this);
-    titleLabel->setStyleSheet("font-size: 18px; font-weight: bold;");
-    mainLayout->addWidget(titleLabel);
+void LoginPage::reset()
+{
+    ui->statusLabel->setText(tr(""));
+    ui->statusLabel->setStyleSheet(
+        "font-size: 12px; "
+        "color: #4facfe; "
+        "padding: 20px; "
+        "background: transparent;"
+        "letter-spacing: 2px;"
+    );
+    ui->usernameEdit->setText("");
+    ui->passwordEdit->setText("");
+    ui->loginButton->setEnabled(true);
+    ui->registerButton->setEnabled(true);
+}
 
-    auto *loginGroup = new QGroupBox(tr("Учетные данные"), this);
-    auto *formLayout = new QFormLayout(loginGroup);
+void LoginPage::setupConnections()
+{
+    connect(ui->loginButton, &QPushButton::clicked,
+            this, &LoginPage::onLoginClicked);
 
-    m_usernameEdit = new QLineEdit(this);
-    m_usernameEdit->setPlaceholderText(tr("Имя пользователя"));
-    formLayout->addRow(tr("Логин:"), m_usernameEdit);
-
-    m_passwordEdit = new QLineEdit(this);
-    m_passwordEdit->setEchoMode(QLineEdit::Password);
-    m_passwordEdit->setPlaceholderText(tr("Пароль"));
-    formLayout->addRow(tr("Пароль:"), m_passwordEdit);
-
-    mainLayout->addWidget(loginGroup);
-
-    auto *buttonsLayout = new QHBoxLayout;
-    m_loginButton = new QPushButton(tr("Войти"), this);
-    m_loginButton->setStyleSheet("padding: 10px; font-size: 14px;");
-    m_registerButton = new QPushButton(tr("Регистрация"), this);
-    m_registerButton->setStyleSheet("padding: 10px; font-size: 14px;");
-    buttonsLayout->addWidget(m_loginButton);
-    buttonsLayout->addWidget(m_registerButton);
-    mainLayout->addLayout(buttonsLayout);
-
-    m_statusLabel = new QLabel("", this);
-    m_statusLabel->setStyleSheet("color: gray; padding: 10px;");
-    mainLayout->addWidget(m_statusLabel);
-
-    mainLayout->addStretch();
-
-    connect(m_loginButton, &QPushButton::clicked, this, &LoginPage::onLoginClicked);
-    connect(m_registerButton, &QPushButton::clicked, this, &LoginPage::onRegisterClicked);
+    connect(ui->registerButton, &QPushButton::clicked, this,
+    [this]{
+        emit pr_registration();
+    });
 }
 
 void LoginPage::onLoginClicked()
 {
-    const QString username = m_usernameEdit->text().trimmed();
-    const QString password = m_passwordEdit->text();
+    const QString username = ui->usernameEdit->text().trimmed();
+    const QString password = ui->passwordEdit->text();
 
     if (username.isEmpty() || password.isEmpty())
     {
@@ -67,22 +48,30 @@ void LoginPage::onLoginClicked()
     }
     else
     {
-        m_statusLabel->setText(tr("Отправка запроса..."));
-        m_statusLabel->setStyleSheet("color: blue; padding: 10px;");
-        m_loginButton->setEnabled(false);
+        ui->statusLabel->setText(tr("> Аутентификация... <"));
+        ui->statusLabel->setStyleSheet(
+            "font-size: 12px; "
+            "color: #4facfe; "
+            "padding: 20px; "
+            "background: transparent;"
+            "letter-spacing: 2px;"
+        );
+        ui->loginButton->setEnabled(false);
 
-        emit loginRequested(username, password);
+        emit r_login(username, password);
     }
-}
-
-void LoginPage::onRegisterClicked()
-{
-    emit registrationPageRequested();
 }
 
 void LoginPage::onLoginError(const QString &reason)
 {
-    m_statusLabel->setText(reason);
-    m_statusLabel->setStyleSheet("color: red; padding: 10px;");
-    m_loginButton->setEnabled(true);
+    ui->statusLabel->setText(tr(">>> Ошибка: %1 <<<").arg(reason.toUpper()));
+    ui->statusLabel->setStyleSheet(
+        "font-size: 12px; "
+        "color: #ff6b6b; "
+        "padding: 20px; "
+        "background: transparent;"
+        "letter-spacing: 2px;"
+    );
+    ui->loginButton->setEnabled(true);
 }
+

@@ -1,5 +1,24 @@
 /home/rakigor788/Projects/Course/NeobankClientWidgets/build/Desktop_Qt_6_10_0-Debug/NeobankClientWidgets_autogen/EWIEGA46WW/moc_mainwindow.cpp: /home/rakigor788/Projects/Course/NeobankClientWidgets/mainwindow.h \
   /home/rakigor788/Projects/Course/NeobankClientWidgets/build/Desktop_Qt_6_10_0-Debug/NeobankClientWidgets_autogen/moc_predefs.h \
+  /home/rakigor788/Projects/Course/NeobankClientWidgets/constants.h \
+  /home/rakigor788/Projects/Course/NeobankClientWidgets/network/socketwrapper.h \
+  /home/rakigor788/Projects/Course/NeobankClientWidgets/pages/accountspage.h \
+  /home/rakigor788/Projects/Course/NeobankClientWidgets/pages/connectpage.h \
+  /home/rakigor788/Projects/Course/NeobankClientWidgets/pages/dashboardpage.h \
+  /home/rakigor788/Projects/Course/NeobankClientWidgets/pages/loginpage.h \
+  /home/rakigor788/Projects/Course/NeobankClientWidgets/pages/registrationpage.h \
+  /home/rakigor788/Projects/Course/NeobankClientWidgets/pages/transactionspage.h \
+  /home/rakigor788/Projects/Course/NeobankClientWidgets/services/accountsservice.h \
+  /home/rakigor788/Projects/Course/NeobankClientWidgets/services/authservice.h \
+  /home/rakigor788/Projects/Course/NeobankClientWidgets/services/transactionsservice.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/QByteArray \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/QDateTime \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/QFlags \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/QJsonObject \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/QList \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/QMetaEnum \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/QObject \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/QString \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/q17memory.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/q20functional.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/q20iterator.h \
@@ -7,6 +26,7 @@
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/q20type_traits.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/q20utility.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/q23utility.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qabstractitemmodel.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qalgorithms.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qalloc.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qanystringview.h \
@@ -22,6 +42,9 @@
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qbytearrayalgorithms.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qbytearraylist.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qbytearrayview.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qcalendar.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qcborcommon.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qcborvalue.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qchar.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qcheckedint_impl.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qcompare.h \
@@ -34,8 +57,10 @@
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qcontainerinfo.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qcontainertools_impl.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qcontiguouscache.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qcryptographichash.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qdarwinhelpers.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qdatastream.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qdatetime.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qdebug.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qendian.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qexceptionhandling.h \
@@ -49,18 +74,26 @@
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qglobalstatic.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qhash.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qhashfunctions.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qiodevice.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qiodevicebase.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qitemselectionmodel.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qiterable.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qiterator.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qjsondocument.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qjsonobject.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qjsonparseerror.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qjsonvalue.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qlatin1stringview.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qline.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qlist.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qlocale.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qlogging.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qmalloc.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qmap.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qmargins.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qmath.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qmetacontainer.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qmetaobject.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qmetatype.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qminmax.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qnamespace.h \
@@ -75,6 +108,7 @@
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qprocessordetection.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qrect.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qrefcount.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qregularexpression.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qscopedpointer.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qscopeguard.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qset.h \
@@ -121,12 +155,15 @@
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qtversionchecks.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qtypeinfo.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qtypes.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qurl.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qutf8stringview.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/quuid.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qvariant.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qvarlengtharray.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qversiontagging.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qxptype_traits.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qyieldcpu.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/QRegularExpressionValidator \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qaction.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qbitmap.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qbrush.h \
@@ -141,20 +178,61 @@
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qkeysequence.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qpaintdevice.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qpalette.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qpen.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qpicture.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qpixelformat.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qpixmap.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qpolygon.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qregion.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qrgb.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qrgba64.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qtextcursor.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qtextdocument.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qtextformat.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qtextoption.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qtgui-config.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qtguiexports.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qtguiglobal.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qtransform.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qvalidator.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtGui/qwindowdefs.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtNetwork/QSslSocket \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtNetwork/qabstractsocket.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtNetwork/qhostaddress.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtNetwork/qssl.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtNetwork/qsslcertificate.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtNetwork/qsslerror.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtNetwork/qsslsocket.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtNetwork/qtcpsocket.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtNetwork/qtnetwork-config.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtNetwork/qtnetworkexports.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtNetwork/qtnetworkglobal.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/QLabel \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/QLineEdit \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/QListWidget \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/QMainWindow \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/QPushButton \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/QStackedWidget \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/qabstractbutton.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/qabstractitemview.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/qabstractslider.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/qabstractspinbox.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/qframe.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/qlabel.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/qlineedit.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/qlistview.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/qlistwidget.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/qmainwindow.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/qpushbutton.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/qrubberband.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/qsizepolicy.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/qslider.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/qstackedwidget.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/qstyle.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/qstyleoption.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/qtabbar.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/qtabwidget.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/qtwidgets-config.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtWidgets/qtwidgetsexports.h \

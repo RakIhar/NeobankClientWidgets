@@ -1,11 +1,18 @@
 /home/rakigor788/Projects/Course/NeobankClientWidgets/build/Desktop_Qt_6_10_0-Debug/NeobankClientWidgets_autogen/3BYFHCGL5U/moc_authservice.cpp: /home/rakigor788/Projects/Course/NeobankClientWidgets/services/authservice.h \
   /home/rakigor788/Projects/Course/NeobankClientWidgets/build/Desktop_Qt_6_10_0-Debug/NeobankClientWidgets_autogen/moc_predefs.h \
+  /home/rakigor788/Projects/Course/NeobankClientWidgets/constants.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/QJsonObject \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/QMetaEnum \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/QObject \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/QString \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/q17memory.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/q20functional.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/q20memory.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/q20type_traits.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/q20utility.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/q23utility.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qalgorithms.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qalloc.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qanystringview.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qarraydata.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qarraydataops.h \
@@ -19,6 +26,9 @@
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qbytearrayalgorithms.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qbytearraylist.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qbytearrayview.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qcalendar.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qcborcommon.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qcborvalue.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qchar.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qcompare.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qcompare_impl.h \
@@ -29,8 +39,12 @@
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qcontainerfwd.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qcontainerinfo.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qcontainertools_impl.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qcontiguouscache.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qdarwinhelpers.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qdatastream.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qdatetime.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qdebug.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qendian.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qexceptionhandling.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qflags.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qfloat16.h \
@@ -40,16 +54,24 @@
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qgenericatomic.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qglobal.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qglobalstatic.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qhash.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qhashfunctions.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qiodevicebase.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qiterable.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qiterator.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qjsondocument.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qjsonobject.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qjsonparseerror.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qjsonvalue.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qlatin1stringview.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qlist.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qlocale.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qlogging.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qmalloc.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qmap.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qmath.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qmetacontainer.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qmetaobject.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qmetatype.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qminmax.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qnamespace.h \
@@ -62,8 +84,14 @@
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qpair.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qprocessordetection.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qrefcount.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qregularexpression.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qscopedpointer.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qscopeguard.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qset.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qshareddata.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qshareddata_impl.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qsharedpointer.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qsharedpointer_impl.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qstdlibdetection.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qstring.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qstringalgorithms.h \
@@ -89,6 +117,7 @@
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qtdeprecationdefinitions.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qtdeprecationmarkers.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qtenvironmentvariables.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qtextstream.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qtformat_impl.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qtmetamacros.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qtnoop.h \
@@ -100,7 +129,11 @@
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qtversionchecks.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qtypeinfo.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qtypes.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qurl.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qutf8stringview.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/quuid.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qvariant.h \
+  /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qvarlengtharray.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qversiontagging.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qxptype_traits.h \
   /home/rakigor788/Qt/6.10.0/gcc_64/include/QtCore/qyieldcpu.h \
@@ -182,10 +215,12 @@
   /usr/include/c++/14/bits/stl_list.h \
   /usr/include/c++/14/bits/stl_map.h \
   /usr/include/c++/14/bits/stl_multimap.h \
+  /usr/include/c++/14/bits/stl_multiset.h \
   /usr/include/c++/14/bits/stl_numeric.h \
   /usr/include/c++/14/bits/stl_pair.h \
   /usr/include/c++/14/bits/stl_raw_storage_iter.h \
   /usr/include/c++/14/bits/stl_relops.h \
+  /usr/include/c++/14/bits/stl_set.h \
   /usr/include/c++/14/bits/stl_tempbuf.h \
   /usr/include/c++/14/bits/stl_tree.h \
   /usr/include/c++/14/bits/stl_uninitialized.h \
@@ -198,6 +233,7 @@
   /usr/include/c++/14/bits/uniform_int_dist.h \
   /usr/include/c++/14/bits/unique_ptr.h \
   /usr/include/c++/14/bits/unordered_map.h \
+  /usr/include/c++/14/bits/unordered_set.h \
   /usr/include/c++/14/bits/uses_allocator.h \
   /usr/include/c++/14/bits/uses_allocator_args.h \
   /usr/include/c++/14/bits/utility.h \
@@ -206,6 +242,7 @@
   /usr/include/c++/14/cctype \
   /usr/include/c++/14/cerrno \
   /usr/include/c++/14/chrono \
+  /usr/include/c++/14/climits \
   /usr/include/c++/14/clocale \
   /usr/include/c++/14/cmath \
   /usr/include/c++/14/compare \
@@ -242,6 +279,7 @@
   /usr/include/c++/14/pstl/glue_numeric_defs.h \
   /usr/include/c++/14/pstl/pstl_config.h \
   /usr/include/c++/14/ratio \
+  /usr/include/c++/14/set \
   /usr/include/c++/14/stdexcept \
   /usr/include/c++/14/streambuf \
   /usr/include/c++/14/string \
@@ -263,6 +301,7 @@
   /usr/include/c++/14/type_traits \
   /usr/include/c++/14/typeinfo \
   /usr/include/c++/14/unordered_map \
+  /usr/include/c++/14/unordered_set \
   /usr/include/c++/14/utility \
   /usr/include/c++/14/variant \
   /usr/include/c++/14/vector \
@@ -272,7 +311,9 @@
   /usr/include/errno.h \
   /usr/include/features-time64.h \
   /usr/include/features.h \
+  /usr/include/limits.h \
   /usr/include/linux/errno.h \
+  /usr/include/linux/limits.h \
   /usr/include/linux/posix_types.h \
   /usr/include/linux/sched/types.h \
   /usr/include/linux/stddef.h \
@@ -302,8 +343,11 @@
   /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
   /usr/include/x86_64-linux-gnu/bits/floatn.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
+  /usr/include/x86_64-linux-gnu/bits/local_lim.h \
   /usr/include/x86_64-linux-gnu/bits/locale.h \
   /usr/include/x86_64-linux-gnu/bits/long-double.h \
+  /usr/include/x86_64-linux-gnu/bits/posix1_lim.h \
+  /usr/include/x86_64-linux-gnu/bits/posix2_lim.h \
   /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
@@ -349,10 +393,12 @@
   /usr/include/x86_64-linux-gnu/bits/types/wint_t.h \
   /usr/include/x86_64-linux-gnu/bits/typesizes.h \
   /usr/include/x86_64-linux-gnu/bits/uintn-identity.h \
+  /usr/include/x86_64-linux-gnu/bits/uio_lim.h \
   /usr/include/x86_64-linux-gnu/bits/waitflags.h \
   /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
   /usr/include/x86_64-linux-gnu/bits/wchar.h \
   /usr/include/x86_64-linux-gnu/bits/wordsize.h \
+  /usr/include/x86_64-linux-gnu/bits/xopen_lim.h \
   /usr/include/x86_64-linux-gnu/c++/14/bits/atomic_word.h \
   /usr/include/x86_64-linux-gnu/c++/14/bits/c++allocator.h \
   /usr/include/x86_64-linux-gnu/c++/14/bits/c++config.h \
