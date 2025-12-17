@@ -1,9 +1,0 @@
-/home/rakigor788/Projects/Course/NeobankClientWidgets/build/Desktop_Qt_6_10_0-Debug/CMakeFiles/NeobankClientWidgets.dir
-/home/rakigor788/Projects/Course/NeobankClientWidgets/build/Desktop_Qt_6_10_0-Debug/CMakeFiles/edit_cache.dir
-/home/rakigor788/Projects/Course/NeobankClientWidgets/build/Desktop_Qt_6_10_0-Debug/CMakeFiles/rebuild_cache.dir
-/home/rakigor788/Projects/Course/NeobankClientWidgets/build/Desktop_Qt_6_10_0-Debug/CMakeFiles/list_install_components.dir
-/home/rakigor788/Projects/Course/NeobankClientWidgets/build/Desktop_Qt_6_10_0-Debug/CMakeFiles/install.dir
-/home/rakigor788/Projects/Course/NeobankClientWidgets/build/Desktop_Qt_6_10_0-Debug/CMakeFiles/install/local.dir
-/home/rakigor788/Projects/Course/NeobankClientWidgets/build/Desktop_Qt_6_10_0-Debug/CMakeFiles/install/strip.dir
-/home/rakigor788/Projects/Course/NeobankClientWidgets/build/Desktop_Qt_6_10_0-Debug/CMakeFiles/NeobankClientWidgets_autogen_timestamp_deps.dir
-/home/rakigor788/Projects/Course/NeobankClientWidgets/build/Desktop_Qt_6_10_0-Debug/CMakeFiles/NeobankClientWidgets_autogen.dir

@@ -1,2 +1,0 @@
-set(__QT_DEPLOY_TARGET_NeobankClientWidgets_FILE /home/rakigor788/Projects/Course/NeobankClientWidgets/build/Desktop_Qt_6_10_0-Debug/NeobankClientWidgets)
-set(__QT_DEPLOY_TARGET_NeobankClientWidgets_TYPE EXECUTABLE)
