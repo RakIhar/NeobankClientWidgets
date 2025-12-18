@@ -60,6 +60,7 @@ enum class JsonField
     Reason,
     ReasonCode,
     Phone,
+    Metadata,
 
     AccObj,
     AccArr,
@@ -104,6 +105,7 @@ inline QString toStr(JsonField field)
     case JsonField::Limit:          return "limit";
     case JsonField::FromAcc:        return "from";
     case JsonField::ToAcc:          return "to";
+    case JsonField::Metadata:       return "metadata";
     }
     return {};
 }

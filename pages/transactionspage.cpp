@@ -23,12 +23,26 @@ void TransactionsPage::setupConnections()
     [this]{
         refreshTransactions();
     });
+
+    connect(ui->pageSpinBox, &QSpinBox::valueChanged, this,
+    [this](int){
+        refreshTransactions();
+    });
+
+    connect(ui->limitComboBox, &QComboBox::currentTextChanged, this,
+    [this](QString){
+        refreshTransactions();
+    });
 }
 
 void TransactionsPage::refreshTransactions()
 {
     showLoading(tr("Загрузка транзакций..."));
-    emit r_transactions();
+
+    int currentPage = ui->pageSpinBox->value();
+    int currentLimit = ui->limitComboBox->currentText().toInt();
+    qDebug() << "Page: " << currentPage << "Limit: " << currentLimit;
+    emit r_transactions(currentLimit, currentPage);
 }
 
 void TransactionsPage::onTransactionsUpdated(const QList<Models::Transaction> &transactions)

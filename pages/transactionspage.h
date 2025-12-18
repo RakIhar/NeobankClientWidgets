@@ -17,7 +17,7 @@ public:
 
 signals:
     void pr_dashboard();
-    void r_transactions();
+    void r_transactions(const int limit = 50, const int page = 0);
 
 public slots:
     void onTransactionsUpdated(const QList<Models::Transaction> &transactions);

@@ -9,9 +9,14 @@
 //connectpage.cpp/h
 //loginpage.cpp/h
 //registrationpage.cpp/h
+//transactionspage.cpp/h
 
 //добавить:
 //dashboard.cpp/h общий баланс - со всех счетов в одной валюте
+//accountspage.cpp/h выбор между id и iban
+//accountspage.cpp/h отображение подробное
+//десериализатор для счетов
+//Обработка пагинаций
 
 //улучшено
 //десериализатор для транзакций

@@ -38,6 +38,16 @@ AccountsPage::AccountsPage(QWidget *parent)
 
 void AccountsPage::setupConnections()
 {
+    connect(ui->pageSpinBox, &QSpinBox::valueChanged, this,
+    [this](int){
+        refreshAccounts();
+    });
+
+    connect(ui->limitComboBox, &QComboBox::currentTextChanged, this,
+    [this](QString){
+        refreshAccounts();
+    });
+
     connect(ui->backButton, &QPushButton::clicked, this,
     [this]{
         emit pr_dashboard();
@@ -87,13 +97,16 @@ void AccountsPage::setupConnections()
         const AccountInfo acc = m_accounts.at(row);
         emit r_testCreditRequested(acc.id.isEmpty() ? acc.iban : acc.id, amount);
     });
-
 }
 
 void AccountsPage::refreshAccounts()
 {
     showLoading(tr("Загрузка счетов..."));
-    emit r_accounts();
+
+    int currentPage = ui->pageSpinBox->value();
+    int currentLimit = ui->limitComboBox->currentText().toInt();
+    qDebug() << "Page: " << currentPage << "Limit: " << currentLimit;
+    emit r_accounts(currentLimit, currentPage);
 }
 
 void AccountsPage::onAccountsUpdated(const QList<AccountInfo> &accounts)
