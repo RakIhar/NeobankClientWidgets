@@ -152,7 +152,11 @@
     </layout>
    </item>
    <item>
-    <widget class="QLabel" name="statusLabel"/>
+    <widget class="QLabel" name="statusLabel">
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

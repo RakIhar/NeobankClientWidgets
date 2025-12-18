@@ -1,6 +1,6 @@
 #ifndef TRANSFERDIALOG_H
 #define TRANSFERDIALOG_H
-///CHECKALL
+
 #include <QDialog>
 #include <QString>
 

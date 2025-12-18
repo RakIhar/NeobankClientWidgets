@@ -13,7 +13,7 @@ struct AccountInfo
     QString status;
 };
 
-namespace Models { //модель из сервера
+namespace Models {
 
 struct Account
 {

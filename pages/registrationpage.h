@@ -20,7 +20,7 @@ class RegistrationPage : public QWidget
     Q_OBJECT
 public:
     explicit RegistrationPage(QWidget *parent = nullptr);
-
+    void reset();
 signals:
     void pr_login();
     void r_registration(const RegData &regData);
@@ -29,10 +29,9 @@ public slots:
     void onRegistrationError(const QString &error);
     void onRegistrationSuccess();
 
-//=====================================================//
-
 private slots:
     void onRegisterClicked();
+
 private:
     void setupConnections();
     Ui::RegistrationPage *ui;

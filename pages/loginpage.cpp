@@ -1,27 +1,25 @@
 #include "loginpage.h"
 
 #include <QMessageBox>
+#include <qstyle.h>
 
 LoginPage::LoginPage(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::LoginPage)
 {
     ui->setupUi(this);
+    ui->statusLabel->setProperty("state", "empty");
+    ui->statusLabel->style()->polish(ui->statusLabel);
     setupConnections();
 }
 
 void LoginPage::reset()
 {
-    ui->statusLabel->setText(tr(""));
-    ui->statusLabel->setStyleSheet(
-        "font-size: 12px; "
-        "color: #4facfe; "
-        "padding: 20px; "
-        "background: transparent;"
-        "letter-spacing: 2px;"
-    );
-    ui->usernameEdit->setText("");
-    ui->passwordEdit->setText("");
+    ui->statusLabel->clear();
+    ui->statusLabel->setProperty("state", "empty");
+    ui->statusLabel->style()->polish(ui->statusLabel);
+    ui->usernameEdit->clear();
+    ui->passwordEdit->clear();
     ui->loginButton->setEnabled(true);
     ui->registerButton->setEnabled(true);
 }
@@ -49,13 +47,8 @@ void LoginPage::onLoginClicked()
     else
     {
         ui->statusLabel->setText(tr("> Аутентификация... <"));
-        ui->statusLabel->setStyleSheet(
-            "font-size: 12px; "
-            "color: #4facfe; "
-            "padding: 20px; "
-            "background: transparent;"
-            "letter-spacing: 2px;"
-        );
+        ui->statusLabel->setProperty("state", "loading");
+        ui->statusLabel->style()->polish(ui->statusLabel);
         ui->loginButton->setEnabled(false);
 
         emit r_login(username, password);
@@ -64,14 +57,9 @@ void LoginPage::onLoginClicked()
 
 void LoginPage::onLoginError(const QString &reason)
 {
-    ui->statusLabel->setText(tr(">>> Ошибка: %1 <<<").arg(reason.toUpper()));
-    ui->statusLabel->setStyleSheet(
-        "font-size: 12px; "
-        "color: #ff6b6b; "
-        "padding: 20px; "
-        "background: transparent;"
-        "letter-spacing: 2px;"
-    );
+    ui->statusLabel->setText(tr("> Ошибка: %1 <").arg(reason.toUpper()));
+    ui->statusLabel->setProperty("state", "error");
+    ui->statusLabel->style()->polish(ui->statusLabel);
     ui->loginButton->setEnabled(true);
 }
 

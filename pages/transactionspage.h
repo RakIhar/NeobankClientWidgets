@@ -5,7 +5,7 @@
 #include <QListWidget>
 #include <QPushButton>
 #include <QLabel>
-#include "../services/transactionsservice.h"
+#include "../models/transaction.h"
 
 class TransactionsPage : public QWidget
 {
@@ -20,11 +20,9 @@ signals:
     void r_transactions();
 
 public slots:
-    void onTransactionsUpdated(const QList<TransactionInfo> &transactions);
+    void onTransactionsUpdated(const QList<Models::Transaction> &transactions);
     void onTransactionsFailed(const QString &reason);
-    void onTransactionCreated(const TransactionInfo &transaction);//CHECK
-
-//=======================================================================//
+    void onTransactionCreated(const Models::Transaction &transaction);
 
 private:
     void setupConnections();

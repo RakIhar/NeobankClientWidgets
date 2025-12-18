@@ -7,7 +7,7 @@
 #include <QHBoxLayout>
 #include <QDoubleValidator>
 #include <QMessageBox>
-///CHECKALL
+
 TransferDialog::TransferDialog(QWidget *parent)
     : QDialog(parent), ui(nullptr)
 {

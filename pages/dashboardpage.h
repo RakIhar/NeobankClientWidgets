@@ -16,8 +16,6 @@ signals:
     void pr_transactions();
     void r_logout();
 
-//==================================================//
-
 private:
     void setupConnections();
     Ui::DashboardPage *ui;

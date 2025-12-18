@@ -4,7 +4,7 @@
 #include <QLineEdit>
 #include <QPushButton>
 #include <QLabel>
-
+#include <QTimer>
 namespace Ui { class ConnectPage; }
 
 class ConnectPage : public QWidget
@@ -13,7 +13,8 @@ class ConnectPage : public QWidget
 public:
     explicit ConnectPage(QWidget *parent = nullptr);
     ~ConnectPage();
-
+    void reset();
+    void stopConnectionTimer();
 signals:
     void r_connect(QString host, quint16 port);
 
@@ -22,9 +23,10 @@ public slots:
 
 private slots:
     void onConnectClicked();
-
+    void onTimeout();
 private:
     Ui::ConnectPage *ui;
+    QTimer *m_connectionTimer = nullptr;
 };
 
 #endif // CONNECTPAGE_H

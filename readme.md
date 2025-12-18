@@ -8,6 +8,8 @@
 * Сигналами могут запросить смену страницы
 * Никаких данных напрямую не хранят
 * pr_ запрос смены page, r_ запрос данных и остальное
+* Объект ConnectPage содержит обширную StyleSheet
+* В каждой странице прямо в коде применяются StyleSheet
 
 ### MainWindow
 * Хранит сокет
@@ -39,6 +41,20 @@
     * void sent()
     * void received(QByteArray)    
     * void errorOccurred(QString)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

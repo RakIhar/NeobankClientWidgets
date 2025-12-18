@@ -9,14 +9,13 @@ class LoginPage : public QWidget
 public:
     explicit LoginPage(QWidget *parent = nullptr);
     void reset();
+
 signals:
     void r_login(const QString &username, const QString &password);
     void pr_registration();
 
 public slots:
     void onLoginError(const QString &reason);
-
-//===============================================================//
 
 private slots:
     void onLoginClicked();

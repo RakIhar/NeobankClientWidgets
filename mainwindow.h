@@ -69,7 +69,6 @@ private slots:
     void onRequestLogout();
     void onRequestAccountsList();
     void onRequestTransactionsList();
-    ///CHECK
     void onRequestCreateTransaction(const QString &fromAccountId,
                                     const QString &to,
                                     const QString &amount,
@@ -77,7 +76,6 @@ private slots:
                                     const QString &description);
     void onRequestCreateAccount(const Enums::Currency curr);
     void onRequestTestCredit(const QString &accountId, const QString &amount);
-    ///
 private:
 
 };

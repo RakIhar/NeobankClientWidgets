@@ -74,6 +74,7 @@ void MainWindow::setupPageSwapConnections()
 {
     connect(m_client.get(), &SocketWrapper::connected, this,
     [this](){
+        m_connectPage->reset();
         m_loginPage->reset();
         showPage(PageLogin);
     });
@@ -84,6 +85,7 @@ void MainWindow::setupPageSwapConnections()
 
     connect(m_loginPage, &LoginPage::pr_registration, this,
     [this]{
+        m_registrationPage->reset();
         showPage(PageRegistration);
     });
     connect(m_registrationPage, &RegistrationPage::pr_login, this,
@@ -125,14 +127,12 @@ void MainWindow::setupRequestConnections()
             this, &MainWindow::onRequestAccountsList);
     connect(m_transactionsPage, &TransactionsPage::r_transactions,
             this, &MainWindow::onRequestTransactionsList);
-    ///CHECK
     connect(m_accountsPage, &AccountsPage::r_transferRequested,
         this, &MainWindow::onRequestCreateTransaction);
     connect(m_accountsPage, &AccountsPage::r_createAccount,
         this, &MainWindow::onRequestCreateAccount);
     connect(m_accountsPage, &AccountsPage::r_testCreditRequested,
         this, &MainWindow::onRequestTestCredit);
-    ///
 }
 
 void MainWindow::setupConnectionsFromServicesToPages()
@@ -152,7 +152,6 @@ void MainWindow::setupConnectionsFromServicesToPages()
         m_accountsPage, &AccountsPage::onAccountsUpdated);
     connect(m_accountsService, &AccountsService::accountsFailed,
         m_accountsPage, &AccountsPage::onAccountsFailed);
-    //CHECK
     connect(m_accountsService, &AccountsService::accountCreated,
     this, [this](const AccountInfo &){
         onRequestAccountsList();
@@ -162,7 +161,6 @@ void MainWindow::setupConnectionsFromServicesToPages()
             m_transactionsPage, &TransactionsPage::onTransactionsUpdated);
     connect(m_transactionsService, &TransactionsService::transactionsFailed,
             m_transactionsPage, &TransactionsPage::onTransactionsFailed);
-    //CHECK
     connect(m_transactionsService, &TransactionsService::transactionCreated,
             m_transactionsPage, &TransactionsPage::onTransactionCreated);
 }
@@ -229,9 +227,10 @@ void MainWindow::onRequestLogout()
     if (m_client) {
         m_client->disconnect();
     }
-    showPage(PageLogin);
+    m_connectPage->reset();
+    showPage(PageConnect);
 }
-void MainWindow::onRequestAccountsList() //CHECK: add limit
+void MainWindow::onRequestAccountsList()
 {
     AuthDelegate authenticate = [this](QJsonObject &request) {
         m_authService->setAuthentificationData(request);
@@ -244,7 +243,7 @@ void MainWindow::onRequestAccountsList() //CHECK: add limit
         m_accountsPage->onAccountsFailed(tr("Нет сессии — войдите заново"));
 }
 
-void MainWindow::onRequestTransactionsList() //CHECK: add limit
+void MainWindow::onRequestTransactionsList()
 {
     AuthDelegate authenticate = [this](QJsonObject &request) {
         m_authService->setAuthentificationData(request);
@@ -310,4 +309,3 @@ void MainWindow::onRequestTestCredit(const QString &accountId, const QString &am
     else
         m_accountsPage->onAccountsFailed(tr("Нет сессии — войдите заново"));
 }
-
