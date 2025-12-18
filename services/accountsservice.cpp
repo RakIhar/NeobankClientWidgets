@@ -4,26 +4,58 @@
 #include <QJsonObject>
 #include "../constants.h"
 
+Models::Account AccountsService::deserializeAccount(const QJsonObject &accObj)
+{
+    Models::Account acc;
+    acc.id          = accObj.value(toStr(JsonField::AccountId)).toVariant().toLongLong();
+    acc.user_id     = accObj.value(toStr(JsonField::UserId)).toVariant().toLongLong();
+    acc.currency    = accObj.value(toStr(JsonField::Currency)).toString();
+
+    QJsonValue ibanVal                    = accObj.value(toStr(JsonField::Iban));
+    if (!ibanVal.isNull())    acc.iban    = ibanVal.toString();
+
+    QJsonValue statusVal                  = accObj.value(toStr(JsonField::Status));
+    if (!statusVal.isNull())  acc.status  = statusVal.toString();
+
+    QJsonValue balanceVal                 = accObj.value(toStr(JsonField::Balance));
+    if (!balanceVal.isNull()) acc.balance = balanceVal.toString();
+
+    QJsonValue crAtVal = accObj.value(toStr(JsonField::CreatedAt));
+    if (!crAtVal.isNull()) {
+        acc.created_at = QDateTime::fromString(crAtVal.toString(), Qt::ISODate);
+    }
+
+    QJsonValue upAtVal = accObj.value(toStr(JsonField::UpdatedAt));
+    if (!upAtVal.isNull()) {
+        acc.updated_at = QDateTime::fromString(upAtVal.toString(), Qt::ISODate);
+    }
+
+    return acc;
+}
+
 AccountsService::AccountsService(QObject *parent)
     : QObject{parent}
 {}
 
-QByteArray AccountsService::createAccListRequest(AuthDelegate authenticate)
+QByteArray AccountsService::createAccListRequest(AuthDelegate authenticate, const int limit, const int page)
 {
     QJsonObject request;
-    request[toStr(JsonField::Type)] = toStr(ProtocolType::AccList);
     authenticate(request);
+    request[toStr(JsonField::Type)]  = toStr(ProtocolType::AccList);
+    request[toStr(JsonField::Limit)] = limit;
+    request[toStr(JsonField::Page)]  = page;
+
     QJsonDocument doc(request);
     return doc.toJson(QJsonDocument::Compact);
 }
 
-QByteArray AccountsService::createAccCreateRequest(AuthDelegate authenticate, const QString &currency)
+QByteArray AccountsService::createAccCreateRequest(AuthDelegate authenticate, const Enums::Currency currency)
 {
     QJsonObject request;
-    request[toStr(JsonField::Type)] = toStr(ProtocolType::AccCreate);
     authenticate(request);
-    if (!currency.isEmpty())
-        request[toStr(JsonField::Currency)] = currency;
+    request[toStr(JsonField::Type)]     = toStr(ProtocolType::AccCreate);
+    request[toStr(JsonField::Currency)] = Enums::toStr(currency);
+
     QJsonDocument doc(request);
     return doc.toJson(QJsonDocument::Compact);
 }
@@ -37,25 +69,15 @@ void AccountsService::handleMessage(const QByteArray &msg)
 
     if (type == toStr(ProtocolType::AccList))
     {
-
         if (result)
         {
             const QJsonArray accountsArray = obj.value(toStr(JsonField::AccArr)).toArray();
 
-            QList<AccountInfo> accounts;
+            QList<Models::Account> accounts;
             accounts.reserve(accountsArray.size());
             for (const auto &item : accountsArray)
                 if (item.isObject())
-                {
-                    const QJsonObject accObj = item.toObject();
-                    AccountInfo info;
-                    info.id       = accObj.value(toStr(JsonField::AccountId)).toVariant().toString();
-                    info.iban     = accObj.value(toStr(JsonField::Iban)).toString();
-                    info.balance  = accObj.value(toStr(JsonField::Balance)).toVariant().toString();
-                    info.currency = accObj.value(toStr(JsonField::Currency)).toString();
-                    info.status   = accObj.value(toStr(JsonField::Status)).toString();
-                    accounts.append(info);
-                }
+                    accounts.append(deserializeAccount(item.toObject()));
             emit accountsUpdated(accounts);
         }
         else
@@ -64,17 +86,7 @@ void AccountsService::handleMessage(const QByteArray &msg)
     else if (type == toStr(ProtocolType::AccCreate))
     {
         if (result)
-        {
-            const QJsonObject accObj = obj.value(toStr(JsonField::AccObj)).toObject();
-            AccountInfo info;
-            info.id       = accObj.value(toStr(JsonField::AccountId)).toVariant().toString();
-            info.iban     = accObj.value(toStr(JsonField::Iban)).toString();
-            info.balance  = accObj.value(toStr(JsonField::Balance)).toVariant().toString();
-            info.currency = accObj.value(toStr(JsonField::Currency)).toString();
-            info.status   = accObj.value(toStr(JsonField::Status)).toString();
-
-            emit accountCreated(info);
-        }
+            emit accountCreated(deserializeAccount(obj.value(toStr(JsonField::AccObj)).toObject()));
         else
             emit accountsFailed(reason);
     }

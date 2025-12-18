@@ -1,5 +1,4 @@
 #include "accountspage.h"
-#include "../services/accountsservice.h"
 #include "transferdialog.h"
 #include <QInputDialog>
 #include <QListWidgetItem>
@@ -8,11 +7,6 @@
 #include <QPushButton>
 #include <QLabel>
 #include "../constants.h"
-
-//TODO
-//разобраться с сигналом void r_accounts(const int limit = 50, const int page = 0);
-//добавить выбор валюты для createButton
-//вынести отсюда qss
 
 /*
                                                                 Table "public.accounts"
@@ -26,6 +20,20 @@
  status     | character varying(32)    |           |          | 'active'::character varying      | extended |             |              |
  created_at | timestamp with time zone |           |          | now()                            | plain    |             |              |
  updated_at | timestamp with time zone |           |          | now()                            | plain    |             |              |
+
+namespace Models {
+struct Account
+{
+    qint64                   id         = 0;
+    qint64                   user_id    = 0;
+    std::optional<QString>   iban       = std::nullopt;
+    std::optional<QString>   balance    = "0.00";
+    QString                  currency;
+    std::optional<QString>   status     = QStringLiteral("active");
+    std::optional<QDateTime> created_at = std::nullopt;
+    std::optional<QDateTime> updated_at = std::nullopt;
+};
+}
 */
 
 AccountsPage::AccountsPage(QWidget *parent)
@@ -34,6 +42,14 @@ AccountsPage::AccountsPage(QWidget *parent)
 {
     ui->setupUi(this);
     setupConnections();
+
+    QMetaEnum metaEnum = QMetaEnum::fromType<Enums::Currency>();
+    ui->currencyComboBox->clear();
+    for (int i = 0; i < metaEnum.keyCount(); ++i) {
+        QString key = metaEnum.key(i);
+        Enums::Currency value = static_cast<Enums::Currency>(metaEnum.value(i));
+        ui->currencyComboBox->addItem(key, QVariant::fromValue(value));
+    }
 }
 
 void AccountsPage::setupConnections()
@@ -59,44 +75,45 @@ void AccountsPage::setupConnections()
     });
 
     connect(ui->createButton, &QPushButton::clicked, this, [this]{
-        emit r_createAccount(Enums::Currency::BYN);
+        emit r_createAccount(ui->currencyComboBox->currentData().value<Enums::Currency>());
     });
 
-    connect(ui->accountsList, &QListWidget::itemDoubleClicked, this,
-    [this](QListWidgetItem *item){
-        const int row = ui->accountsList->row(item);
-        if (row < 0 || row >= m_accounts.size())
-            return;
-        const AccountInfo acc = m_accounts.at(row);
-        TransferDialog dlg(this);
-        dlg.setFromAccount(acc.id.isEmpty() ? acc.iban : acc.id);
-        if (dlg.exec() == QDialog::Accepted) {
-            const auto data = dlg.resultData();
-            emit r_transferRequested(acc.id.isEmpty() ? acc.iban : acc.id,
-                                     data.toAccount,
-                                     data.amount,
-                                     Enums::fromStr(data.currency, Enums::Currency::BYN),
-                                     data.description);
-        }
-    });
+    ///CHECK
+    // connect(ui->accountsList, &QListWidget::itemDoubleClicked, this,
+    // [this](QListWidgetItem *item){
+    //     const int row = ui->accountsList->row(item);
+    //     if (row < 0 || row >= m_accounts.size())
+    //         return;
+    //     const Models::Account acc = m_accounts.at(row);
+    //     TransferDialog dlg(this);
+    //     dlg.setFromAccount(acc.id.isEmpty() ? acc.iban : acc.id);
+    //     if (dlg.exec() == QDialog::Accepted) {
+    //         const auto data = dlg.resultData();
+    //         emit r_transferRequested(acc.id.isEmpty() ? acc.iban : acc.id,
+    //                                  data.toAccount,
+    //                                  data.amount,
+    //                                  Enums::fromStr(data.currency, Enums::Currency::BYN),
+    //                                  data.description);
+    //     }
+    // });
 
-    connect(ui->testCreditButton, &QPushButton::clicked, this, [this]{
-        const auto current = ui->accountsList->currentItem();
-        if (!current) {
-            onAccountsFailed(tr("Выберите счёт перед тестовым начислением"));
-            return;
-        }
-        const int row = ui->accountsList->row(current);
-        if (row < 0 || row >= m_accounts.size()) {
-            onAccountsFailed(tr("Неверный счёт"));
-            return;
-        }
-        bool ok = false;
-        const QString amount = QInputDialog::getText(this, tr("Тестовое начисление"), tr("Сумма:"), QLineEdit::Normal, "100", &ok);
-        if (!ok || amount.isEmpty()) return;
-        const AccountInfo acc = m_accounts.at(row);
-        emit r_testCreditRequested(acc.id.isEmpty() ? acc.iban : acc.id, amount);
-    });
+    // connect(ui->testCreditButton, &QPushButton::clicked, this, [this]{
+    //     const auto current = ui->accountsList->currentItem();
+    //     if (!current) {
+    //         onAccountsFailed(tr("Выберите счёт перед тестовым начислением"));
+    //         return;
+    //     }
+    //     const int row = ui->accountsList->row(current);
+    //     if (row < 0 || row >= m_accounts.size()) {
+    //         onAccountsFailed(tr("Неверный счёт"));
+    //         return;
+    //     }
+    //     bool ok = false;
+    //     const QString amount = QInputDialog::getText(this, tr("Тестовое начисление"), tr("Сумма:"), QLineEdit::Normal, "100", &ok);
+    //     if (!ok || amount.isEmpty()) return;
+    //     const Models::Account acc = m_accounts.at(row);
+    //     emit r_testCreditRequested(acc.id.isEmpty() ? acc.iban : acc.id, amount);
+    // });
 }
 
 void AccountsPage::refreshAccounts()
@@ -109,32 +126,50 @@ void AccountsPage::refreshAccounts()
     emit r_accounts(currentLimit, currentPage);
 }
 
-void AccountsPage::onAccountsUpdated(const QList<AccountInfo> &accounts)
+void AccountsPage::onAccountsUpdated(const QList<Models::Account> &accounts)
 {
     ui->accountsList->clear();
     m_accounts = accounts;
+
     for (const auto &acc : accounts)
     {
-        const QString text = tr("Счет %1 • %2 %3 (%4)")
-                                 .arg(acc.iban.isEmpty() ? acc.id : acc.iban,
-                                      acc.balance,
-                                      acc.currency.isEmpty() ? QStringLiteral("₽") : acc.currency,
-                                      acc.status);
-        ui->accountsList->addItem(text);
+        QString ibanStr = acc.iban.has_value() ? *acc.iban : tr("Нет IBAN");
+        QString accountIds = QString("ID: %1 | %2").arg(QString::number(acc.id).leftJustified(4), ibanStr);
+
+        Enums::Currency currEnum = Enums::fromStr(acc.currency, Enums::Currency::BYN);
+        QString symbol = Enums::toSymbol(currEnum);
+        if (symbol.isEmpty()) symbol = acc.currency;
+
+        QString statusStr = acc.status.value_or("active");
+        QString statusIcon = (statusStr == "active") ? "✔️" : "⚠️";
+
+        const QString text = QString("%1 %2 %3 %4")
+                                 .arg(statusIcon)
+                                 .arg(accountIds.leftJustified(45, ' '))
+                                 .arg(acc.balance.value_or("0.00").rightJustified(15, ' '))
+                                 .arg(symbol);
+
+        QListWidgetItem *item = new QListWidgetItem(text);
+
+        if (statusStr != "active") {
+            item->setForeground(Qt::gray);
+            item->setToolTip(tr("Счет заморожен или неактивен"));
+        }
+
+        ui->accountsList->addItem(item);
     }
 
     if (accounts.isEmpty())
     {
         ui->statusLabel->setText(tr("> Аккаунты не найдены <"));
         ui->statusLabel->setProperty("state", "empty");
-        ui->statusLabel->style()->polish(ui->statusLabel);
     }
     else
     {
         ui->statusLabel->clear();
-        ui->statusLabel->setProperty("state", "none");
-        ui->statusLabel->style()->polish(ui->statusLabel);
+        ui->statusLabel->setProperty("state", "");
     }
+    ui->statusLabel->style()->polish(ui->statusLabel);
     ui->refreshButton->setEnabled(true);
 }
 

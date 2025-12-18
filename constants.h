@@ -67,7 +67,8 @@ enum class JsonField
     TrObj,
     TrArr,
 
-    Limit
+    Limit,
+    Page
 };
 
 inline QString toStr(JsonField field)
@@ -103,6 +104,7 @@ inline QString toStr(JsonField field)
     case JsonField::TrArr:          return "transactions";
     case JsonField::CounterpartyId: return "counterparty_account_id";
     case JsonField::Limit:          return "limit";
+    case JsonField::Page:           return "page";
     case JsonField::FromAcc:        return "from";
     case JsonField::ToAcc:          return "to";
     case JsonField::Metadata:       return "metadata";
@@ -153,5 +155,5 @@ public:
         return isCorrect ? static_cast<Currency>(value) : defaultValue;
     }
 };
-
+Q_DECLARE_METATYPE(Enums::Currency)
 #endif // CONSTANTS_H

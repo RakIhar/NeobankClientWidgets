@@ -5,7 +5,8 @@
 #include <QListWidget>
 #include <QPushButton>
 #include <QLabel>
-#include "../services/accountsservice.h"
+#include "../models/account.h"
+#include "../constants.h"
 
 class AccountsPage : public QWidget
 {
@@ -27,13 +28,13 @@ signals:
     void r_testCreditRequested(const QString &accountId, const QString &amount);
 
 public slots:
-    void onAccountsUpdated(const QList<AccountInfo> &accounts);
+    void onAccountsUpdated(const QList<Models::Account> &accounts);
     void onAccountsFailed(const QString &reason);
 
 private:
     void setupConnections();
     Ui::AccountsPage *ui;
-    QList<AccountInfo> m_accounts;
+    QList<Models::Account> m_accounts;
 };
 
 #endif // ACCOUNTSPAGE_H

@@ -3,45 +3,22 @@
 #include <QObject>
 #include <QDateTime>
 #include "../constants.h"
-
-struct AccountInfo
-{
-    QString id;
-    QString iban;
-    QString balance;
-    QString currency;
-    QString status;
-};
-
-namespace Models {
-
-struct Account
-{
-    qint64 id = 0;
-    qint64 user_id = 0;
-    QString iban;
-    QString balance = "0.00";
-    QString currency;
-    QString status = QStringLiteral("active");
-    QDateTime created_at;
-    QDateTime updated_at;
-};
-
-}
+#include "../models/account.h"
 
 class AccountsService : public QObject
 {
     Q_OBJECT
+    Models::Account deserializeAccount(const QJsonObject &txObj);
 public:
     explicit AccountsService(QObject *parent = nullptr);
-    QByteArray createAccListRequest(AuthDelegate authenticate);
-    QByteArray createAccCreateRequest(AuthDelegate authenticate, const QString &currency = QString());
+    QByteArray createAccListRequest(AuthDelegate authenticate, const int limit = 50, const int page = 0);
+    QByteArray createAccCreateRequest(AuthDelegate authenticate, const Enums::Currency currency);
     void handleMessage(const QByteArray &msg);
 
 signals:
-    void accountsUpdated(const QList<AccountInfo> &accounts);
+    void accountsUpdated(const QList<Models::Account> &accounts);
     void accountsFailed(const QString &reason);
-    void accountCreated(const AccountInfo &account);
+    void accountCreated(const Models::Account &account);
 };
 
 #endif // ACCOUNTSSERVICE_H

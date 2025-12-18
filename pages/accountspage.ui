@@ -109,6 +109,9 @@
       </spacer>
      </item>
      <item>
+      <widget class="QComboBox" name="currencyComboBox"/>
+     </item>
+     <item>
       <widget class="QPushButton" name="createButton">
        <property name="font">
         <font>

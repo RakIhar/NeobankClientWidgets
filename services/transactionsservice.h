@@ -14,7 +14,7 @@ class TransactionsService : public QObject
     Models::Transaction deserializeTransaction(const QJsonObject &txObj);
 public:
     explicit TransactionsService(QObject *parent = nullptr);
-    QByteArray createTrListRequest(AuthDelegate authenticate, int limit = 50);
+    QByteArray createTrListRequest(AuthDelegate authenticate, const int limit = 50, const int page = 0);
     QByteArray createTransferRequest(AuthDelegate authenticate,
                                      const QString &fromAccount, const QString &to,
                                      const QString &amount, const Enums::Currency &curr,

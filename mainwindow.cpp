@@ -153,7 +153,7 @@ void MainWindow::setupConnectionsFromServicesToPages()
     connect(m_accountsService, &AccountsService::accountsFailed,
         m_accountsPage, &AccountsPage::onAccountsFailed);
     connect(m_accountsService, &AccountsService::accountCreated,
-    this, [this](const AccountInfo &){
+    this, [this](const Models::Account&){
         onRequestAccountsList();
     });
 
@@ -264,7 +264,7 @@ void MainWindow::onRequestCreateAccount(Enums::Currency curr)
 
     std::pair<QString, QString> sessionData = m_authService->getSessionData();
     if (!sessionData.first.isEmpty() && !sessionData.second.isEmpty())
-        m_client->send(m_accountsService->createAccCreateRequest(authenticate, Enums::toStr(curr)));
+        m_client->send(m_accountsService->createAccCreateRequest(authenticate, curr));
     else
         m_accountsPage->onAccountsFailed(tr("Нет сессии — войдите заново"));
 }

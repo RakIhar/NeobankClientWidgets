@@ -7,21 +7,23 @@ TransactionsService::TransactionsService(QObject *parent)
     : QObject{parent}
 {}
 
-QByteArray TransactionsService::createTrListRequest(AuthDelegate authenticate, int limit)
+QByteArray TransactionsService::createTrListRequest(AuthDelegate authenticate, const int limit , const int page)
 {
     QJsonObject request;
-    request[toStr(JsonField::Type)] = toStr(ProtocolType::TrList);
     authenticate(request);
-    QJsonDocument doc(request);
+    request[toStr(JsonField::Type)]  = toStr(ProtocolType::TrList);
     request[toStr(JsonField::Limit)] = limit;
+    request[toStr(JsonField::Page)]  = page;
+
+    QJsonDocument doc(request);
     return doc.toJson(QJsonDocument::Compact);
 }
 
 QByteArray TransactionsService::createTransferRequest(AuthDelegate authenticate, const QString &fromAccount, const QString &to, const QString &amount, const Enums::Currency &curr, const QString &description)
 {
     QJsonObject request;
-    request[toStr(JsonField::Type)]     = toStr(ProtocolType::TrCreate);
     authenticate(request);
+    request[toStr(JsonField::Type)]     = toStr(ProtocolType::TrCreate);
     request[toStr(JsonField::FromAcc)]  = fromAccount;
     request[toStr(JsonField::ToAcc)]    = to;
     request[toStr(JsonField::Amount)]   = amount;

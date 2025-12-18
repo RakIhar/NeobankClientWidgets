@@ -12,6 +12,7 @@
 #include "pages/transactionspage.h"
 #include "services/authservice.h"
 #include "services/transactionsservice.h"
+#include "services/accountsservice.h"
 #include "constants.h"
 
 namespace Ui { class MainWindow; }
