@@ -11,7 +11,7 @@ ConnectPage::ConnectPage(QWidget *parent)
 
     m_connectionTimer = new QTimer(this);
     m_connectionTimer->setSingleShot(true);
-    connect(m_connectionTimer, &QTimer::timeout, this, &ConnectPage::onTimeout);
+    connect(m_connectionTimer, &QTimer::timeout, this, [this]{onSocketError(tr("Превышено время ожидания"));});
 
     ui->statusLabel->setProperty("state", "empty");
     ui->statusLabel->style()->polish(ui->statusLabel);
@@ -19,10 +19,7 @@ ConnectPage::ConnectPage(QWidget *parent)
             this, &ConnectPage::onConnectClicked);
 }
 
-ConnectPage::~ConnectPage()
-{
-    delete ui;
-}
+ConnectPage::~ConnectPage() { delete ui; }
 
 void ConnectPage::reset()
 {
@@ -71,11 +68,6 @@ void ConnectPage::onSocketError(const QString &msg)
     ui->statusLabel->style()->polish(ui->statusLabel);
 
     ui->connectButton->setEnabled(true);
-}
-
-void ConnectPage::onTimeout()
-{
-    onSocketError(tr("Превышено время ожидания"));
 }
 
 void ConnectPage::stopConnectionTimer()

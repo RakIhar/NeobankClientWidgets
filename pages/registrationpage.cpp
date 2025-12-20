@@ -17,14 +17,17 @@
  updated_at    | timestamp with time zone |           |          | now()                            | plain    |             |              |
 */
 
-RegistrationPage::RegistrationPage(QWidget *parent)
+RegistrationPage::RegistrationPage(AuthService *authService, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::RegistrationPage)
+    , m_authService(authService)
 {
     ui->setupUi(this);
     reset();
     setupConnections();
 }
+
+RegistrationPage::~RegistrationPage() { delete ui; }
 
 void RegistrationPage::reset()
 {
@@ -51,6 +54,11 @@ void RegistrationPage::setupConnections()
 
     connect(ui->registerButton, &QPushButton::clicked,
             this, &RegistrationPage::onRegisterClicked);
+
+    connect(m_authService, &AuthService::registerSuccess,
+            this, &RegistrationPage::onRegistrationSuccess);
+    connect(m_authService, &AuthService::registerFailed,
+            this, &RegistrationPage::onRegistrationError);
 }
 
 void RegistrationPage::onRegistrationError(const QString &error)
@@ -100,7 +108,7 @@ void RegistrationPage::onRegisterClicked()
         regData.email = email;
         regData.phone = phone;
         regData.password = password;
-        emit r_registration(regData);
+        m_authService->createRegistrationRequest(regData);
 
         ui->statusLabel->setText(tr("> Отправка запроса... <"));
         ui->statusLabel->setProperty("state", "loading");

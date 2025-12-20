@@ -3,7 +3,9 @@
 #include <QString>
 #include <QJsonObject>
 #include <QMetaEnum>
+
 using AuthDelegate = std::function<void(QJsonObject&)>;
+using SendDelegate = std::function<void(const QByteArray&)>;
 
 enum class ProtocolType
 {
@@ -13,7 +15,8 @@ enum class ProtocolType
     AccList,
     TrList,
     AccCreate,
-    TrCreate
+    TrCreate,
+    TrBefore
 };
 
 inline QString toStr(ProtocolType type)
@@ -26,6 +29,7 @@ inline QString toStr(ProtocolType type)
     case ProtocolType::TrList:        return "transaction.list";
     case ProtocolType::AccCreate:     return "account.create";
     case ProtocolType::TrCreate:      return "transaction.create";
+    case ProtocolType::TrBefore:      return "transaction.before";
     }
     return {};
 }

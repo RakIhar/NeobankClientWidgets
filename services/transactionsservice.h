@@ -11,24 +11,24 @@
 class TransactionsService : public QObject
 {
     Q_OBJECT
-    Models::Transaction deserializeTransaction(const QJsonObject &txObj);
+
 public:
-    explicit TransactionsService(QObject *parent = nullptr);
-    QByteArray createTrListRequest(AuthDelegate authenticate, const int limit = 50, const int page = 0);
-    QByteArray createTransferRequest(AuthDelegate authenticate,
-                                     const QString &fromAccount, const QString &to,
-                                     const QString &amount, const Enums::Currency &curr,
-                                     const QString &description);
-    QByteArray createTransferRequest(const QString &sessionId, const QString &token,
-                                    const QString &fromAccount, const QString &to,
-                                    const QString &amount, const QString &currency,
-                                    const QString &description);
+    explicit TransactionsService(SendDelegate send, AuthDelegate authenticate, QObject *parent);
+    void createTrListRequest(const int limit = 50, const int page = 0);
+    void createTransferRequest(const TransferData& trData);
+    void createCreditRequest(const CreditData& crData);
+    void createBeforeTrRequest(const QString& to);
     void handleMessage(const QByteArray &msg);
 
 signals:
     void transactionsUpdated(const QList<Models::Transaction> &transactions);
     void transactionsFailed(const QString &reason);
     void transactionCreated(const Models::Transaction &transaction);
+    void beforeTransferInfo(const BeforeTransferInfo& info);
+
+private:
+    SendDelegate send;
+    AuthDelegate authenticate;
 };
 
 #endif // TRANSACTIONSSERVICE_H

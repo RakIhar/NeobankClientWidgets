@@ -2,26 +2,26 @@
 #define LOGINPAGE_H
 
 #include "ui_loginpage.h"
+#include "../services/authservice.h"
 
 class LoginPage : public QWidget
 {
     Q_OBJECT
 public:
-    explicit LoginPage(QWidget *parent = nullptr);
+    explicit LoginPage(AuthService *authService, QWidget *parent = nullptr);
+    ~LoginPage();;
     void reset();
 
 signals:
-    void r_login(const QString &username, const QString &password);
     void pr_registration();
-
-public slots:
-    void onLoginError(const QString &reason);
 
 private slots:
     void onLoginClicked();
+    void onLoginError(const QString &reason);
 
 private:
     void setupConnections();
+    AuthService *m_authService;
     Ui::LoginPage *ui;
 };
 

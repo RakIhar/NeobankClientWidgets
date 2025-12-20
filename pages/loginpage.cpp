@@ -3,15 +3,18 @@
 #include <QMessageBox>
 #include <qstyle.h>
 
-LoginPage::LoginPage(QWidget *parent)
+LoginPage::LoginPage(AuthService *authService, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::LoginPage)
+    , m_authService(authService)
 {
     ui->setupUi(this);
     ui->statusLabel->setProperty("state", "empty");
     ui->statusLabel->style()->polish(ui->statusLabel);
     setupConnections();
 }
+
+LoginPage::~LoginPage() { delete ui; }
 
 void LoginPage::reset()
 {
@@ -33,6 +36,8 @@ void LoginPage::setupConnections()
     [this]{
         emit pr_registration();
     });
+
+    connect(m_authService, &AuthService::loginFailed, this, &LoginPage::onLoginError);
 }
 
 void LoginPage::onLoginClicked()
@@ -51,7 +56,7 @@ void LoginPage::onLoginClicked()
         ui->statusLabel->style()->polish(ui->statusLabel);
         ui->loginButton->setEnabled(false);
 
-        emit r_login(username, password);
+        m_authService->createLoginRequest(username, password);
     }
 }
 

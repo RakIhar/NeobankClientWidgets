@@ -2,12 +2,9 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include "../deserializers.h"
 
-TransactionsService::TransactionsService(QObject *parent)
-    : QObject{parent}
-{}
-
-QByteArray TransactionsService::createTrListRequest(AuthDelegate authenticate, const int limit , const int page)
+void TransactionsService::createTrListRequest(const int limit , const int page)
 {
     QJsonObject request;
     authenticate(request);
@@ -16,22 +13,49 @@ QByteArray TransactionsService::createTrListRequest(AuthDelegate authenticate, c
     request[toStr(JsonField::Page)]  = page;
 
     QJsonDocument doc(request);
-    return doc.toJson(QJsonDocument::Compact);
+    send(doc.toJson(QJsonDocument::Compact));
 }
 
-QByteArray TransactionsService::createTransferRequest(AuthDelegate authenticate, const QString &fromAccount, const QString &to, const QString &amount, const Enums::Currency &curr, const QString &description)
+void TransactionsService::createTransferRequest(const TransferData &trData)
 {
     QJsonObject request;
     authenticate(request);
-    request[toStr(JsonField::Type)]     = toStr(ProtocolType::TrCreate);
-    request[toStr(JsonField::FromAcc)]  = fromAccount;
-    request[toStr(JsonField::ToAcc)]    = to;
-    request[toStr(JsonField::Amount)]   = amount;
-    request[toStr(JsonField::Currency)] = Enums::toStr(curr);
-    request[toStr(JsonField::Reason)]   = description;
-
+    request[toStr(JsonField::Type)]    = toStr(ProtocolType::TrCreate);
+    if (trData.from_acc.iban.has_value())
+    request[toStr(JsonField::FromAcc)] = trData.from_acc.iban.value();
+    else
+    request[toStr(JsonField::FromAcc)] = trData.from_acc.id;
+    if (trData.to_acc.iban.has_value())
+    request[toStr(JsonField::ToAcc)]   = trData.to_acc.iban.value();
+    else
+    request[toStr(JsonField::ToAcc)]   = trData.to_acc.id;
+    request[toStr(JsonField::Amount)]  = trData.from_amount;
+    request[toStr(JsonField::Reason)]  = trData.description.has_value()
+                                        ? QJsonValue(trData.description.value())
+                                        : QJsonValue::Null;
     QJsonDocument doc(request);
-    return doc.toJson(QJsonDocument::Compact);
+    send(doc.toJson(QJsonDocument::Compact));
+}
+
+void TransactionsService::createCreditRequest(const CreditData &crData)
+{
+    QJsonObject request;
+    authenticate(request);
+    request[toStr(JsonField::Type)]      = toStr(ProtocolType::TrCreate);
+    request[toStr(JsonField::AccountId)] = crData.acc.id;
+    request[toStr(JsonField::Amount)]    = crData.amount;
+    QJsonDocument doc(request);
+    send(doc.toJson(QJsonDocument::Compact));
+}
+
+void TransactionsService::createBeforeTrRequest(const QString &to)
+{
+    QJsonObject request;
+    authenticate(request);
+    request[toStr(JsonField::Type)]  = toStr(ProtocolType::TrBefore);
+    request[toStr(JsonField::ToAcc)] = to;
+    QJsonDocument doc(request);
+    send(doc.toJson(QJsonDocument::Compact));
 }
 
 void TransactionsService::handleMessage(const QByteArray &msg)
@@ -71,32 +95,5 @@ void TransactionsService::handleMessage(const QByteArray &msg)
     }
 }
 
-Models::Transaction TransactionsService::deserializeTransaction(const QJsonObject &txObj)
-{
-    Models::Transaction info;
-    info.id         = txObj.value(toStr(JsonField::TransactionId)).toVariant().toLongLong();
-    info.account_id = txObj.value(toStr(JsonField::AccountId)).toVariant().toLongLong();
-
-    QJsonValue cpVal = txObj.value(toStr(JsonField::CounterpartyId));
-    if (!cpVal.isNull()) {
-        info.counterparty_account_id = cpVal.toVariant().toLongLong(); //для безопасности
-    }
-
-    info.amount   = txObj.value(toStr(JsonField::Amount)).toString();
-    info.currency = txObj.value(toStr(JsonField::Currency)).toString();
-    info.type     = txObj.value(toStr(JsonField::Type)).toString();
-
-    QJsonValue descVal = txObj.value(toStr(JsonField::Reason));
-    if (!descVal.isNull()) info.description = descVal.toString();
-
-    QJsonValue statusVal = txObj.value(toStr(JsonField::Status));
-    if (!statusVal.isNull()) info.status = statusVal.toString();
-
-    QJsonValue dateVal = txObj.value(toStr(JsonField::CreatedAt));
-    if (!dateVal.isNull()) {
-        info.created_at = QDateTime::fromString(dateVal.toString(), Qt::ISODate);
-    }
-
-    return info;
-}
-
+TransactionsService::TransactionsService(SendDelegate send, AuthDelegate authenticate, QObject *parent)
+    : QObject{parent}, send(send), authenticate(authenticate) {}

@@ -4,9 +4,8 @@
 #include <QJsonDocument>
 #include "../constants.h"
 
-AuthService::AuthService(QObject *parent)
-    : QObject{parent}
-{}
+AuthService::AuthService(std::function<void (const QByteArray &)> send, QObject *parent)
+    : QObject{parent} { this->send = send; }
 
 void AuthService::handleMessage(const QByteArray &msg)
 {
@@ -35,7 +34,13 @@ void AuthService::handleMessage(const QByteArray &msg)
     }
 }
 
-QByteArray AuthService::createLoginRequest(const QString &username, const QString &password)
+void AuthService::setAuthentificationData(QJsonObject &request)
+{
+    request[toStr(JsonField::SessionId)] = session_id;
+    request[toStr(JsonField::Token)]     = token;
+}
+
+void AuthService::createLoginRequest(const QString &username, const QString &password)
 {
     QJsonObject request;
     request[toStr(JsonField::Type)]     = toStr(ProtocolType::Login);
@@ -43,10 +48,10 @@ QByteArray AuthService::createLoginRequest(const QString &username, const QStrin
     request[toStr(JsonField::Password)] = password;
     QJsonDocument doc(request);
     QByteArray data = doc.toJson(QJsonDocument::Compact);
-    return data;
+    send(data);
 }
 
-QByteArray AuthService::createRegistrationRequest(const RegData &regData)
+void AuthService::createRegistrationRequest(const RegData &regData)
 {
     QJsonObject request;
     request[toStr(JsonField::Type)]     = toStr(ProtocolType::Register);
@@ -56,6 +61,6 @@ QByteArray AuthService::createRegistrationRequest(const RegData &regData)
     request[toStr(JsonField::Phone)]    = regData.phone;
     QJsonDocument doc(request);
     QByteArray data = doc.toJson(QJsonDocument::Compact);
-    return data;
+    send(data);
 }
 

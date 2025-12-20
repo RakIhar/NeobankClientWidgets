@@ -4,6 +4,30 @@
 #include <QString>
 #include <QDateTime>
 #include <QJsonObject>
+#include "../models/account.h"
+
+struct TransferData
+{
+    Models::Account from_acc;
+    Models::Account to_acc;
+    QString from_amount = "0.00";
+    std::optional<QString> description;
+};
+
+struct CreditData
+{
+    Models::Account acc;
+    QString amount = "0.00";
+};
+
+struct BeforeTransferInfo
+{
+    QString comission;
+    QString exchangeRate;
+    std::optional<Models::Account> to_acc;
+    bool isError;
+    QString error;
+};
 
 namespace Models {
 
@@ -12,11 +36,16 @@ struct Transaction
     qint64 id = 0;
     qint64 account_id = 0;
     std::optional<qint64> counterparty_account_id = std::nullopt;
-    QString amount = "0.00";
-    QString currency;
+    QString amount = "0.00";//amount_from
+    QString currency;       //currency_from
+                            //amount_to
+                            //currency_to
+                            //валюты можно удалить или сделать null
+                            //можно добавить курс обмена
+                            //можно добавить комиссию
     QString type;
-    std::optional<QString> description = std::nullopt;
-    std::optional<QString> status = QStringLiteral("pending");
+    std::optional<QString> description  = std::nullopt;
+    std::optional<QString> status       = QStringLiteral("pending");
     std::optional<QJsonObject> metadata = std::nullopt;
     std::optional<QDateTime> created_at = std::nullopt;
 };

@@ -6,18 +6,19 @@
 #include <QPushButton>
 #include <QLabel>
 #include "../models/transaction.h"
+#include "../services/transactionsservice.h"
 
 class TransactionsPage : public QWidget
 {
     Q_OBJECT
 public:
-    explicit TransactionsPage(QWidget *parent = nullptr);
+    explicit TransactionsPage(TransactionsService *trService, QWidget *parent = nullptr);
+    ~TransactionsPage();
     void refreshTransactions();
     void showLoading(const QString &message = QString());
 
 signals:
     void pr_dashboard();
-    void r_transactions(const int limit = 50, const int page = 0);
 
 public slots:
     void onTransactionsUpdated(const QList<Models::Transaction> &transactions);
@@ -26,6 +27,7 @@ public slots:
 
 private:
     void setupConnections();
+    TransactionsService *m_trService;
     Ui::TransactionsPage *ui;
 };
 

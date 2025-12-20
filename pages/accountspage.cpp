@@ -1,5 +1,4 @@
 #include "accountspage.h"
-#include "transferdialog.h"
 #include <QInputDialog>
 #include <QListWidgetItem>
 
@@ -36,9 +35,11 @@ struct Account
 }
 */
 
-AccountsPage::AccountsPage(QWidget *parent)
+AccountsPage::AccountsPage(AccountsService *accService, TransactionsService *trService, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::AccountsPage)
+    , m_accService(accService)
+    , m_trService(trService)
 {
     ui->setupUi(this);
     setupConnections();
@@ -51,6 +52,8 @@ AccountsPage::AccountsPage(QWidget *parent)
         ui->currencyComboBox->addItem(key, QVariant::fromValue(value));
     }
 }
+
+AccountsPage::~AccountsPage() { delete ui; }
 
 void AccountsPage::setupConnections()
 {
@@ -74,46 +77,62 @@ void AccountsPage::setupConnections()
         refreshAccounts();
     });
 
-    connect(ui->createButton, &QPushButton::clicked, this, [this]{
-        emit r_createAccount(ui->currencyComboBox->currentData().value<Enums::Currency>());
+    connect(ui->createButton, &QPushButton::clicked, this,
+    [this]{
+        m_accService->createAccCreateRequest(ui->currencyComboBox->currentData().value<Enums::Currency>());
     });
 
-    ///CHECK
-    // connect(ui->accountsList, &QListWidget::itemDoubleClicked, this,
-    // [this](QListWidgetItem *item){
-    //     const int row = ui->accountsList->row(item);
-    //     if (row < 0 || row >= m_accounts.size())
-    //         return;
-    //     const Models::Account acc = m_accounts.at(row);
-    //     TransferDialog dlg(this);
-    //     dlg.setFromAccount(acc.id.isEmpty() ? acc.iban : acc.id);
-    //     if (dlg.exec() == QDialog::Accepted) {
-    //         const auto data = dlg.resultData();
-    //         emit r_transferRequested(acc.id.isEmpty() ? acc.iban : acc.id,
-    //                                  data.toAccount,
-    //                                  data.amount,
-    //                                  Enums::fromStr(data.currency, Enums::Currency::BYN),
-    //                                  data.description);
-    //     }
-    // });
+    connect(ui->accountsList, &QListWidget::itemDoubleClicked, this,
+    [this](QListWidgetItem *item){
+        const int row = ui->accountsList->row(item);
+        if (row < 0 || row >= m_accounts.size())
+            return;
+        const Models::Account acc = m_accounts.at(row);
+        emit pr_transfer(acc);
+    });
 
-    // connect(ui->testCreditButton, &QPushButton::clicked, this, [this]{
-    //     const auto current = ui->accountsList->currentItem();
-    //     if (!current) {
-    //         onAccountsFailed(tr("Выберите счёт перед тестовым начислением"));
-    //         return;
-    //     }
-    //     const int row = ui->accountsList->row(current);
-    //     if (row < 0 || row >= m_accounts.size()) {
-    //         onAccountsFailed(tr("Неверный счёт"));
-    //         return;
-    //     }
-    //     bool ok = false;
-    //     const QString amount = QInputDialog::getText(this, tr("Тестовое начисление"), tr("Сумма:"), QLineEdit::Normal, "100", &ok);
-    //     if (!ok || amount.isEmpty()) return;
-    //     const Models::Account acc = m_accounts.at(row);
-    //     emit r_testCreditRequested(acc.id.isEmpty() ? acc.iban : acc.id, amount);
-    // });
+    connect(ui->testCreditButton, &QPushButton::clicked,
+            this, &AccountsPage::onTestCredit);
+
+    //Сервисы
+    connect(m_accService, &AccountsService::accountsUpdated,
+            this, &AccountsPage::onAccountsUpdated);
+    connect(m_accService, &AccountsService::accountsFailed,
+            this, &AccountsPage::onAccountsFailed);
+    connect(m_accService, &AccountsService::accountCreated, this,
+    [this](const Models::Account&){
+        refreshAccounts();
+    });
+}
+
+void AccountsPage::onTestCredit()
+{
+    const QListWidgetItem* current = ui->accountsList->currentItem();
+    if (!current) {
+        onAccountsFailed(tr("Выберите счёт перед тестовым начислением"));
+        return;
+    }
+    const int row = ui->accountsList->row(current);
+    if (row < 0 || row >= m_accounts.size()) {
+        onAccountsFailed(tr("Неверный счёт"));
+        return;
+    }
+    bool isCorrect = false;
+    const QString amount = QInputDialog::getText(this,  tr("Тестовое начисление"), tr("Сумма:"), QLineEdit::Normal, "100", &isCorrect);
+    if (isCorrect && !amount.isEmpty())
+    {
+        const Models::Account acc = m_accounts.at(row);
+        const double val = amount.toDouble(&isCorrect);
+        if (isCorrect && val > 0.0)
+        {
+            CreditData crData;
+            crData.acc = acc;
+            crData.amount = amount;
+            m_trService->createCreditRequest(crData);
+        }
+        else
+            onAccountsFailed(tr("Некорректная сумма для тестового начисления"));
+    }
 }
 
 void AccountsPage::refreshAccounts()
@@ -123,7 +142,7 @@ void AccountsPage::refreshAccounts()
     int currentPage = ui->pageSpinBox->value();
     int currentLimit = ui->limitComboBox->currentText().toInt();
     qDebug() << "Page: " << currentPage << "Limit: " << currentLimit;
-    emit r_accounts(currentLimit, currentPage);
+    m_accService->createAccListRequest(currentLimit, currentPage);
 }
 
 void AccountsPage::onAccountsUpdated(const QList<Models::Account> &accounts)
@@ -143,11 +162,10 @@ void AccountsPage::onAccountsUpdated(const QList<Models::Account> &accounts)
         QString statusStr = acc.status.value_or("active");
         QString statusIcon = (statusStr == "active") ? "✔️" : "⚠️";
 
-        const QString text = QString("%1 %2 %3 %4")
-                                 .arg(statusIcon)
-                                 .arg(accountIds.leftJustified(45, ' '))
-                                 .arg(acc.balance.value_or("0.00").rightJustified(15, ' '))
-                                 .arg(symbol);
+        const QString text = QString("%1 %2 %3 %4").arg(statusIcon,
+                                                        accountIds.leftJustified(45, ' '),
+                                                        acc.balance.value_or("0.00").rightJustified(15, ' '),
+                                                        symbol);
 
         QListWidgetItem *item = new QListWidgetItem(text);
 

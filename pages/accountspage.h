@@ -6,33 +6,33 @@
 #include <QPushButton>
 #include <QLabel>
 #include "../models/account.h"
-#include "../constants.h"
+#include "../services/accountsservice.h"
+#include "../services/transactionsservice.h"
 
 class AccountsPage : public QWidget
 {
     Q_OBJECT
 public:
-    explicit AccountsPage(QWidget *parent = nullptr);
+    explicit AccountsPage(AccountsService *accService, TransactionsService* trService, QWidget *parent = nullptr);
+    ~AccountsPage();
     void refreshAccounts();
     void showLoading(const QString &message = QString());
 
 signals:
     void pr_dashboard();
-    void r_accounts(const int limit = 50, const int page = 0);
-    void r_transferRequested(const QString &fromAccountId,
-                             const QString &to,
-                             const QString &amount,
-                             const Enums::Currency &currency,
-                             const QString &description);
-    void r_createAccount(Enums::Currency curr);
-    void r_testCreditRequested(const QString &accountId, const QString &amount);
+    void pr_transfer(Models::Account fromAcc);
 
 public slots:
     void onAccountsUpdated(const QList<Models::Account> &accounts);
     void onAccountsFailed(const QString &reason);
 
+private slots:
+    void onTestCredit();
+
 private:
     void setupConnections();
+    AccountsService *m_accService;
+    TransactionsService *m_trService;
     Ui::AccountsPage *ui;
     QList<Models::Account> m_accounts;
 };

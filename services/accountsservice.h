@@ -8,17 +8,20 @@
 class AccountsService : public QObject
 {
     Q_OBJECT
-    Models::Account deserializeAccount(const QJsonObject &txObj);
 public:
-    explicit AccountsService(QObject *parent = nullptr);
-    QByteArray createAccListRequest(AuthDelegate authenticate, const int limit = 50, const int page = 0);
-    QByteArray createAccCreateRequest(AuthDelegate authenticate, const Enums::Currency currency);
+    explicit AccountsService(SendDelegate send, AuthDelegate authenticate, QObject *parent = nullptr);
+    void createAccListRequest(const int limit = 50, const int page = 0);
+    void createAccCreateRequest(const Enums::Currency currency);
     void handleMessage(const QByteArray &msg);
 
 signals:
     void accountsUpdated(const QList<Models::Account> &accounts);
     void accountsFailed(const QString &reason);
     void accountCreated(const Models::Account &account);
+
+private:
+    SendDelegate send;
+    AuthDelegate authenticate;
 };
 
 #endif // ACCOUNTSSERVICE_H

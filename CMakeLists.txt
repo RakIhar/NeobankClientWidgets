@@ -54,13 +54,15 @@ set(PROJECT_SOURCES
   pages/transactionspage.cpp
 
   #нет ui
-  pages/transferdialog.h
-  pages/transferdialog.cpp
+  pages/transferpage.h
+  pages/transferpage.cpp
     res.qrc
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Core)
+find_package(Qt6 REQUIRED COMPONENTS Core)
 find_package(Qt6 REQUIRED COMPONENTS Core)
 
 qt_add_executable(NeobankClientWidgets
@@ -70,6 +72,11 @@ qt_add_executable(NeobankClientWidgets
     models/account.h
     models/transaction.h
     models/user.h
+    pages/transferpage.ui
+    converters.h
+
+    deserializers.h
+
 )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET NeobankClientWidgets APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
@@ -91,6 +98,8 @@ endif()
 
 target_link_libraries(NeobankClientWidgets PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Network)
 target_link_libraries(NeobankClientWidgets PRIVATE Qt6::Widgets)
+target_link_libraries(NeobankClientWidgets PRIVATE Qt6::Core)
+target_link_libraries(NeobankClientWidgets PRIVATE Qt6::Core)
 target_link_libraries(NeobankClientWidgets PRIVATE Qt6::Core)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

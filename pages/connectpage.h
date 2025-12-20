@@ -15,6 +15,7 @@ public:
     ~ConnectPage();
     void reset();
     void stopConnectionTimer();
+
 signals:
     void r_connect(QString host, quint16 port);
 
@@ -23,7 +24,7 @@ public slots:
 
 private slots:
     void onConnectClicked();
-    void onTimeout();
+
 private:
     Ui::ConnectPage *ui;
     QTimer *m_connectionTimer = nullptr;

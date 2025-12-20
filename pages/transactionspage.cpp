@@ -4,13 +4,18 @@
 #include <QLabel>
 #include "../constants.h"
 
-TransactionsPage::TransactionsPage(QWidget *parent)
+
+
+TransactionsPage::TransactionsPage(TransactionsService *trService, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::TransactionsPage)
+    , m_trService(trService)
 {
     ui->setupUi(this);
     setupConnections();
 }
+
+TransactionsPage::~TransactionsPage() { delete ui; }
 
 void TransactionsPage::setupConnections()
 {
@@ -33,6 +38,14 @@ void TransactionsPage::setupConnections()
     [this](QString){
         refreshTransactions();
     });
+
+    connect(m_trService, &TransactionsService::transactionsUpdated,
+            this, &TransactionsPage::onTransactionsUpdated);
+    connect(m_trService, &TransactionsService::transactionsFailed,
+            this, &TransactionsPage::onTransactionsFailed);
+    connect(m_trService, &TransactionsService::transactionCreated,
+            this, &TransactionsPage::onTransactionCreated);
+
 }
 
 void TransactionsPage::refreshTransactions()
@@ -42,7 +55,7 @@ void TransactionsPage::refreshTransactions()
     int currentPage = ui->pageSpinBox->value();
     int currentLimit = ui->limitComboBox->currentText().toInt();
     qDebug() << "Page: " << currentPage << "Limit: " << currentLimit;
-    emit r_transactions(currentLimit, currentPage);
+    m_trService->createTrListRequest(currentLimit, currentPage);
 }
 
 void TransactionsPage::onTransactionsUpdated(const QList<Models::Transaction> &transactions)

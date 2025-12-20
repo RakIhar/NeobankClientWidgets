@@ -10,6 +10,8 @@ DashboardPage::DashboardPage(QWidget *parent)
     setupConnections();
 }
 
+DashboardPage::~DashboardPage() { delete ui; }
+
 void DashboardPage::setupConnections()
 {
     connect(ui->accountsButton, &QPushButton::clicked, this,

@@ -10,7 +10,7 @@ class DashboardPage : public QWidget
     Q_OBJECT
 public:
     explicit DashboardPage(QWidget *parent = nullptr);
-
+    ~DashboardPage();
 signals:
     void pr_accounts();
     void pr_transactions();
