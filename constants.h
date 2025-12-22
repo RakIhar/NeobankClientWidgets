@@ -7,6 +7,26 @@
 using AuthDelegate = std::function<void(QJsonObject&)>;
 using SendDelegate = std::function<void(const QByteArray&)>;
 
+enum class AccStatus
+{
+    Active,
+    Frozen,
+    Deleted,
+    System
+};
+
+inline QString toStr(AccStatus st)
+{
+    switch(st)
+    {
+    case AccStatus::Active:  return "active";
+    case AccStatus::Frozen:  return "frozen";
+    case AccStatus::Deleted: return "deleted";
+    case AccStatus::System:  return "system";
+    }
+    return {};
+}
+
 enum class ProtocolType
 {
     Login,
@@ -15,8 +35,12 @@ enum class ProtocolType
     AccList,
     TrList,
     AccCreate,
+    AccDelete,
     TrCreate,
-    TrBefore
+    TrBefore,
+    CreditCreate,
+    Undefined,
+    ExchangeRate
 };
 
 inline QString toStr(ProtocolType type)
@@ -28,8 +52,12 @@ inline QString toStr(ProtocolType type)
     case ProtocolType::AccList:       return "account.list";
     case ProtocolType::TrList:        return "transaction.list";
     case ProtocolType::AccCreate:     return "account.create";
+    case ProtocolType::AccDelete:     return "account.delete";
     case ProtocolType::TrCreate:      return "transaction.create";
     case ProtocolType::TrBefore:      return "transaction.before";
+    case ProtocolType::CreditCreate:  return "credit.create";
+    case ProtocolType::Undefined:     return "undef";
+    case ProtocolType::ExchangeRate:  return "exchange_rate";
     }
     return {};
 }
@@ -61,7 +89,8 @@ enum class JsonField
     SessionId,
     Token,
     Result,
-    Reason,
+    Error,
+    Descr,
     ReasonCode,
     Phone,
     Metadata,
@@ -70,9 +99,15 @@ enum class JsonField
     AccArr,
     TrObj,
     TrArr,
+    Obj,
 
     Limit,
-    Page
+    Page,
+
+    Comission,
+    ExchangeRate,
+
+    Count
 };
 
 inline QString toStr(JsonField field)
@@ -95,7 +130,7 @@ inline QString toStr(JsonField field)
     case JsonField::SessionId:      return "session_id";
     case JsonField::Token:          return "token";
     case JsonField::Result:         return "result";
-    case JsonField::Reason:         return "reason";
+    case JsonField::Error:          return "error";
     case JsonField::ReasonCode:     return "reason_code";
     case JsonField::Phone:          return "phone";
     case JsonField::Iban:           return "iban";
@@ -112,6 +147,11 @@ inline QString toStr(JsonField field)
     case JsonField::FromAcc:        return "from";
     case JsonField::ToAcc:          return "to";
     case JsonField::Metadata:       return "metadata";
+    case JsonField::Obj:            return "obj";
+    case JsonField::Comission:      return "comission";
+    case JsonField::ExchangeRate:   return "exchane_rate";
+    case JsonField::Descr:          return "description";
+    case JsonField::Count:          return "count";
     }
     return {};
 }
@@ -147,17 +187,21 @@ public:
         default:            return "";
         }
     }
-    static QString toStr(Currency currency)
+
+    static inline QString toStr(Currency currency)
     {
         const int value = static_cast<int>(currency);
         const char* key = QMetaEnum::fromType<Currency>().valueToKey(value);
         return key ? QString::fromLatin1(key) : QString();
     }
-    static Currency fromStr(const QString &str, Currency defaultValue = Currency::BYN) {
+
+    static inline Currency fromStr(const QString &str, Currency defaultValue = Currency::BYN) {
         bool isCorrect;
         int value = QMetaEnum::fromType<Currency>().keyToValue(str.toUpper().toLatin1().data(), &isCorrect);
         return isCorrect ? static_cast<Currency>(value) : defaultValue;
     }
 };
+
 Q_DECLARE_METATYPE(Enums::Currency)
+
 #endif // CONSTANTS_H

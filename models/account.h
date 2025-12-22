@@ -3,9 +3,10 @@
 
 #include <QString>
 #include <QDateTime>
+#include "../constants.h"
 
-namespace Models {
-
+namespace Models
+{
 struct Account
 {
     qint64                   id         = 0;
@@ -13,11 +14,10 @@ struct Account
     std::optional<QString>   iban       = std::nullopt;
     std::optional<QString>   balance    = "0.00";
     QString                  currency;
-    std::optional<QString>   status     = QStringLiteral("active");
+    std::optional<QString>   status     = toStr(AccStatus::Active);
     std::optional<QDateTime> created_at = std::nullopt;
     std::optional<QDateTime> updated_at = std::nullopt;
 };
-
 }
 #endif // ACCOUNT_H
 

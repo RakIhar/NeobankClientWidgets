@@ -69,6 +69,14 @@ void MainWindow::setupPages()
 void MainWindow::setupServices()
 {
     SendDelegate send = [this](const QByteArray& data){
+        QJsonDocument doc = QJsonDocument::fromJson(data);
+        if (!doc.isObject()) return;
+
+        if (!doc.isNull()) {
+            qDebug().noquote() << "Sent JSON:\n" << doc.toJson(QJsonDocument::Indented);
+        } else
+            qDebug() << "Sent:\n" << data;
+
         m_client->send(data);
     };
     AuthDelegate authenticate = [this](QJsonObject &request) {
@@ -142,10 +150,13 @@ void MainWindow::setupSwaps()
 
 void MainWindow::routeMessage(const QByteArray &msg)
 {
-    qDebug() << msg; //DEBUG
-
     QJsonDocument doc = QJsonDocument::fromJson(msg);
     if (!doc.isObject()) return;
+
+    if (!doc.isNull()) {
+        qDebug().noquote() << "Received JSON:\n" << doc.toJson(QJsonDocument::Indented);
+    } else
+        qDebug() << "Received:\n" << msg;
 
     QJsonObject obj = doc.object();
     QString type = obj.value("type").toString();

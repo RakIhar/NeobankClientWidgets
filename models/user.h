@@ -4,8 +4,8 @@
 #include <QString>
 #include <QDateTime>
 
-namespace Models {
-
+namespace Models
+{
 struct User
 {
     qint64 id = 0;
@@ -17,7 +17,6 @@ struct User
     QDateTime created_at;
     QDateTime updated_at;
 };
-
 }
 
 #endif // USER_H

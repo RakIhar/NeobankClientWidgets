@@ -6,12 +6,12 @@
 #include <QJsonObject>
 #include "../models/account.h"
 
-struct TransferData
+struct TransferData //несериализуется
 {
     Models::Account from_acc;
     Models::Account to_acc;
     QString from_amount = "0.00";
-    std::optional<QString> description;
+    QString description = "";
 };
 
 struct CreditData
@@ -22,15 +22,16 @@ struct CreditData
 
 struct BeforeTransferInfo
 {
-    QString comission;
-    QString exchangeRate;
+    QString comission = "";
+    QString exchangeRate = "";
+    QString resultAmount = "";
     std::optional<Models::Account> to_acc;
-    bool isError;
+    bool isAllowed;
     QString error;
 };
 
-namespace Models {
-
+namespace Models
+{
 struct Transaction
 {
     qint64 id = 0;
@@ -49,7 +50,6 @@ struct Transaction
     std::optional<QJsonObject> metadata = std::nullopt;
     std::optional<QDateTime> created_at = std::nullopt;
 };
-
 }
 
 #endif // TRANSACTION_H

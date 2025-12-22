@@ -13,8 +13,8 @@ public:
     void handleMessage(const QByteArray &msg);
     void setAuthentificationData(QJsonObject &request);
     std::pair<QString, QString> getSessionData() const { return { session_id, token}; };
-    void createLoginRequest(const QString &username, const QString &password);
-    void createRegistrationRequest(const RegData &regData);
+    void login(const QString &username, const QString &password);
+    void registration(const RegData &regData);
 
 signals:
     void loginSuccess();

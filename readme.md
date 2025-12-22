@@ -1,3 +1,40 @@
+# TODO первичное
+accountspage.ui и transactionpage.ui проверить таблицу
+
+согласованность BeforeTransferInfo и Transaction
+
+transferpagepage полностью проверить
+
+transactionspage полностью проверить
+
+transferPage улучшить UX, потому что мегаплохо сделаны кнопки
+
+Проверить transactionservice - handleMessage
+
+Можно выбрать замороженный счет для трансфера в accountspage
+
+Можно отправить запрос кредита на замороженный счёт в accountspage
+
+Ошибка с тем, что клиент вообще не обрабатывает Credit.create 
+
+# TODO вторичное
+правильная модель для user
+
+улучшить модель и таблицу для транзакций
+
+улучшить протокол для BeforeTransferInfo
+
+дописать общий баланс для dashboardpage
+
+Разобраться со стилями в main
+
+Дописать readme.md
+
+# TODO проверить
+accountspage: onAccountsUpdated, onAccountsCount
+
+transactionspage: onTransactionsUpdated, onTransactionsCount
+
 # About
 
 ### Pages

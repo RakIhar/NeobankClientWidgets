@@ -45,19 +45,17 @@ void LoginPage::onLoginClicked()
     const QString username = ui->usernameEdit->text().trimmed();
     const QString password = ui->passwordEdit->text();
 
-    if (username.isEmpty() || password.isEmpty())
-    {
-        QMessageBox::warning(this, tr("Ошибка"), tr("Заполните все поля"));
-    }
-    else
+    if (!username.isEmpty() && !password.isEmpty())
     {
         ui->statusLabel->setText(tr("> Аутентификация... <"));
         ui->statusLabel->setProperty("state", "loading");
         ui->statusLabel->style()->polish(ui->statusLabel);
         ui->loginButton->setEnabled(false);
 
-        m_authService->createLoginRequest(username, password);
+        m_authService->login(username, password);
     }
+    else
+        QMessageBox::warning(this, tr("Ошибка"), tr("Заполните все поля"));
 }
 
 void LoginPage::onLoginError(const QString &reason)

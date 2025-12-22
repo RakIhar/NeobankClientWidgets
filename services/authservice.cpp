@@ -12,7 +12,7 @@ void AuthService::handleMessage(const QByteArray &msg)
     QJsonObject obj      = QJsonDocument::fromJson(msg).object();
     const QString type   = obj.value(toStr(JsonField::Type)).toString();
     const bool result    = obj.value(toStr(JsonField::Result)).toBool();
-    const QString reason = obj.value(toStr(JsonField::Reason)).toString();
+    const QString reason = obj.value(toStr(JsonField::Error)).toString();
 
     if (type == toStr(ProtocolType::Login))
     {
@@ -40,7 +40,7 @@ void AuthService::setAuthentificationData(QJsonObject &request)
     request[toStr(JsonField::Token)]     = token;
 }
 
-void AuthService::createLoginRequest(const QString &username, const QString &password)
+void AuthService::login(const QString &username, const QString &password)
 {
     QJsonObject request;
     request[toStr(JsonField::Type)]     = toStr(ProtocolType::Login);
@@ -51,7 +51,7 @@ void AuthService::createLoginRequest(const QString &username, const QString &pas
     send(data);
 }
 
-void AuthService::createRegistrationRequest(const RegData &regData)
+void AuthService::registration(const RegData &regData)
 {
     QJsonObject request;
     request[toStr(JsonField::Type)]     = toStr(ProtocolType::Register);

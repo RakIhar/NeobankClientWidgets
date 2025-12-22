@@ -13,18 +13,20 @@ class TransactionsService : public QObject
     Q_OBJECT
 
 public:
-    explicit TransactionsService(SendDelegate send, AuthDelegate authenticate, QObject *parent);
-    void createTrListRequest(const int limit = 50, const int page = 0);
-    void createTransferRequest(const TransferData& trData);
-    void createCreditRequest(const CreditData& crData);
-    void createBeforeTrRequest(const QString& to);
+    explicit TransactionsService(SendDelegate send, AuthDelegate authenticate, QObject *parent)
+        : QObject{parent}, send(send), authenticate(authenticate) {}
+    void transactionsListRequest(const int limit = 50, const int page = 0);
+    void transferRequest(const TransferData& trData);
+    void creditRequest(const CreditData& crData);
+    void beforeTransferInfoRequest(const QString& to, const QString &amount = QString(), const QString &from = QString());
     void handleMessage(const QByteArray &msg);
 
 signals:
-    void transactionsUpdated(const QList<Models::Transaction> &transactions);
+    void transactionsList(const QList<Models::Transaction> &transactions);
     void transactionsFailed(const QString &reason);
     void transactionCreated(const Models::Transaction &transaction);
     void beforeTransferInfo(const BeforeTransferInfo& info);
+    void transactionsCount(int total, int page, int limit);
 
 private:
     SendDelegate send;

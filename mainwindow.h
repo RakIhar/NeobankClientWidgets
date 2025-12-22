@@ -51,9 +51,10 @@ private:
     QStackedWidget *m_stackedWidget;
     Pages m_pages;
 
-    AuthService         *m_authService;
-    AccountsService     *m_accountsService;
-    TransactionsService *m_transactionsService;
+    AuthService         *m_authService = nullptr;
+    AccountsService     *m_accountsService = nullptr;
+    TransactionsService *m_transactionsService = nullptr;
+    
 
     void setupPages();
     void setupServices();

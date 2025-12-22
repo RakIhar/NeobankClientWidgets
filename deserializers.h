@@ -5,30 +5,34 @@
 #include "models/transaction.h"
 #include "models/account.h"
 
+//std::optional - поле может отсутствовать вовсе
+
 inline Models::Transaction deserializeTransaction(const QJsonObject &txObj)
 {
     Models::Transaction info;
     info.id         = txObj.value(toStr(JsonField::TransactionId)).toVariant().toLongLong();
     info.account_id = txObj.value(toStr(JsonField::AccountId)).toVariant().toLongLong();
 
-    QJsonValue cpVal = txObj.value(toStr(JsonField::CounterpartyId));
-    if (!cpVal.isNull()) {
-        info.counterparty_account_id = cpVal.toVariant().toLongLong(); //для безопасности
-    }
+    if (txObj.contains(toStr(JsonField::CounterpartyId)))
+        info.counterparty_account_id = txObj.value(toStr(JsonField::CounterpartyId)).toVariant().toLongLong();
 
     info.amount   = txObj.value(toStr(JsonField::Amount)).toString();
     info.currency = txObj.value(toStr(JsonField::Currency)).toString();
     info.type     = txObj.value(toStr(JsonField::Type)).toString();
 
-    QJsonValue descVal = txObj.value(toStr(JsonField::Reason));
-    if (!descVal.isNull()) info.description = descVal.toString();
+    if (txObj.contains(toStr(JsonField::Descr)))
+        info.description = txObj.value(toStr(JsonField::Descr)).toString();
 
-    QJsonValue statusVal = txObj.value(toStr(JsonField::Status));
-    if (!statusVal.isNull()) info.status = statusVal.toString();
+    if (txObj.contains(toStr(JsonField::Status)))
+        info.status = txObj.value(toStr(JsonField::Status)).toString();
 
-    QJsonValue dateVal = txObj.value(toStr(JsonField::CreatedAt));
-    if (!dateVal.isNull()) {
-        info.created_at = QDateTime::fromString(dateVal.toString(), Qt::ISODate);
+    if (txObj.contains(toStr(JsonField::Metadata)))
+        info.metadata = txObj.value(toStr(JsonField::Metadata)).toObject();
+
+    if (txObj.contains(toStr(JsonField::CreatedAt)))
+    {
+        QString dateStr = txObj.value(toStr(JsonField::CreatedAt)).toString();
+        info.created_at = QDateTime::fromString(dateStr, Qt::ISODate);
     }
 
     return info;
@@ -41,26 +45,44 @@ inline Models::Account deserializeAccount(const QJsonObject &accObj)
     acc.user_id     = accObj.value(toStr(JsonField::UserId)).toVariant().toLongLong();
     acc.currency    = accObj.value(toStr(JsonField::Currency)).toString();
 
-    QJsonValue ibanVal                    = accObj.value(toStr(JsonField::Iban));
-    if (!ibanVal.isNull())    acc.iban    = ibanVal.toString();
+    if (accObj.contains(toStr(JsonField::Iban)))
+        acc.iban = accObj.value(toStr(JsonField::Iban)).toString();
 
-    QJsonValue statusVal                  = accObj.value(toStr(JsonField::Status));
-    if (!statusVal.isNull())  acc.status  = statusVal.toString();
+    if (accObj.contains(toStr(JsonField::Balance)))
+        acc.balance = accObj.value(toStr(JsonField::Balance)).toString();
 
-    QJsonValue balanceVal                 = accObj.value(toStr(JsonField::Balance));
-    if (!balanceVal.isNull()) acc.balance = balanceVal.toString();
+    if (accObj.contains(toStr(JsonField::Status)))
+        acc.status = accObj.value(toStr(JsonField::Status)).toString();
 
-    QJsonValue crAtVal = accObj.value(toStr(JsonField::CreatedAt));
-    if (!crAtVal.isNull()) {
-        acc.created_at = QDateTime::fromString(crAtVal.toString(), Qt::ISODate);
+    if (accObj.contains(toStr(JsonField::CreatedAt)))
+    {
+        QString dateStr = accObj.value(toStr(JsonField::CreatedAt)).toString();
+        acc.created_at  = QDateTime::fromString(dateStr, Qt::ISODate);
     }
 
-    QJsonValue upAtVal = accObj.value(toStr(JsonField::UpdatedAt));
-    if (!upAtVal.isNull()) {
-        acc.updated_at = QDateTime::fromString(upAtVal.toString(), Qt::ISODate);
+    if (accObj.contains(toStr(JsonField::UpdatedAt)))
+    {
+        QString dateStr = accObj.value(toStr(JsonField::UpdatedAt)).toString();
+        acc.updated_at  = QDateTime::fromString(dateStr, Qt::ISODate);
     }
 
     return acc;
+}
+
+inline BeforeTransferInfo deserializeBeforeTransferInfo(const QJsonObject &obj)
+{
+    BeforeTransferInfo info;
+
+    info.isAllowed    = obj.value(toStr(JsonField::Result)).toBool();
+    info.error        = obj.value(toStr(JsonField::Error)).toString();
+    info.comission    = obj.value(toStr(JsonField::Comission)).toString();
+    info.exchangeRate = obj.value(toStr(JsonField::ExchangeRate)).toString();
+    info.resultAmount = obj.value(toStr(JsonField::Amount)).toString();
+
+    if (obj.contains(toStr(JsonField::AccObj)))
+        info.to_acc = deserializeAccount(obj.value(toStr(JsonField::AccObj)).toObject());
+
+    return info;
 }
 
 #endif // DESERIALIZERS_H

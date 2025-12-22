@@ -4,8 +4,6 @@
 #include <QLabel>
 #include "../constants.h"
 
-
-
 TransactionsPage::TransactionsPage(TransactionsService *trService, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::TransactionsPage)
@@ -13,6 +11,7 @@ TransactionsPage::TransactionsPage(TransactionsService *trService, QWidget *pare
 {
     ui->setupUi(this);
     setupConnections();
+    ui->transactionsTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
 }
 
 TransactionsPage::~TransactionsPage() { delete ui; }
@@ -39,69 +38,93 @@ void TransactionsPage::setupConnections()
         refreshTransactions();
     });
 
-    connect(m_trService, &TransactionsService::transactionsUpdated,
-            this, &TransactionsPage::onTransactionsUpdated);
+    connect(m_trService, &TransactionsService::transactionsList,
+        this, &TransactionsPage::onTransactionsUpdated);
+
     connect(m_trService, &TransactionsService::transactionsFailed,
             this, &TransactionsPage::onTransactionsFailed);
+
     connect(m_trService, &TransactionsService::transactionCreated,
             this, &TransactionsPage::onTransactionCreated);
 
+    connect(m_trService, &TransactionsService::transactionsCount,
+        this, &TransactionsPage::onTransactionsCount);
 }
 
 void TransactionsPage::refreshTransactions()
 {
     showLoading(tr("Загрузка транзакций..."));
 
-    int currentPage = ui->pageSpinBox->value();
+    int currentPage = ui->pageSpinBox->value() - 1;
     int currentLimit = ui->limitComboBox->currentText().toInt();
     qDebug() << "Page: " << currentPage << "Limit: " << currentLimit;
-    m_trService->createTrListRequest(currentLimit, currentPage);
+    m_trService->transactionsListRequest(currentLimit, currentPage);
 }
 
 void TransactionsPage::onTransactionsUpdated(const QList<Models::Transaction> &transactions)
 {
-    ui->transactionsList->clear();
-
+    ui->transactionsTable->clearContents();
+    ui->transactionsTable->setRowCount(transactions.size());
+    ui->transactionsTable->setHorizontalHeaderLabels({tr("Дата"), tr("Тип"), tr("Счёта"), tr("Сумма"), tr("Валюта")});
+    int row = 0;
     for (const auto &tx : transactions)
     {
         QString direction;
-        if (tx.counterparty_account_id.has_value()) {
-            direction = tr("Счёт #%1 ➔ Счёт #%2")
-                            .arg(tx.account_id)
-                            .arg(*tx.counterparty_account_id);
-        } else {
-            direction = tr("Счёт #%1").arg(tx.account_id);
+        QString selfLabel = QString::number(tx.account_id);
+        QString cpLabel = tx.counterparty_account_id.has_value() ? QString::number(tx.counterparty_account_id.value()) : QString();
+        // prefer IBANs from metadata when present
+        if (tx.metadata.has_value()) {
+            QJsonObject md = tx.metadata.value();
+            if (md.contains("self_iban") && !md.value("self_iban").toString().isEmpty())
+                selfLabel = QString("%1 (%2)").arg(selfLabel).arg(md.value("self_iban").toString());
+            if (md.contains("counterparty_iban") && !md.value("counterparty_iban").toString().isEmpty() && !cpLabel.isEmpty())
+                cpLabel = QString("%1 (%2)").arg(cpLabel).arg(md.value("counterparty_iban").toString());
+        }
+        if (!cpLabel.isEmpty())
+            direction = tr("%1 ➔ %2").arg(selfLabel).arg(cpLabel);
+        else
+            direction = selfLabel;
+
+        QString dateStr = tx.created_at.has_value() ? tx.created_at->toString("dd.MM HH:mm") : "--.--";
+
+        QTableWidgetItem *dateItem = new QTableWidgetItem(dateStr);
+        QTableWidgetItem *typeItem = new QTableWidgetItem(tx.description.value_or(tx.type));
+        QTableWidgetItem *dirItem  = new QTableWidgetItem(direction);
+        QTableWidgetItem *amountItem = new QTableWidgetItem(tx.amount);
+        QTableWidgetItem *curItem = new QTableWidgetItem(tx.currency.isEmpty() ? tr("?") : tx.currency);
+
+        // make items read-only
+        dateItem->setFlags(dateItem->flags() & ~Qt::ItemIsEditable);
+        typeItem->setFlags(typeItem->flags() & ~Qt::ItemIsEditable);
+        dirItem->setFlags(dirItem->flags() & ~Qt::ItemIsEditable);
+        amountItem->setFlags(amountItem->flags() & ~Qt::ItemIsEditable);
+        curItem->setFlags(curItem->flags() & ~Qt::ItemIsEditable);
+
+        // show metadata (commission/exchange/result) as tooltip on amount
+        if (tx.metadata.has_value()) {
+            QJsonObject md = tx.metadata.value();
+            QStringList parts;
+            if (md.contains(toStr(JsonField::Comission))) parts << md.value(toStr(JsonField::Comission)).toString();
+            if (md.contains(toStr(JsonField::ExchangeRate))) parts << tr("rate:") + md.value(toStr(JsonField::ExchangeRate)).toString();
+            if (md.contains(toStr(JsonField::Amount))) parts << tr("final:") + md.value(toStr(JsonField::Amount)).toString();
+            if (!parts.isEmpty()) amountItem->setToolTip(parts.join("; "));
         }
 
-        QString icon = "•";
-        QString sign = "";
-        if (tx.type == "deposit") {
-            icon = "➕"; sign = "+";
-        } else if (tx.type == "withdrawal") {
-            icon = "➖"; sign = "-";
-        } else if (tx.type == "transfer") {
-            icon = "⇄";
+        // if metadata contains counterparty IBAN, prefer to display it
+        if (tx.metadata.has_value()) {
+            QJsonObject md = tx.metadata.value();
+            if (md.contains("counterparty_iban") && !md.value("counterparty_iban").toString().isEmpty()) {
+                QString cp = md.value("counterparty_iban").toString();
+                dirItem->setText(tr("%1 ➔ %2").arg(tx.account_id).arg(cp));
+            }
         }
 
-        QString dateStr = tx.created_at.has_value()
-                              ? tx.created_at->toString("dd.MM HH:mm")
-                              : "--.--";
-
-        // [Иконка] [Тип/Описание] | [Направление] | [Сумма]
-        const QString line = QString("%1 %2 | %3 | %4%5 %6 | %7")
-                                 .arg(icon,
-                                      tx.description.value_or(tx.type).leftJustified(15, ' '),
-                                      direction.leftJustified(30, ' '),
-                                      sign, tx.amount,
-                                      tx.currency.isEmpty() ? Enums::toStr(Enums::Currency::BYN) + "?" : tx.currency,
-                                      dateStr);
-
-        QListWidgetItem *item = new QListWidgetItem(line);
-
-        if (tx.type == "deposit") item->setForeground(QColor(0x2b9348));
-        else if (tx.type == "withdrawal") item->setForeground(QColor(0xe63946));
-
-        ui->transactionsList->addItem(item);
+        ui->transactionsTable->setItem(row, 0, dateItem);
+        ui->transactionsTable->setItem(row, 1, typeItem);
+        ui->transactionsTable->setItem(row, 2, dirItem);
+        ui->transactionsTable->setItem(row, 3, amountItem);
+        ui->transactionsTable->setItem(row, 4, curItem);
+        row++;
     }
 
     if (transactions.isEmpty())
@@ -117,6 +140,13 @@ void TransactionsPage::onTransactionsUpdated(const QList<Models::Transaction> &t
         ui->statusLabel->style()->polish(ui->statusLabel);
     }
     ui->refreshButton->setEnabled(true);
+}
+
+void TransactionsPage::onTransactionsCount(int total, int page, int limit)
+{
+    int pages = limit > 0 ? ((total + limit - 1) / limit) : 1;
+    ui->pageSpinBox->setMaximum(std::max(1, pages));
+    ui->statusLabel->setText(tr("Всего: %1 записей, стр %2/%3").arg(total).arg(page+1).arg(pages));
 }
 
 void TransactionsPage::onTransactionsFailed(const QString &reason)

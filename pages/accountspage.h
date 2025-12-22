@@ -2,7 +2,7 @@
 #define ACCOUNTSPAGE_H
 
 #include "ui_accountspage.h"
-#include <QListWidget>
+#include <QTableWidget>
 #include <QPushButton>
 #include <QLabel>
 #include "../models/account.h"
@@ -22,12 +22,12 @@ signals:
     void pr_dashboard();
     void pr_transfer(Models::Account fromAcc);
 
-public slots:
-    void onAccountsUpdated(const QList<Models::Account> &accounts);
-    void onAccountsFailed(const QString &reason);
-
 private slots:
     void onTestCredit();
+    void onDeleteAccount();
+    void onAccountsUpdated(const QList<Models::Account> &accounts);
+    void onAccountsFailed(const QString &reason);
+    void onAccountsCount(int total, int page, int limit);
 
 private:
     void setupConnections();

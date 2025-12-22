@@ -18,9 +18,18 @@ set(PROJECT_SOURCES
   mainwindow.h
   mainwindow.ui
   readme.md
+  res.qrc
+
+  converters.h
+  constants.h
+  deserializers.h
 
   network/socketwrapper.h
   network/socketwrapper.cpp
+
+  models/account.h
+  models/transaction.h
+  models/user.h
 
   services/accountsservice.h
   services/accountsservice.cpp
@@ -53,10 +62,11 @@ set(PROJECT_SOURCES
   pages/transactionspage.h
   pages/transactionspage.cpp
 
-  #нет ui
+  pages/transferpage.ui
   pages/transferpage.h
   pages/transferpage.cpp
-    res.qrc
+
+
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -67,17 +77,7 @@ find_package(Qt6 REQUIRED COMPONENTS Core)
 
 qt_add_executable(NeobankClientWidgets
     MANUAL_FINALIZATION
-    ${PROJECT_SOURCES}
-    constants.h
-    models/account.h
-    models/transaction.h
-    models/user.h
-    pages/transferpage.ui
-    converters.h
-
-    deserializers.h
-
-)
+    ${PROJECT_SOURCES})
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET NeobankClientWidgets APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
 #                 ${CMAKE_CURRENT_SOURCE_DIR}/android)

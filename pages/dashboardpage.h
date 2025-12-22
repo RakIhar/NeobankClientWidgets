@@ -1,9 +1,9 @@
 #ifndef DASHBOARDPAGE_H
 #define DASHBOARDPAGE_H
-
 #include "ui_dashboardpage.h"
 #include <QLabel>
 #include <QPushButton>
+
 
 class DashboardPage : public QWidget
 {
@@ -11,6 +11,7 @@ class DashboardPage : public QWidget
 public:
     explicit DashboardPage(QWidget *parent = nullptr);
     ~DashboardPage();
+
 signals:
     void pr_accounts();
     void pr_transactions();

@@ -15,22 +15,24 @@ class TransferPage : public QDialog
 {
     Q_OBJECT
 public:
-    explicit TransferPage(TransactionsService *trService, QWidget *parent = nullptr);
+    explicit TransferPage(TransactionsService *trService,
+                          QWidget *parent = nullptr);
     ~TransferPage();
     void reset(const Models::Account &from);
+
 signals:
     void pr_back();
 
 private slots:
     void onBeforeTransferInfo(const BeforeTransferInfo& info);
-    void onTransferResult(const std::optional<Models::Transaction>& tr);
 
 private:
+    void setupConnections();
     Ui::TransferDialog *ui;
     TransactionsService *m_trService;
     TransferData m_data;
     void setInfoText();
-    void setInfoText(const BeforeTransferInfo& info);
+    void setInfoText(const BeforeTransferInfo &beforeTransferInfo);
 };
 
 #endif // TRANSFERDIALOG_H

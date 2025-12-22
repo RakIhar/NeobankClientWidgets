@@ -4,10 +4,11 @@
 #include <QJsonObject>
 #include "../deserializers.h"
 
-void TransactionsService::createTrListRequest(const int limit , const int page)
+void TransactionsService::transactionsListRequest(const int limit , const int page)
 {
     QJsonObject request;
     authenticate(request);
+
     request[toStr(JsonField::Type)]  = toStr(ProtocolType::TrList);
     request[toStr(JsonField::Limit)] = limit;
     request[toStr(JsonField::Page)]  = page;
@@ -16,44 +17,44 @@ void TransactionsService::createTrListRequest(const int limit , const int page)
     send(doc.toJson(QJsonDocument::Compact));
 }
 
-void TransactionsService::createTransferRequest(const TransferData &trData)
+void TransactionsService::transferRequest(const TransferData &trData)
 {
     QJsonObject request;
     authenticate(request);
+
     request[toStr(JsonField::Type)]    = toStr(ProtocolType::TrCreate);
-    if (trData.from_acc.iban.has_value())
-    request[toStr(JsonField::FromAcc)] = trData.from_acc.iban.value();
-    else
     request[toStr(JsonField::FromAcc)] = trData.from_acc.id;
-    if (trData.to_acc.iban.has_value())
-    request[toStr(JsonField::ToAcc)]   = trData.to_acc.iban.value();
-    else
     request[toStr(JsonField::ToAcc)]   = trData.to_acc.id;
     request[toStr(JsonField::Amount)]  = trData.from_amount;
-    request[toStr(JsonField::Reason)]  = trData.description.has_value()
-                                        ? QJsonValue(trData.description.value())
-                                        : QJsonValue::Null;
+    request[toStr(JsonField::Descr)]   = trData.description;
+
     QJsonDocument doc(request);
     send(doc.toJson(QJsonDocument::Compact));
 }
 
-void TransactionsService::createCreditRequest(const CreditData &crData)
+void TransactionsService::creditRequest(const CreditData &crData)
 {
     QJsonObject request;
     authenticate(request);
-    request[toStr(JsonField::Type)]      = toStr(ProtocolType::TrCreate);
+
+    request[toStr(JsonField::Type)]      = toStr(ProtocolType::CreditCreate);
     request[toStr(JsonField::AccountId)] = crData.acc.id;
     request[toStr(JsonField::Amount)]    = crData.amount;
+
     QJsonDocument doc(request);
     send(doc.toJson(QJsonDocument::Compact));
 }
 
-void TransactionsService::createBeforeTrRequest(const QString &to)
+void TransactionsService::beforeTransferInfoRequest(const QString &to, const QString &amount, const QString &from)
 {
     QJsonObject request;
     authenticate(request);
+
     request[toStr(JsonField::Type)]  = toStr(ProtocolType::TrBefore);
     request[toStr(JsonField::ToAcc)] = to;
+    request[toStr(JsonField::Amount)] = amount;
+    request[toStr(JsonField::FromAcc)] = QJsonValue(from);
+
     QJsonDocument doc(request);
     send(doc.toJson(QJsonDocument::Compact));
 }
@@ -63,7 +64,7 @@ void TransactionsService::handleMessage(const QByteArray &msg)
     QJsonObject obj      = QJsonDocument::fromJson(msg).object();
     const QString type   = obj.value(toStr(JsonField::Type)).toString();
     const bool result    = obj.value(toStr(JsonField::Result)).toBool();
-    const QString reason = obj.value(toStr(JsonField::Reason)).toString();
+    const QString reason = obj.value(toStr(JsonField::Error)).toString();
 
     if (type == toStr(ProtocolType::TrList)) {
         if (result)
@@ -74,10 +75,13 @@ void TransactionsService::handleMessage(const QByteArray &msg)
             txs.reserve(txArray.size());
             for (const auto &item : txArray)
                 if (item.isObject())
-                {
                     txs.append(deserializeTransaction(item.toObject()));
-                }
-            emit transactionsUpdated(txs);
+            emit transactionsList(txs);
+
+            int total = obj.value(toStr(JsonField::Count)).toInt(0);
+            int page  = obj.value(toStr(JsonField::Page)).toInt(0);
+            int limit = obj.value(toStr(JsonField::Limit)).toInt(50);
+            emit transactionsCount(total, page, limit);
         }
         else
             emit transactionsFailed(reason);
@@ -93,7 +97,19 @@ void TransactionsService::handleMessage(const QByteArray &msg)
         else
             emit transactionsFailed(reason);
     }
+    else if (type == toStr(ProtocolType::TrBefore))
+        emit beforeTransferInfo(deserializeBeforeTransferInfo(obj.value(toStr(JsonField::TrObj)).toObject()));
 }
 
-TransactionsService::TransactionsService(SendDelegate send, AuthDelegate authenticate, QObject *parent)
-    : QObject{parent}, send(send), authenticate(authenticate) {}
+/* TODO:
+Received JSON:
+ {
+    "error": "Account is not available for credit",
+    "result": false,
+    "type": "credit.create"
+}
+
+Unknown message type "credit.create"
+*/
+
+

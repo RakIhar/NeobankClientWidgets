@@ -11,7 +11,10 @@ ConnectPage::ConnectPage(QWidget *parent)
 
     m_connectionTimer = new QTimer(this);
     m_connectionTimer->setSingleShot(true);
-    connect(m_connectionTimer, &QTimer::timeout, this, [this]{onSocketError(tr("Превышено время ожидания"));});
+    connect(m_connectionTimer, &QTimer::timeout, this,
+    [this]{
+        onSocketError(tr("Превышено время ожидания"));
+    });
 
     ui->statusLabel->setProperty("state", "empty");
     ui->statusLabel->style()->polish(ui->statusLabel);
@@ -41,24 +44,23 @@ void ConnectPage::onConnectClicked()
     bool isCorrect = false;
     const quint16 port = ui->portEdit->text().toUShort(&isCorrect);
     constexpr int TIMEOUT_MS = 10000;
-    if (host.isEmpty())
+    if (!host.isEmpty())
     {
-        QMessageBox::warning(this, tr("Ошибка"), tr("Введите адрес сервера"));
-    }
-    else if (!isCorrect || port == 0)
-    {
-        QMessageBox::warning(this, tr("Ошибка"), tr("Некорректный порт"));
+        if (isCorrect && port)
+        {
+            ui->statusLabel->setText(tr("> Подключение... <"));
+            ui->statusLabel->setProperty("state", "loading");
+            ui->statusLabel->style()->polish(ui->statusLabel);
+
+            ui->connectButton->setEnabled(false);
+            m_connectionTimer->start(TIMEOUT_MS);
+            emit r_connect(host, port);
+        }
+        else
+            QMessageBox::warning(this, tr("Ошибка"), tr("Некорректный порт"));
     }
     else
-    {
-        ui->statusLabel->setText(tr("> Подключение... <"));
-        ui->statusLabel->setProperty("state", "loading");
-        ui->statusLabel->style()->polish(ui->statusLabel);
-
-        ui->connectButton->setEnabled(false);
-        m_connectionTimer->start(TIMEOUT_MS);
-        emit r_connect(host, port);
-    }
+        QMessageBox::warning(this, tr("Ошибка"), tr("Введите адрес сервера"));
 }
 
 void ConnectPage::onSocketError(const QString &msg)

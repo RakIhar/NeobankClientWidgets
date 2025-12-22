@@ -81,9 +81,9 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="findButton">
+      <widget class="QPushButton" name="beforeTrInfoButton">
        <property name="text">
-        <string>Найти получателя</string>
+        <string>Предварительная информация</string>
        </property>
       </widget>
      </item>

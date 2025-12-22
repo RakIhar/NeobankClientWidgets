@@ -2,7 +2,7 @@
 #define TRANSACTIONSPAGE_H
 
 #include "ui_transactionspage.h"
-#include <QListWidget>
+#include <QTableWidget>
 #include <QPushButton>
 #include <QLabel>
 #include "../models/transaction.h"
@@ -20,10 +20,11 @@ public:
 signals:
     void pr_dashboard();
 
-public slots:
+private slots:
     void onTransactionsUpdated(const QList<Models::Transaction> &transactions);
     void onTransactionsFailed(const QString &reason);
     void onTransactionCreated(const Models::Transaction &transaction);
+    void onTransactionsCount(int total, int page, int limit);
 
 private:
     void setupConnections();

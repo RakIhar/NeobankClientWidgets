@@ -85,35 +85,36 @@ void RegistrationPage::onRegisterClicked()
     const QString password = ui->passwordEdit->text();
     const QString password2 = ui->passwordConfirmEdit->text();
 
-    if (username.isEmpty() || password.isEmpty() || password2.isEmpty())
+    if (username.isEmpty() && password.isEmpty() && password2.isEmpty())
     {
-        QMessageBox::warning(this, tr("Ошибка"), tr("Заполните все поля"));
-    }
-    else if (password != password2)
-    {
-        QMessageBox::warning(this, tr("Ошибка"), tr("Пароли не совпадают"));
-    }
-    else if (!ui->emailEdit->hasAcceptableInput())
-    {
-        QMessageBox::warning(this, tr("Ошибка"), tr("Некорректный email"));
-    }
-    else if (!ui->phoneEdit->hasAcceptableInput())
-    {
-        QMessageBox::warning(this, tr("Ошибка"), tr("Некорректный номер телефона"));
+        if (password == password2)
+        {
+            if (!ui->emailEdit->hasAcceptableInput())
+            {
+                if (ui->phoneEdit->hasAcceptableInput())
+                {
+                    RegData regData;
+                    regData.username = username;
+                    regData.email = email;
+                    regData.phone = phone;
+                    regData.password = password;
+                    m_authService->registration(regData);
+
+                    ui->statusLabel->setText(tr("> Отправка запроса... <"));
+                    ui->statusLabel->setProperty("state", "loading");
+                    ui->statusLabel->style()->polish(ui->statusLabel);
+                    ui->registerButton->setEnabled(false);
+                }
+                else
+                    QMessageBox::warning(this, tr("Ошибка"), tr("Некорректный номер телефона"));
+            }
+            else
+                QMessageBox::warning(this, tr("Ошибка"), tr("Некорректный email"));
+        }
+        else
+            QMessageBox::warning(this, tr("Ошибка"), tr("Пароли не совпадают"));
     }
     else
-    {
-        RegData regData;
-        regData.username = username;
-        regData.email = email;
-        regData.phone = phone;
-        regData.password = password;
-        m_authService->createRegistrationRequest(regData);
-
-        ui->statusLabel->setText(tr("> Отправка запроса... <"));
-        ui->statusLabel->setProperty("state", "loading");
-        ui->statusLabel->style()->polish(ui->statusLabel);
-        ui->registerButton->setEnabled(false);
-    }
+        QMessageBox::warning(this, tr("Ошибка"), tr("Заполните все поля"));
 }
 
